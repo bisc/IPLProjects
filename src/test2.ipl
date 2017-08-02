@@ -1,0 +1,2 @@
+//sort things : pkg.thing;
+//F (forall i : things, VPred(i));

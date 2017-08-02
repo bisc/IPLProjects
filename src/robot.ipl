@@ -1,0 +1,18 @@
+//vrfun Vel(int) -> real;
+//mfun PowRate(real) -> real;
+//vrfun Time(int) -> real;
+//
+//var vels : {real};
+//var loc : int;
+//
+//elem battery;
+//elem map;
+//
+//var plan : int; // Is this correct?
+//
+//forall ch : map.chargeSts,
+//	forall v : vels, 
+//		G (loc = ch & Vel(plan) = v 
+//			-> PowRate(v) * Time(plan) <= battery.maxcap
+//		)
+//;
