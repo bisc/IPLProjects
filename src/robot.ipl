@@ -1,6 +1,6 @@
-//vrfun Vel(int) -> real;
-//mfun PowRate(real) -> real;
-//vrfun Time(int) -> real;
+vrfun Vel(int) -> real;
+mfun PowRate(real) -> real;
+vrfun Time(int) -> real;
 //
 //var vels : {real};
 //var loc : int;
