@@ -65,7 +65,7 @@ property set Memory_Properties is
 	Memory_Size: Size
 		applies to (memory, system, processor, virtual processor);
 	
-	Word_Size: Size => 8 bits
+	Word_Size: Size => 8 bits 
 		applies to (memory);
 	
 	Word_Space: aadlinteger 1 .. Max_Word_Space => 1

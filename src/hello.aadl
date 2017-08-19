@@ -34,7 +34,7 @@ public
 
   processor cpu
     --  A processor provides execution resources
-  properties
+  properties 
     Scheduling_Protocol => (RMS);                             -- How thread are given access to the CPU
   end cpu;
 

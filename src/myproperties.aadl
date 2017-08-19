@@ -8,5 +8,7 @@ property set myproperties is
 		
 	prop3: aadlboolean => true
 		applies to (processor);
-				
+	
+
+		
 end myproperties;

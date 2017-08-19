@@ -1,3 +1,0 @@
-stvar s : int;
-
-$ P>0.5 [true] $ -> true;

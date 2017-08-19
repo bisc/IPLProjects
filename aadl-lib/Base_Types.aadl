@@ -25,7 +25,7 @@ public
   properties
     Data_Model::Number_Representation => Signed;
     Data_Size => 2 Bytes;
-  end Integer_16;
+  end Integer_16; 
 
   data Integer_32 extends Integer
   properties

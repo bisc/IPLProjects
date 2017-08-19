@@ -77,7 +77,7 @@ property set Programming_Properties is
 	Hardware_Description_Source_Text: inherit list of aadlstring	
 		applies to (memory, bus, device, processor, system);
 	
-	Hardware_Source_Language: Supported_Hardware_Source_Languages
+	Hardware_Source_Language: Supported_Hardware_Source_Languages 
 		applies to (memory, bus, device, processor, system);
 		
 	Device_Driver: classifier (abstract implementation)

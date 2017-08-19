@@ -36,7 +36,7 @@ property set Communication_Properties is
 	
 	Input_Rate: Rate_Spec => [Value_Range => 1.0 .. 1.0; Rate_Unit => PerDispatch; Rate_Distribution => Fixed;]
 		applies to (feature);
-	
+	 
 	Input_Time: list of IO_Time_Spec => ([Time => Dispatch; Offset => 0 ns .. 0 ns;])
 		applies to (feature);
 	

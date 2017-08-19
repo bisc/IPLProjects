@@ -1,0 +1,16 @@
+import Robot_Task_Types.*;
+import tasks.*;
+
+use view Library.i as lib;
+
+set Lib : Library.i; 
+set tasks : Task; 
+     
+//forall t1 : tasks | t1::task_type2 = 1;   
+//exists t1 : tasks | exists t2: tasks | t1::task_type2 != t2::task_type2;
+ 
+exists t1 : tasks | exists t2: tasks | 
+	t1::task_type = 1 & t2::task_type = 0 & 
+	t1::end_loc = t2::start_loc -> true;             
+      
+//exists t1 : Lib | exists t2: Lib | exists t3: Lib | t1::task_type2 = 1;

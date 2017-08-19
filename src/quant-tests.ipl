@@ -1,7 +1,6 @@
-
  
-forall x : {1, 2, 3} | 1 + 2 = 3;     
-exists y : {1, 2, 3} | 1 + 2 = 3;
+forall x : {1, 2, 3} | 1 + 2 = 3;      
+exists y : {1, 2, 3} | 1 + 2 = 3;   
 exists xyz : {true, false} | (xyz V !xyz);        
-(2 = 2) V (exists z : {1, 2, 3} | z + 4 = 3);    
-                          
+exists z : {1, 2, 3} | z + 4 = 3;    
+forall z : {1, 2, 3} | z + 1 = 3;    

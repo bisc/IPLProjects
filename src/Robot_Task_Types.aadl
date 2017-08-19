@@ -1,0 +1,28 @@
+property set Robot_Task_Types is
+
+	distance: aadlreal -- meters
+		applies to (process);
+	
+	duration: aadlreal -- seconds 
+		applies to (process);
+		
+	task_type_enum: enumeration
+        (Forward, Rotate) 
+      	applies to (process); 		
+	 
+	task_type: aadlinteger -- 0 = forward, 1 = rotate
+        applies to (process); 		
+        
+    start_loc: aadlinteger -- location label
+    	applies to (process);
+    
+    end_loc: aadlinteger -- location label
+    	applies to (process);
+    	
+    start_head: aadlinteger -- heading label
+    	applies to (process); 
+    
+    end_head: aadlinteger -- heading label
+    	applies to (process);
+		
+end Robot_Task_Types;
