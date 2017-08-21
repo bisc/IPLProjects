@@ -6,6 +6,6 @@
 true & false != false V true; 
 true V false;
 
-// invalid 
+// invalid  
 1 = 2; 
 false;                                          

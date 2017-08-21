@@ -4,7 +4,7 @@ import tasks.*;
 use view Library.i as lib;
 
 set Lib : Library.i; 
-set tasks : Task; 
+set tasks : Task;   
      
 //forall t1 : tasks | t1::task_type2 = 1;   
 //exists t1 : tasks | exists t2: tasks | t1::task_type2 != t2::task_type2;

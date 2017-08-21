@@ -1,4 +1,0 @@
-stvar s : int;
-
-$P>0.5 [true]${| 1 |} -> true;
-    
