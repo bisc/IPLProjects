@@ -15,6 +15,7 @@ public
 			s1: process Task;
 			s2: process Task;
 			s3: process Task;
+			s4: process Task;
 			 
 		properties 
 			Robot_Task_Types::distance => 5.0 applies to s1; 
@@ -43,6 +44,15 @@ public
 			Robot_Task_Types::end_loc => 1 applies to s3;  
 			Robot_Task_Types::start_head => 1 applies to s3;
 			Robot_Task_Types::end_head => 3 applies to s3;  
+			
+			Robot_Task_Types::distance => 2.3 applies to s4; 
+			Robot_Task_Types::duration => 1.1 applies to s4;
+			Robot_Task_Types::task_type_enum => Forward applies to s4;
+			Robot_Task_Types::task_type => 0 applies to s4; 
+			Robot_Task_Types::start_loc => 1 applies to s4;
+			Robot_Task_Types::end_loc => 2 applies to s4;  
+			Robot_Task_Types::start_head => 1 applies to s4;
+			Robot_Task_Types::end_head => 1 applies to s4;  
 			
 	end Library.i;
 	

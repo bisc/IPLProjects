@@ -8,7 +8,7 @@ exists z : {true, false} | !z;
 exists x : {1, 2} | exists xy : {0, 1, 2, 3 } | 
 	exists xyz : {true, false} | 
 		(x + xy >= x * xy) V xyz;   
-
+ 
 // invalid                
 exists x : {1, 2, 30} | x + 2 = 29;    
 

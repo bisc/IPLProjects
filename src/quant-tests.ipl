@@ -1,4 +1,4 @@
-// valid
+// valid 
 forall x : {1, 2, 3} | 1 + 2 = 3;       
 exists y : {1, 2, 3} | 1 + 2 = 3;   
 exists xyz : {true, false} | (xyz V !xyz);     
