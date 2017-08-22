@@ -115,7 +115,7 @@ rewards "time"
 	[l7_to_l8] true :s=HALF_SPEED? 17.7429 : 9.1324;
 	[l7_to_l6] true :s=HALF_SPEED? 64.4914 : 33.1941;
 	[l6_to_l7] true :s=HALF_SPEED? 64.4914 : 33.1941;
-	[l3_to_l6] true :s=HALF_SPEED? 29.3143 : 15.0882;
+	[l3_to_l6] true :s=HALF_SPEED? 29.3143 : 15.0882; // error! should be the line below
 	[l6_to_l3] true :s=HALF_SPEED? 8.5714 : 4.4118;
 	[l4_to_l5] true :s=HALF_SPEED? 29.3143 : 15.0882;
 	[l5_to_l4] true :s=HALF_SPEED? 29.3143 : 15.0882;

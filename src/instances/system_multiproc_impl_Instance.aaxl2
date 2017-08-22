@@ -8,38 +8,11 @@
       </ownedValue>
       <propertyAssociation href="../system.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedPropertyAssociation.0"/>
     </ownedPropertyAssociation>
-    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
-      <property href="../../aadl-lib/Predeclared_Property_Sets/Thread_Properties.aadl#Thread_Properties.Runtime_Protection"/>
-      <ownedValue>
-        <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
-      </ownedValue>
-      <propertyAssociation href="../system.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedPropertyAssociation.1"/>
-    </ownedPropertyAssociation>
     <subcomponent xsi:type="aadl2:ProcessSubcomponent" href="../system.aadl#/0/@ownedPublicSection/@ownedClassifier.12/@ownedProcessSubcomponent.0"/>
     <index>0</index>
     <classifier xsi:type="aadl2:ProcessType" href="../system.aadl#pkg.pro"/>
   </componentInstance>
   <componentInstance name="cpuA" category="processor">
-    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
-      <property href="../../aadl-lib/Predeclared_Property_Sets/Deployment_Properties.aadl#Deployment_Properties.Scheduling_Protocol"/>
-      <ownedValue>
-        <ownedValue xsi:type="aadl2:ListValue">
-          <ownedListElement xsi:type="aadl2:NamedValue">
-            <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../Plugin_Resources/Predeclared_Property_Sets/AADL_Project.aadl#/0/@ownedPropertyType.7/@ownedLiteral.5"/>
-          </ownedListElement>
-        </ownedValue>
-      </ownedValue>
-      <propertyAssociation href="../system.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedPropertyAssociation.0"/>
-    </ownedPropertyAssociation>
-    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
-      <property href="../../aadl-lib/Predeclared_Property_Sets/Timing_Properties.aadl#Timing_Properties.Processor_Capacity"/>
-      <ownedValue>
-        <ownedValue xsi:type="aadl2:RealLiteral" value="500.0">
-          <unit href="../../../Plugin_Resources/Predeclared_Property_Sets/AADL_Project.aadl#/0/@ownedPropertyType.20/@ownedLiteral.1"/>
-        </ownedValue>
-      </ownedValue>
-      <propertyAssociation href="../system.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedPropertyAssociation.1"/>
-    </ownedPropertyAssociation>
     <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
       <property href="../myproperties.aadl#myproperties.prop3"/>
       <ownedValue>
@@ -53,26 +26,6 @@
   </componentInstance>
   <componentInstance name="cpuB" category="processor">
     <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
-      <property href="../../aadl-lib/Predeclared_Property_Sets/Deployment_Properties.aadl#Deployment_Properties.Scheduling_Protocol"/>
-      <ownedValue>
-        <ownedValue xsi:type="aadl2:ListValue">
-          <ownedListElement xsi:type="aadl2:NamedValue">
-            <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../Plugin_Resources/Predeclared_Property_Sets/AADL_Project.aadl#/0/@ownedPropertyType.7/@ownedLiteral.5"/>
-          </ownedListElement>
-        </ownedValue>
-      </ownedValue>
-      <propertyAssociation href="../system.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedPropertyAssociation.0"/>
-    </ownedPropertyAssociation>
-    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
-      <property href="../../aadl-lib/Predeclared_Property_Sets/Timing_Properties.aadl#Timing_Properties.Processor_Capacity"/>
-      <ownedValue>
-        <ownedValue xsi:type="aadl2:RealLiteral" value="500.0">
-          <unit href="../../../Plugin_Resources/Predeclared_Property_Sets/AADL_Project.aadl#/0/@ownedPropertyType.20/@ownedLiteral.1"/>
-        </ownedValue>
-      </ownedValue>
-      <propertyAssociation href="../system.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedPropertyAssociation.1"/>
-    </ownedPropertyAssociation>
-    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
       <property href="../myproperties.aadl#myproperties.prop3"/>
       <ownedValue>
         <ownedValue xsi:type="aadl2:BooleanLiteral"/>
@@ -84,33 +37,11 @@
     <classifier xsi:type="aadl2:ProcessorImplementation" href="../system.aadl#pkg.cpu.impl"/>
   </componentInstance>
   <componentInstance name="cpuC" category="processor">
-    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
-      <property href="../../aadl-lib/Predeclared_Property_Sets/Deployment_Properties.aadl#Deployment_Properties.Scheduling_Protocol"/>
-      <ownedValue>
-        <ownedValue xsi:type="aadl2:ListValue">
-          <ownedListElement xsi:type="aadl2:NamedValue">
-            <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../Plugin_Resources/Predeclared_Property_Sets/AADL_Project.aadl#/0/@ownedPropertyType.7/@ownedLiteral.5"/>
-          </ownedListElement>
-        </ownedValue>
-      </ownedValue>
-      <propertyAssociation href="../system.aadl#/0/@ownedPublicSection/@ownedClassifier.9/@ownedPropertyAssociation.0"/>
-    </ownedPropertyAssociation>
     <subcomponent xsi:type="aadl2:ProcessorSubcomponent" href="../system.aadl#/0/@ownedPublicSection/@ownedClassifier.12/@ownedProcessorSubcomponent.2"/>
     <index>0</index>
     <classifier xsi:type="aadl2:ProcessorImplementation" href="../system.aadl#pkg.mycpu.impl2"/>
   </componentInstance>
   <componentInstance name="cpuD" category="processor">
-    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
-      <property href="../../aadl-lib/Predeclared_Property_Sets/Deployment_Properties.aadl#Deployment_Properties.Scheduling_Protocol"/>
-      <ownedValue>
-        <ownedValue xsi:type="aadl2:ListValue">
-          <ownedListElement xsi:type="aadl2:NamedValue">
-            <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../Plugin_Resources/Predeclared_Property_Sets/AADL_Project.aadl#/0/@ownedPropertyType.7/@ownedLiteral.5"/>
-          </ownedListElement>
-        </ownedValue>
-      </ownedValue>
-      <propertyAssociation href="../system.aadl#/0/@ownedPublicSection/@ownedClassifier.9/@ownedPropertyAssociation.0"/>
-    </ownedPropertyAssociation>
     <subcomponent xsi:type="aadl2:ProcessorSubcomponent" href="../system.aadl#/0/@ownedPublicSection/@ownedClassifier.12/@ownedProcessorSubcomponent.3"/>
     <index>0</index>
     <classifier xsi:type="aadl2:ProcessorImplementation" href="../system.aadl#pkg.mycpu.impl2"/>
