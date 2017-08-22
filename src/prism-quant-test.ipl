@@ -1,7 +1,24 @@
-use model prismtmp;
+use model prism_probs(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
 
-forall x : {1, 2, 3} | $P>0.5 [true]${|x|};
-//forall x : {1, 2, 3} | $P>0.5 [x+2]${|x|}; 
-//forall x : {1.0, 2.0, 3.0} | $P>0.5 [x+2]${|x|};                                      
-//forall x : {false, true} | $P>0.5 [x]${|x|};
-                                                                  
+stvar goal: bool;
+  
+// valid  
+forall x : {1, 2, 3} |
+	R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 5; 
+ 
+exists x : {1, 2, 3} |  
+	R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 45;
+  
+// invalid 
+forall x : {1, 2, 3} |  
+	R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 45;
+    
+   
+//forall x : {1, 2, 3} | P>0.5 [true]{|x|};
+//forall x : {1, 2, 3} | P>0.5 [x+2]{|x|}; 
+//forall x : {1.0, 2.0, 3.0} | P>0.5 [x+2]{|x|};                                      
+//forall x : {false, true} | P>0.5 [x]{|x|};
+ 
+     
+      
+                                                                              

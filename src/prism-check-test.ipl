@@ -1,0 +1,6 @@
+use model prism_probs(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY ); 
+stvar goal: bool; 
+ 
+// valid  
+R{"time"}min=? [F (goal)]{| 0, 2, 10000 |} > 5; 
+                                                 

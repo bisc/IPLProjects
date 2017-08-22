@@ -1,8 +1,10 @@
 stvar s : int;
 
 // a priori valid
-$P>0.5 [true]${| 1 |} -> true; 
+P>0.5 [true]{| 1 |} -> true; 
+
 
 // checking needed
-$P>0.5 [true]${| 1 |} || false; 
+P>0.5 [true]{| 1 |}; 
+P>0.5 [true]{| 1 |} || false; 
    
