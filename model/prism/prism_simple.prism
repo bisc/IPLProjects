@@ -73,6 +73,12 @@ s:[HALF_SPEED..FULL_SPEED] init HALF_SPEED;
 robot_done:bool init false;
 	[] true & (turn=RT) & (!stop) & (robot_done) -> (robot_done'=false) & (turn'=ET);
 
+
+	 // * Speed settings
+	 [t_set_half_speed] (s!=HALF_SPEED) & (!stop) & (!robot_done) & (turn=RT) -> (s'=HALF_SPEED) & (robot_done'=true);
+	 [t_set_full_speed] (s!=FULL_SPEED) & (!stop) & (!robot_done) & (turn=RT) -> (s'=FULL_SPEED) & (robot_done'=true);
+
+
 	 [l1_to_l2] (l=l1) & (!stop) & (turn=RT) & (!robot_done) -> (l'=l2)  & (b'=b_upd_l1_l2) & (robot_done'=true);
 	 [l2_to_l1] (l=l2) & (!stop) & (turn=RT) & (!robot_done) -> (l'=l1)  & (b'=b_upd_l2_l1) & (robot_done'=true);
 	 [l2_to_l3] (l=l2) & (!stop) & (turn=RT) & (!robot_done) -> (l'=l3)  & (b'=b_upd_l2_l3) & (robot_done'=true);

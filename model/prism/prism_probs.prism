@@ -58,7 +58,7 @@ formula b_upd_l8_l7= s=HALF_SPEED? max(0,b-390) : max(0,b-656);
 formula b_upd_l7_l8= s=HALF_SPEED? max(0,b-390) : max(0,b-656);
 formula b_upd_l7_l6= s=HALF_SPEED? max(0,b-661) : max(0,b-848);
 formula b_upd_l6_l7= s=HALF_SPEED? max(0,b-661) : max(0,b-848);
-formula b_upd_l3_l6= s=HALF_SPEED? max(0,b-457) : max(0,b-703);
+formula b_upd_l3_l6= s=HALF_SPEED? max(0,b-457) : max(0,b-703); // error, should be the line below
 formula b_upd_l6_l3= s=HALF_SPEED? max(0,b-337) : max(0,b-618);
 formula b_upd_l4_l5= s=HALF_SPEED? max(0,b-457) : max(0,b-703);
 formula b_upd_l5_l4= s=HALF_SPEED? max(0,b-457) : max(0,b-703);
