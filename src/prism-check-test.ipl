@@ -3,4 +3,4 @@ stvar goal: bool;
  
 // valid  
 R{"time"}min=? [F (goal)]{| 0, 2, 10000 |} > 5; 
-                                                 
+                                                  

@@ -16,7 +16,7 @@ R{"time"}min=? [ F l=2 ]
 
 R{"time"}min=? [ F l!=2 ]
 
-Pmax=? [ F goal ]
+Pmax=? [ G F goal U goal ]
 
 Pmin=? [ F goal ]
 
@@ -28,5 +28,5 @@ P=? [ F goal ]
 
 R{"time"}min=? [ F goal ]
 
-R{"time"}min=? [ F (goal) ]
+R{"time"}min=? [ F (goal & goal) ]
 

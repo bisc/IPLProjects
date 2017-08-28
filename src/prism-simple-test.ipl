@@ -1,9 +1,11 @@
-stvar s : int;
+use model prism_probs(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
+
+//stvar s : int;
 
 // a priori valid
 P>0.5 [true]{| 1 |} -> true; 
 
-
+  
 // checking needed
 P>0.5 [true]{| 1 |}; 
 P>0.5 [true]{| 1 |} || false; 
