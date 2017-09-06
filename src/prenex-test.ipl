@@ -1,0 +1,23 @@
+use model prism_probs(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
+
+stvar goal: bool;
+   
+// valid, need prenexing
+(1 + 2 = 3 ) & (forall x : {1, 2} |      
+	R{"time"}min=? [F (goal)]{| 0, x, 5000 |} > 5) ;
+
+! (exists x : {1, 2} |      
+	R{"time"}min=? [F (goal)]{| 0, x, 5000 |} < 5);      
+
+(exists x : {0, 1} | x > 0 ) ->  (forall y : {1, 2} |  
+	R{"time"}min=? [F (goal)]{| 0, y, 5000 |} > 5);
+ 
+// valid, no prenexing needed 
+forall x : {1, 2} |  
+	R{"time"}min=? [F (goal)]{| 0, x, 5000 |} > 5;      
+	 
+forall x : {1, 2} |   
+	exists y: {0, 1} | 
+		R{"time"}min=? [F (goal)]{| y, x, 5000 |} > 5;  
+		
+R{"time"}min=? [F (goal)]{| 1, 3, 5000 |} > 5;  

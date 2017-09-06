@@ -3,13 +3,22 @@ use model prism_probs(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
 stvar goal: bool;
    
 // valid  
-forall x : {1, 2, 3} | 
+forall x : {1, 2, 3} |  
 	R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 5; 
-    
-exists x : {1, 2, 3} |   
+      
+exists x : {1, 2, 3} |    
 	R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 45;
+   
+exists x : {0, 1, 2} | 
+	forall y : {0, 1, 2} |     
+		x + y >= R{"time"}min=? [F (goal)]{| 0, x, 10000 |};         
   
 // invalid 
+
+exists x : {0, 1, 2} | 
+	forall y : {0, 1, 2} |    
+		x + y > R{"time"}min=? [F (goal)]{| 0, x, 10000 |};        
+
 forall x : {1, 2, 3} |  
 	R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 45;
     

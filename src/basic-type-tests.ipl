@@ -1,11 +1,11 @@
 // valid
 1 = 1;
-1 != 3;
-1 - 2 + 13 > 4; 
+1 != 3;  
+1 - 2 + 13 > 4;   
 1.1*3.4 <= 100.0;  
 true & false != false V true; 
-true V false;
-
-// invalid  
-1 = 2; 
-false;                                          
+true V false; 
+     
+// invalid     
+1 = 2;  
+false;                                              

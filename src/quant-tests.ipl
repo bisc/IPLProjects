@@ -1,9 +1,28 @@
 // valid 
 forall x : {1, 2, 3} | 1 + 2 = 3;       
-exists y : {1, 2, 3} | 1 + 2 = 3;   
-exists xyz : {true, false} | (xyz V !xyz);     
-   
+
+exists y : {1, 2, 3} | 1 + 2 = 3;    
+ 
+forall x: { 1 } | x = 1;
+
+exists x : {1, 2, 30} | x + 2 = 32;      
+
+exists y : {1.0, 2.0, 3.0} | y + 2.0 = 3.0;       
+
+exists z : {true, false} | !z;             
+
+forall xyz : {true, false} | (xyz V !xyz);     
+
+exists x : {1, 2} | exists xy : {0, 1, 2, 3 } | 
+	exists xyz : {true, false} | 
+		(x + xy >= x * xy) V xyz;   
+  
 // invalid   
 exists z : {1, 2, 3} | z + 4 = 3;    
-forall z : {1, 2, 3} | z + 1 = 3;       
 
+exists x : {1, 2, 30} | x + 2 = 29;   
+
+forall z : {1, 2, 3} | z + 1 = 3;       
+ 
+exists z : {true, false} | !z & z;                        
+ 
