@@ -3,10 +3,11 @@ use model prism_probs(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
 //stvar s : int;
 
 // a priori valid
-P>0.5 [true]{| 1 |} -> true; 
-
+P>0.5 [true]{| 0, 1, 3000 |} -> true; 
   
-// checking needed
-P>0.5 [true]{| 1 |}; 
-P>0.5 [true]{| 1 |} || false; 
+// valid, but checking needed
+P>0.5 [true]{| 0, 1, 3000 |}; 
+P>0.5 [true]{| 0, 1, 3000 |} || false; 
    
+// invalid
+P<0.5 [true]{| 0, 1, 3000 |}; 

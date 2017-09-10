@@ -2,10 +2,10 @@ use model prism_probs(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
 
 stvar goal: bool;
    
-// valid  
+// valid   
 forall x : {1, 2, 3} |  
 	R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 5; 
-      
+       
 exists x : {1, 2, 3} |    
 	R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 45;
    

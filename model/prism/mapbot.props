@@ -28,5 +28,7 @@ P=? [ F goal ]
 
 R{"time"}min=? [ F goal ]
 
-R{"time"}min=? [ F (goal & goal) ]
+R{"time"}min=? [ F (goal&goal) ]
+
+A [ F goal ]
 

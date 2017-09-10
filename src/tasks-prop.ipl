@@ -5,19 +5,19 @@ use view TaskLibrary.fullspeed as lib;
 use model prism_probs(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
      
 stvar l: bool;         
-bfun abs (real) -> real;
+bfun abs (real) -> real;   
  
-set tasks : Task;                        
-            
+set tasks : Task;                
+                
  // presumably valid with 0.05, not valid with 0.5
 exists t1 : tasks | exists t2: tasks |    
 	t1::task_type = 1 & t2::task_type = 1 & // forward motion
 	t1::end_loc = t2::start_loc & // sequential
 	t1::start_loc != t2::end_loc & // start != finish
-	abs (    
-		R{"time"}min=? [F (l =  t2::end_loc)]{| t1::start_loc, t2::end_loc, 30000 /*initial battery charge*/ |} - 
+	abs (     
+		R{"time"}min=? [F (l =  t2::end_loc)]{| t1::start_loc, t2::end_loc, 3000 /*initial battery charge*/ |} - 
 		(t1::duration + t2::duration)
-	) > 0.5 * (t1::duration + t2::duration);   
+	) > 0.05 * (t1::duration + t2::duration);   
         
  // presumably valid
 /*exists t1 : tasks | exists t2: tasks |   
