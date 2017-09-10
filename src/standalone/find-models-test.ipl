@@ -4,9 +4,9 @@ use model prism_probs;
 exists x : {0, 1, 2} |     
 	forall y : {0, 1, 2} |      
 		P>0.5 [F (x + y > 1)]{||};        
-		       
-exists x : {0, 1} |     
-	forall y : {1, 2} |       
+		        
+exists x : {0, 1} |      
+	forall y : {1, 2} |        
 		P>0.5 [F (y + 1 > 1)]{||};    
   
 exists x : {1, 2, 3} |  

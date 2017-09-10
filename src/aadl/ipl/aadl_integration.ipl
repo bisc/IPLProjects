@@ -5,7 +5,7 @@ import pkg.*;
 use view multiproc.impl as mp;
 
 set CPUs : multiproc.impl;
-
+ 
 forall c : CPUs | c::Processor_Capacity > 300000;
 
 //connected(pkg2.bigthing, pkg.thing);
