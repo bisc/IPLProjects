@@ -4,7 +4,7 @@ stvar goal: bool;
    
 // valid   
 forall x : {1, 2, 3} |  
-	R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 5; 
+	R{"time"}min=? [F goal]{| 0, x, 10000 |} > 5; 
        
 exists x : {1, 2, 3} |    
 	R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 45;

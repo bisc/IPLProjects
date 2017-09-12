@@ -8,7 +8,7 @@ stvar goal: bool;
  
 ! (exists x : {1, 2} |      
 	R{"time"}min=? [F (goal)]{| 0, x, 5000 |} < 5);      
-
+ 
 (exists x : {0, 1} | x > 0 ) ->  (forall y : {1, 2} |  
 	R{"time"}min=? [F (goal)]{| 0, y, 5000 |} > 5);
  
