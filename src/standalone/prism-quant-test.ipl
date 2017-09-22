@@ -1,4 +1,4 @@
-use model prism_probs(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
+use model prism_nospeed_noturns(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
 
 stvar goal: bool;
    
