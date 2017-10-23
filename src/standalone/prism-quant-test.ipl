@@ -1,4 +1,4 @@
-use model prism_probs(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
+use model prism_simple_nospeed(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
  
 stvar goal: bool;
    
@@ -13,13 +13,11 @@ exists x : {0, 1, 2} |
 	forall y : {0, 1, 2} |     
 		x + y >= R{"time"}min=? [F (goal)]{| 0, x, 10000 |};         
  
-// FIXME does not pass yet
 exists x : int | 
 	forall y : {0, 1, 2} |     
-		R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 0 & x > 0 & x < 10;         
+		R{"time"}min=? [F (goal)]{| 0, x, 10000 |} > 0 & x > 0 & x < 5;         
   
 // invalid 
- 
 exists x : {0, 1, 2} | 
 	forall y : {0, 1, 2} |    
 		x + y > R{"time"}min=? [F (goal)]{| 0, x, 10000 |};        

@@ -1,4 +1,4 @@
-use model prism_probs;
+use model prism_simple_nospeed; // can use without params; instantiates w/ defaults
 
 // valid
 exists x : {1, 2, 3} | // existence  
@@ -9,7 +9,10 @@ forall x : {1, 2, 3} | // prop abstr
 
 exists x : {1, 2, 3} | // prop abstr   
 	x > 2 & P>0.5 [F (x + 1 > 3)]{||};  
-      
+
+forall x : int | // unbounded domain
+	x > 2 & x < 5 ->  P>0.5 [F (x + 1 > 3)]{||};       
+ 
 exists x : {0, 1, 2} |  // alternation
 	forall y : {0, 1, 2} |      
 		P>0.5 [F (x + y > 1)]{||};  

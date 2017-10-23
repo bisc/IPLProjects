@@ -8,7 +8,7 @@ vrfun VPred(int) -> bool;
 //G (forall i : items, MPred(i));
 
 // Legal, modality over rigid quantifier
-F (forall i : items, VPred(i));
+//F (forall i : items, VPred(i));
 
 // Illegal, nested quantifier with flexible set
 //X (true & (forall i : mitems, VPred(i)));
