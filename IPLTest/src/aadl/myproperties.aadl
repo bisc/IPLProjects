@@ -1,0 +1,14 @@
+property set myproperties is
+
+	prop1: aadlinteger 
+		applies to (system);
+
+	prop2: aadlreal => 0.1
+		applies to (process); 
+		
+	prop3: aadlboolean => true
+		applies to (processor);
+	
+
+		
+end myproperties;

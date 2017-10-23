@@ -1,0 +1,34 @@
+R{"time"}min=? [ F goal ]
+
+R{"distance"}min=? [ F end ]
+
+R{"time"}min=? [ F end ]
+
+R{"time"}=? [ F goal ]
+
+Pmax=? [ F (l=2) ]
+
+Pmax=? [ F (l=7) ]
+
+R{"time"}min=? [ F l=2 ]
+
+R{"time"}min=? [ F l=2 ]
+
+R{"time"}min=? [ F l!=2 ]
+
+Pmax=? [ G F goal U goal ]
+
+Pmin=? [ F goal ]
+
+R{"time"}max=? [ F goal ]
+
+Pmax=? [ (l=2) U (l=3) ]
+
+P=? [ F goal ]
+
+R{"time"}min=? [ F goal ]
+
+R{"time"}min=? [ F (goal&goal) ]
+
+A [ F goal ]
+

@@ -1,0 +1,74 @@
+package pkg
+
+public
+	with myproperties;
+	
+	system implementation thing.impl2
+		subcomponents
+			a: system;
+			b: device;
+	end thing.impl2;
+	
+	system thing 
+	end thing;
+	
+	system implementation thing.impl
+		subcomponents
+		s: system sub.i2; 
+		
+	end thing.impl;
+	
+	system sub
+	end sub;
+	
+	system implementation sub.i1
+		subcomponents
+		a: system; 
+	end sub.i1;
+
+	system implementation sub.i2
+		subcomponents
+		s: system; 
+	end sub.i2;
+	
+	processor mycpu extends cpu
+			
+	end mycpu;
+	
+	processor cpu
+	end cpu;
+	
+
+	
+	processor implementation cpu.impl
+			properties    
+    			Scheduling_Protocol => (RMS);
+    			Processor_Capacity => 500.0 MIPS;
+    			myproperties::prop3 => false; 
+	end cpu.impl;
+
+	processor implementation mycpu.impl2
+		properties
+    			Scheduling_Protocol => (RMS);
+	end mycpu.impl2;
+	
+	process pro
+		properties
+			myproperties::prop2 => 5.1; 
+			Runtime_Protection => true;
+	end pro;
+	
+	system multiproc
+		
+	end multiproc;
+	
+	system implementation multiproc.impl
+		subcomponents
+			pr1 : process pro; 
+    			cpuA	   : processor cpu.impl;
+    			cpuB	   : processor cpu.impl;
+    			cpuC	   : processor mycpu.impl2;
+    			cpuD   : processor mycpu.impl2;
+	end multiproc.impl;
+	
+end pkg;

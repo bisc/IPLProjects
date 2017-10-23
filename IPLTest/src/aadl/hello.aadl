@@ -1,0 +1,54 @@
+--  This small example is a basic AADL model, with a full hierarchy of components
+
+package Hello_World
+  -- Entities are attached to a package
+
+public
+
+  subprogram Hello_Spg_1
+    --  Simple subprogram: actual behavior, not modeled in AADL
+  properties
+    Source_Language => (C);                                  --  Implementation language is C
+    Source_Name     => "user_hello_spg_1";                   --  Name of the corresponding C function
+    Source_Text     => ("hello.c");                          --  Implementation file
+  end Hello_Spg_1;
+
+  thread Task
+    --  A task: a concurrent flow of execution
+  properties
+    Priority                => 1;                            --  Priority, interpretation given by the processor
+    Dispatch_Protocol       => Periodic;                     --  Periodic
+    Period                  => 1000 ms;                      --  Period of the task
+    Compute_Execution_Time  => 0 ms .. 3 ms;                 --  Execution time
+    Compute_Entrypoint      => classifier (Hello_Spg_1);    --  Hello_Spg_1 is executed at each dispatch
+  end Task;
+
+  process node_a
+    --  A process, gathers several threads as subcomponents
+  end node_a;
+
+  process implementation node_a.impl
+  subcomponents
+    Task1 : thread Task;
+  end node_a.impl;
+
+  processor cpu
+    --  A processor provides execution resources
+  properties 
+    Scheduling_Protocol => (RMS);                             -- How thread are given access to the CPU
+  end cpu;
+
+  system rma
+     --  A system combines both hardware and software elements
+  end rma;
+
+  system implementation rma.impl
+  subcomponents
+    node_a : process node_a.impl;
+    cpu	   : processor cpu;
+  properties
+    Actual_Processor_Binding                                  -- Binding relations between hardware and software
+       => (reference (cpu)) applies to node_a;             -- node_a is allocated resources on cpu
+  end rma.impl;
+
+end Hello_World;
