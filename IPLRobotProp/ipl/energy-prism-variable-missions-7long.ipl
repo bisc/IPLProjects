@@ -1,0 +1,88 @@
+import Robot_Task_Types.*;
+import tasks_simple_empty.*;
+import Map_Types.*;
+import map.*;     
+   
+use view TaskLibrary.fullspeed as tasklib;
+use view Map.i as mapp;  
+set locs : Location; 
+set tasks: Task;
+
+bfun distinct(int, int, int, int, int, int, int, int) -> bool;    
+
+
+stvar l: int;
+stvar s: int;
+stvar b: int; 
+ 
+//use model prism_nospeed_noturns_nocharge(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+//use model prism_speed_noturns_nocharge(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+
+forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | forall t6:tasks | forall t7: tasks |
+// cohesive path: task n-1 connects to task n
+	( t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
+		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc
+		& t5::end_loc = t6::start_loc & t6::end_loc = t7::start_loc) & 
+// no circularities/shortcuts, and the tail of the path can be empty: 
+		(
+			// either:  
+			( // all tasks are different
+				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t6::start_loc, t7::start_loc, t7::end_loc) &
+				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc & 
+				t4::start_loc != t4::end_loc & t5::start_loc != t5::end_loc & t6::start_loc != t6::end_loc & t7::start_loc != t7::end_loc
+			) || 
+			( // or the last one is empty
+				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t6::start_loc, t7::start_loc) & 
+				t7::start_loc = t7::end_loc &
+				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc & 
+				t4::start_loc != t4::end_loc & t5::start_loc != t5::end_loc & t6::start_loc != t6::end_loc
+			) || 
+			( // or the last two are empty
+				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t6::start_loc) & 
+				t6::start_loc = t6::end_loc & t7::start_loc = t7::end_loc & 
+				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc & 
+				t4::start_loc != t4::end_loc & t5::start_loc != t5::end_loc 
+			) ||
+			(  // or the last three are empty
+				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) & 
+				t5::start_loc = t5::end_loc & t6::start_loc = t6::end_loc & t7::start_loc = t7::end_loc & 
+				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc &
+				t3::start_loc != t3::end_loc & t4::start_loc != t4::end_loc 
+			) ||
+			( // or the last four are empty 
+				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc) & 
+				t4::start_loc = t4::end_loc  & t5::start_loc = t5::end_loc &
+				t6::start_loc = t6::end_loc & t7::start_loc = t7::end_loc & 
+				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc &
+				t3::start_loc != t3::end_loc
+			) ||
+			( // or the last five are empty 
+				distinct(t1::start_loc, t2::start_loc, t3::start_loc) & 
+				t3::start_loc = t3::end_loc & t4::start_loc = t4::end_loc  & t5::start_loc = t5::end_loc &
+				t6::start_loc = t6::end_loc & t7::start_loc = t7::end_loc &
+				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc
+			) || 
+			( // or the last six are empty 
+				distinct(t1::start_loc, t2::start_loc) & 
+				t2::start_loc = t2::end_loc & t3::start_loc = t3::end_loc & t4::start_loc = t4::end_loc  & 
+				t5::start_loc = t5::end_loc & t6::start_loc = t6::end_loc & t7::start_loc = t7::end_loc &
+				t1::start_loc != t1::end_loc 
+			)
+	) ->     
+	P max=? [   
+		//(G s = 1) & 
+		// robot visits each location 
+		/*(F l = t2::start_loc) &
+		(F l = t3::start_loc) &
+		(F l = t4::start_loc) & 
+		(F l = t5::start_loc) &
+		(F l = t6::start_loc) &
+		(F l = t7::start_loc) &               otherwise this takes too long when accidentally triggered*/    
+		// in order
+		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U 
+			(l = t4::start_loc U (l = t5::start_loc U (l = t6::start_loc U ( l = t7::start_loc U
+			// gets to the end without draining the battery 
+			( l = t7::end_loc & b > 0)
+		)))))))
+	]{|t1::start_loc, t5::end_loc, t1::energy + t2::energy + t3::energy + 
+			t4::energy + t5::energy + t6::energy + t7::energy +1 |} = 1;

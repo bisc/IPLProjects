@@ -1,0 +1,84 @@
+R{"time"}min=? [ F goal ]
+
+R{"distance"}min=? [ F end ]
+
+R{"time"}min=? [ F end ]
+
+R{"time"}=? [ F goal ]
+
+Pmax=? [ F (l=2) ]
+
+Pmax=? [ F goal ]
+
+R{"time"}min=? [ F l=2 ]
+
+R{"time"}min=? [ F l=2 ]
+
+R{"time"}min=? [ F l!=2 ]
+
+Pmax=? [ G F goal U goal ]
+
+Pmin=? [ F goal ]
+
+R{"time"}max=? [ F goal ]
+
+Pmax=? [ (l=2) U (l=3) ]
+
+P=? [ F goal ]
+
+R{"time"}min=? [ F goal ]
+
+R{"time"}min=? [ F (goal&goal) ]
+
+A [ F goal ]
+
+R{"time"}min=? [ F (l=3&(F l=5)) ]
+
+R{"time"}min=? [ l=0 U l=1 ]
+
+R{"time"}min=? [ l=1 U (l=7 U l=6) ]
+
+A [ F l=3 ]
+
+E [ F l=3 ]
+
+R{"time"}min=? [ l=5&(X (l=4&(X l=3))) ]
+
+R{"time"}min=? [ true ]
+
+Pmax=? [ (F l=3)&(l=5 U (l=4 U l=3)) ]
+
+Pmax=? [ F l=5 ]
+
+Pmax=? [ (F l=3)&(l=5 U (l=4 U (l=3&b>0))) ]
+
+Pmax=? [ (l=5 U (l=4 U (l=3&b>0))) ]
+
+Pmax=? [ (l=2&b=1000) U (l=2&b>1000) ]
+
+Pmax=? [ (l=2&b=1000) U (l=2&b>1650&b<1750) ]
+
+Pmax=? [ G b>0 ]
+
+Pmin=? [ G b>0 ]
+
+Pmax=? [ (G s=1)&(l=5 U (l=4 U (l=3&b>0))) ]
+
+Pmax=? [ (l=5 U (l=4 U (l=3&b>0))) ]
+
+Pmax=? [ (G s=1)&(F l=3)&(F l=4)&(l=0 U (l=1 U (l=2 U (l=3 U (l=4 U (l=5&b>0)))))) ]
+
+Pmax=? [ (G s=1)&(l=0 U (l=1 U (l=2 U (l=5&b>0)))) ]
+
+Pmax=? [ (G s=1)&(F (l=5&b>0))&((((l=0 U l=1) U l=2) U l=3) U l=4) U (l=5&b>0) ]
+
+Pmax=? [ (F l=0)&(F l=1)&(F l=2)&(F l=3)&(F l=4)&(F l=5)&((((l=0 U l=1) U l=2) U l=3) U l=4) U (l=5&b>0) ]
+
+Pmax=? [ (F l=1)&(F l=2)&(F l=3)&(F l=4)&(F l=5)&(F l=6)&(l=0 U (l=1 U (l=2 U (l=3 U (l=4 U (l=5 U (l=6 U (l=7&b>0)))))))) ]
+
+Pmax=? [ (F l=1)&(F l=2)&(F l=3)&(F l=4)&(F l=5)&(F l=6)&(F l = 7)]
+
+Pmax=? [l=0 U (l=1 U (l=2 U (l=3 U (l=4 U (l=5 U (l=6 U (l=7&b>0)))))))]
+
+Pmax=? [ (F l=1)&(F l=2)&(F l=3)&(F l=4)&(F l=5)&(F l=6)&(l=0 U (l=1 U (l=2 U (l=3 U (l=4 U (l=5 U (l=7&b>0))))))) ]
+
