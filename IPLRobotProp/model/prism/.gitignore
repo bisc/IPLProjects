@@ -4,3 +4,14 @@
 /prism-quant-test-f1.props
 /prism-quant-test-f2.props
 /find-models-test-f1.props
+/energy-prism-budget-7long-f0.props
+/tasks-timing-nospeed-noturns-f0.props
+/tasks-energy-nospeed-noturns-f0.props
+/tasks-energy-nospeed-noturns-f1.props
+/energy-prism-budget-5long-f0.props
+/map-prism-tasklib-f1.props
+/tasks-timing-speed-noturns-f0.props
+/tasks-timing-speed-noturns-f1.props
+/tasks-timing-prop-noconstr-f0.props
+/energy-prism-missions-5long-f0.props
+/energy-prism-missions-7long-f0.props
