@@ -1,0 +1,12 @@
+{"map": [
+         {"node-id": "l1", "coord" : {"x" : 14.474, "y" : 69}, "connected-to": ["l2" ] },
+         {"node-id": "l2", "coord" : {"x" : 19.82, "y" : 69}, "connected-to": ["l1", "l3", "l8" ] },
+         {"node-id": "l3", "coord" : {"x" : 42.5, "y" : 69}, "connected-to": ["l2", "l4" ] },
+         {"node-id": "l4", "coord" : {"x" : 52.22, "y" : 69}, "connected-to": ["l3", "ls", "l5" ] },
+         {"node-id": "l5", "coord" : {"x" : 52.22, "y" : 58.74}, "connected-to": ["l4", "l6" ] },
+         {"node-id": "l6", "coord" : {"x" : 42.5, "y" : 58.74}, "connected-to": ["l3", "l5", "l7" ] },
+         {"node-id": "l7", "coord" : {"x" : 19.82, "y" : 58.74}, "connected-to": ["l6", "l8" ] },
+         {"node-id": "l8", "coord" : {"x" : 19.83, "y" : 64.95}, "connected-to": ["l2", "l7" ] },  
+         {"node-id": "ls", "coord" : {"x" : 52.22, "y" : 74.4}, "connected-to": ["l4" ] }
+   ]
+}  
