@@ -1,7 +1,7 @@
 package tasks_simple_empty
 public
 	with Robot_Task_Types;
-	
+	 
 	system TaskLibrary
 		
 	end TaskLibrary;
@@ -12,6 +12,7 @@ public
 	
 	system implementation TaskLibrary.fullspeed
 		subcomponents
+			-- forward motion tasks
 			s_1_to_2: process Task;
 			s_2_to_1: process Task;
 			s_2_to_3: process Task;
@@ -33,6 +34,7 @@ public
 			s_4_to_s: process Task;
 			s_s_to_4: process Task;
 			
+			-- empty tasks (to model missions of varied lenght)
 			s_1_empty: process Task;
 			s_2_empty: process Task;
 			s_3_empty: process Task;
@@ -44,12 +46,13 @@ public
 			s_s_empty: process Task;
 			   
 		properties  
+			-- forward motion tasks
 			Robot_Task_Types::task_id => 0 applies to s_1_to_2;
 			Robot_Task_Types::duration => 7.9941 applies to s_1_to_2;
 			Robot_Task_Types::energy => 647 applies to s_1_to_2;
 			Robot_Task_Types::energy_sim => 640 applies to s_1_to_2;
 			Robot_Task_Types::task_type_enum => Forward applies to s_1_to_2;
-			Robot_Task_Types::task_type => 1 applies to s_1_to_2;  
+			Robot_Task_Types::task_type => 0 applies to s_1_to_2;  
 			Robot_Task_Types::start_loc => 0 applies to s_1_to_2;
 			Robot_Task_Types::end_loc => 1 applies to s_1_to_2;
 			
@@ -58,7 +61,7 @@ public
 			Robot_Task_Types::energy => 647 applies to s_2_to_1;
 			Robot_Task_Types::energy_sim => 650 applies to s_2_to_1;
 			Robot_Task_Types::task_type_enum => Forward applies to s_2_to_1;
-			Robot_Task_Types::task_type => 1 applies to s_2_to_1;  
+			Robot_Task_Types::task_type => 0 applies to s_2_to_1;  
 			Robot_Task_Types::start_loc => 1 applies to s_2_to_1;
 			Robot_Task_Types::end_loc => 0 applies to s_2_to_1;
 			
@@ -67,7 +70,7 @@ public
 			Robot_Task_Types::energy => 848 applies to s_2_to_3;
 			Robot_Task_Types::energy_sim => 840 applies to s_2_to_3;
 			Robot_Task_Types::task_type_enum => Forward applies to s_2_to_3;
-			Robot_Task_Types::task_type => 1 applies to s_2_to_3;  
+			Robot_Task_Types::task_type => 0 applies to s_2_to_3;  
 			Robot_Task_Types::start_loc => 1 applies to s_2_to_3;
 			Robot_Task_Types::end_loc => 2 applies to s_2_to_3;
 			
@@ -76,7 +79,7 @@ public
 			Robot_Task_Types::energy => 848 applies to s_3_to_2;
 			Robot_Task_Types::energy_sim => 850 applies to s_3_to_2;
 			Robot_Task_Types::task_type_enum => Forward applies to s_3_to_2;
-			Robot_Task_Types::task_type => 1 applies to s_3_to_2;  
+			Robot_Task_Types::task_type => 0 applies to s_3_to_2;  
 			Robot_Task_Types::start_loc => 2 applies to s_3_to_2;
 			Robot_Task_Types::end_loc => 1 applies to s_3_to_2;
 			
@@ -85,7 +88,7 @@ public
 			Robot_Task_Types::energy => 697 applies to s_3_to_4;
 			Robot_Task_Types::energy_sim => 700 applies to s_3_to_4;
 			Robot_Task_Types::task_type_enum => Forward applies to s_3_to_4;
-			Robot_Task_Types::task_type => 1 applies to s_3_to_4;  
+			Robot_Task_Types::task_type => 0 applies to s_3_to_4;  
 			Robot_Task_Types::start_loc => 2 applies to s_3_to_4;
 			Robot_Task_Types::end_loc => 3 applies to s_3_to_4;
 			
@@ -94,7 +97,7 @@ public
 			Robot_Task_Types::energy => 697 applies to s_4_to_3;
 			Robot_Task_Types::energy_sim => 695 applies to s_4_to_3;
 			Robot_Task_Types::task_type_enum => Forward applies to s_4_to_3;
-			Robot_Task_Types::task_type => 1 applies to s_4_to_3;  
+			Robot_Task_Types::task_type => 0 applies to s_4_to_3;  
 			Robot_Task_Types::start_loc => 3 applies to s_4_to_3;
 			Robot_Task_Types::end_loc => 2 applies to s_4_to_3;
 			
@@ -103,7 +106,7 @@ public
 			Robot_Task_Types::energy => 630 applies to s_2_to_8;
 			Robot_Task_Types::energy_sim => 640 applies to s_2_to_8;
 			Robot_Task_Types::task_type_enum => Forward applies to s_2_to_8;
-			Robot_Task_Types::task_type => 1 applies to s_2_to_8;  
+			Robot_Task_Types::task_type => 0 applies to s_2_to_8;  
 			Robot_Task_Types::start_loc => 1 applies to s_2_to_8;
 			Robot_Task_Types::end_loc => 7 applies to s_2_to_8;
 			
@@ -112,7 +115,7 @@ public
 			Robot_Task_Types::energy => 630 applies to s_8_to_2;
 			Robot_Task_Types::energy_sim => 626 applies to s_8_to_2;
 			Robot_Task_Types::task_type_enum => Forward applies to s_8_to_2;
-			Robot_Task_Types::task_type => 1 applies to s_8_to_2;  
+			Robot_Task_Types::task_type => 0 applies to s_8_to_2;  
 			Robot_Task_Types::start_loc => 7 applies to s_8_to_2;
 			Robot_Task_Types::end_loc => 1 applies to s_8_to_2;
 			
@@ -121,7 +124,7 @@ public
 			Robot_Task_Types::energy => 656 applies to s_8_to_7;
 			Robot_Task_Types::energy_sim => 650 applies to s_8_to_7;
 			Robot_Task_Types::task_type_enum => Forward applies to s_8_to_7;
-			Robot_Task_Types::task_type => 1 applies to s_8_to_7;  
+			Robot_Task_Types::task_type => 0 applies to s_8_to_7;  
 			Robot_Task_Types::start_loc => 7 applies to s_8_to_7;
 			Robot_Task_Types::end_loc => 6 applies to s_8_to_7;
 			
@@ -130,7 +133,7 @@ public
 			Robot_Task_Types::energy => 656 applies to s_7_to_8;
 			Robot_Task_Types::energy_sim => 655 applies to s_7_to_8;
 			Robot_Task_Types::task_type_enum => Forward applies to s_7_to_8;
-			Robot_Task_Types::task_type => 1 applies to s_7_to_8;  
+			Robot_Task_Types::task_type => 0 applies to s_7_to_8;  
 			Robot_Task_Types::start_loc => 6 applies to s_7_to_8;
 			Robot_Task_Types::end_loc => 7 applies to s_7_to_8;
 			
@@ -139,7 +142,7 @@ public
 			Robot_Task_Types::energy => 848 applies to s_7_to_6;
 			Robot_Task_Types::energy_sim => 850 applies to s_7_to_6;
 			Robot_Task_Types::task_type_enum => Forward applies to s_7_to_6;
-			Robot_Task_Types::task_type => 1 applies to s_7_to_6;  
+			Robot_Task_Types::task_type => 0 applies to s_7_to_6;  
 			Robot_Task_Types::start_loc => 6 applies to s_7_to_6;
 			Robot_Task_Types::end_loc => 5 applies to s_7_to_6;  
 			
@@ -148,7 +151,7 @@ public
 			Robot_Task_Types::energy => 848 applies to s_6_to_7;
 			Robot_Task_Types::energy_sim => 846 applies to s_6_to_7;
 			Robot_Task_Types::task_type_enum => Forward applies to s_6_to_7;
-			Robot_Task_Types::task_type => 1 applies to s_6_to_7;  
+			Robot_Task_Types::task_type => 0 applies to s_6_to_7;  
 			Robot_Task_Types::start_loc => 5 applies to s_6_to_7;
 			Robot_Task_Types::end_loc => 6 applies to s_6_to_7;
 			
@@ -157,7 +160,7 @@ public
 			Robot_Task_Types::energy => 703 applies to s_3_to_6;
 			Robot_Task_Types::energy_sim => 695 applies to s_3_to_6;
 			Robot_Task_Types::task_type_enum => Forward applies to s_3_to_6;
-			Robot_Task_Types::task_type => 1 applies to s_3_to_6;  
+			Robot_Task_Types::task_type => 0 applies to s_3_to_6;  
 			Robot_Task_Types::start_loc => 2 applies to s_3_to_6;
 			Robot_Task_Types::end_loc => 5 applies to s_3_to_6;
 			
@@ -166,7 +169,7 @@ public
 			Robot_Task_Types::energy => 618 applies to s_6_to_3;
 			Robot_Task_Types::energy_sim => 630 applies to s_6_to_3;
 			Robot_Task_Types::task_type_enum => Forward applies to s_6_to_3;
-			Robot_Task_Types::task_type => 1 applies to s_6_to_3;  
+			Robot_Task_Types::task_type => 0 applies to s_6_to_3;  
 			Robot_Task_Types::start_loc => 5 applies to s_6_to_3;
 			Robot_Task_Types::end_loc => 2 applies to s_6_to_3;
 			
@@ -175,7 +178,7 @@ public
 			Robot_Task_Types::energy => 703 applies to s_4_to_5;
 			Robot_Task_Types::energy_sim => 700 applies to s_4_to_5;
 			Robot_Task_Types::task_type_enum => Forward applies to s_4_to_5;
-			Robot_Task_Types::task_type => 1 applies to s_4_to_5;  
+			Robot_Task_Types::task_type => 0 applies to s_4_to_5;  
 			Robot_Task_Types::start_loc => 3 applies to s_4_to_5;
 			Robot_Task_Types::end_loc => 4 applies to s_4_to_5;
 			
@@ -184,7 +187,7 @@ public
 			Robot_Task_Types::energy => 703 applies to s_5_to_4;
 			Robot_Task_Types::energy_sim => 707 applies to s_5_to_4;
 			Robot_Task_Types::task_type_enum => Forward applies to s_5_to_4;
-			Robot_Task_Types::task_type => 1 applies to s_5_to_4;  
+			Robot_Task_Types::task_type => 0 applies to s_5_to_4;  
 			Robot_Task_Types::start_loc => 4 applies to s_5_to_4;
 			Robot_Task_Types::end_loc => 3 applies to s_5_to_4;
 			
@@ -193,7 +196,7 @@ public
 			Robot_Task_Types::energy => 697 applies to s_6_to_5;
 			Robot_Task_Types::energy_sim => 690 applies to s_6_to_5;
 			Robot_Task_Types::task_type_enum => Forward applies to s_6_to_5;
-			Robot_Task_Types::task_type => 1 applies to s_6_to_5;  
+			Robot_Task_Types::task_type => 0 applies to s_6_to_5;  
 			Robot_Task_Types::start_loc => 5 applies to s_6_to_5;
 			Robot_Task_Types::end_loc => 4 applies to s_6_to_5;
 			
@@ -202,7 +205,7 @@ public
 			Robot_Task_Types::energy => 697 applies to s_5_to_6;
 			Robot_Task_Types::energy_sim => 703 applies to s_5_to_6;
 			Robot_Task_Types::task_type_enum => Forward applies to s_5_to_6;
-			Robot_Task_Types::task_type => 1 applies to s_5_to_6;  
+			Robot_Task_Types::task_type => 0 applies to s_5_to_6;  
 			Robot_Task_Types::start_loc => 4 applies to s_5_to_6;
 			Robot_Task_Types::end_loc => 5 applies to s_5_to_6;
 			
@@ -211,7 +214,7 @@ public
 			Robot_Task_Types::energy => 646 applies to s_4_to_s;
 			Robot_Task_Types::energy_sim => 640 applies to s_4_to_s;
 			Robot_Task_Types::task_type_enum => Forward applies to s_4_to_s;
-			Robot_Task_Types::task_type => 1 applies to s_4_to_s;  
+			Robot_Task_Types::task_type => 0 applies to s_4_to_s;  
 			Robot_Task_Types::start_loc => 3 applies to s_4_to_s;
 			Robot_Task_Types::end_loc => 8 applies to s_4_to_s;
 			
@@ -220,16 +223,17 @@ public
 			Robot_Task_Types::energy => 646 applies to s_s_to_4;
 			Robot_Task_Types::energy_sim => 660 applies to s_s_to_4;
 			Robot_Task_Types::task_type_enum => Forward applies to s_s_to_4;
-			Robot_Task_Types::task_type => 1 applies to s_s_to_4;  
+			Robot_Task_Types::task_type => 0 applies to s_s_to_4;  
 			Robot_Task_Types::start_loc => 8 applies to s_s_to_4;
 			Robot_Task_Types::end_loc => 3 applies to s_s_to_4;
 			
+			-- empty tasks
 			Robot_Task_Types::task_id => 20 applies to s_1_empty;
 			Robot_Task_Types::duration => 0.0 applies to s_1_empty;
 			Robot_Task_Types::energy => 0 applies to s_1_empty;
 			Robot_Task_Types::energy_sim => 0 applies to s_1_empty;
 			Robot_Task_Types::task_type_enum => Forward applies to s_1_empty;
-			Robot_Task_Types::task_type => 1 applies to s_1_empty;  
+			Robot_Task_Types::task_type => 0 applies to s_1_empty;  
 			Robot_Task_Types::start_loc => 0 applies to s_1_empty;
 			Robot_Task_Types::end_loc => 0 applies to s_1_empty;
 			
@@ -238,7 +242,7 @@ public
 			Robot_Task_Types::energy => 0 applies to s_2_empty;
 			Robot_Task_Types::energy_sim => 0 applies to s_2_empty;
 			Robot_Task_Types::task_type_enum => Forward applies to s_2_empty;
-			Robot_Task_Types::task_type => 1 applies to s_2_empty;  
+			Robot_Task_Types::task_type => 0 applies to s_2_empty;  
 			Robot_Task_Types::start_loc => 1 applies to s_2_empty;
 			Robot_Task_Types::end_loc => 1 applies to s_2_empty;
 			
@@ -247,7 +251,7 @@ public
 			Robot_Task_Types::energy => 0 applies to s_3_empty;
 			Robot_Task_Types::energy_sim => 0 applies to s_3_empty;
 			Robot_Task_Types::task_type_enum => Forward applies to s_3_empty;
-			Robot_Task_Types::task_type => 1 applies to s_3_empty;  
+			Robot_Task_Types::task_type => 0 applies to s_3_empty;  
 			Robot_Task_Types::start_loc => 2 applies to s_3_empty;
 			Robot_Task_Types::end_loc => 2 applies to s_3_empty;
 			
@@ -256,7 +260,7 @@ public
 			Robot_Task_Types::energy => 0 applies to s_4_empty;
 			Robot_Task_Types::energy_sim => 0 applies to s_4_empty;
 			Robot_Task_Types::task_type_enum => Forward applies to s_4_empty;
-			Robot_Task_Types::task_type => 1 applies to s_4_empty;  
+			Robot_Task_Types::task_type => 0 applies to s_4_empty;  
 			Robot_Task_Types::start_loc => 3 applies to s_4_empty;
 			Robot_Task_Types::end_loc => 3 applies to s_4_empty;
 			
@@ -265,7 +269,7 @@ public
 			Robot_Task_Types::energy => 0 applies to s_5_empty;
 			Robot_Task_Types::energy_sim => 0 applies to s_5_empty;
 			Robot_Task_Types::task_type_enum => Forward applies to s_5_empty;
-			Robot_Task_Types::task_type => 1 applies to s_5_empty;  
+			Robot_Task_Types::task_type => 0 applies to s_5_empty;  
 			Robot_Task_Types::start_loc => 4 applies to s_5_empty;
 			Robot_Task_Types::end_loc => 4 applies to s_5_empty;
 			
@@ -274,7 +278,7 @@ public
 			Robot_Task_Types::energy => 0 applies to s_6_empty;
 			Robot_Task_Types::energy_sim => 0 applies to s_6_empty;
 			Robot_Task_Types::task_type_enum => Forward applies to s_6_empty;
-			Robot_Task_Types::task_type => 1 applies to s_6_empty;  
+			Robot_Task_Types::task_type => 0 applies to s_6_empty;  
 			Robot_Task_Types::start_loc => 5 applies to s_6_empty;
 			Robot_Task_Types::end_loc => 5 applies to s_6_empty;
 			
@@ -283,7 +287,7 @@ public
 			Robot_Task_Types::energy => 0 applies to s_7_empty;
 			Robot_Task_Types::energy_sim => 0 applies to s_7_empty;
 			Robot_Task_Types::task_type_enum => Forward applies to s_7_empty;
-			Robot_Task_Types::task_type => 1 applies to s_7_empty;  
+			Robot_Task_Types::task_type => 0 applies to s_7_empty;  
 			Robot_Task_Types::start_loc => 6 applies to s_7_empty;
 			Robot_Task_Types::end_loc => 6 applies to s_7_empty;
 			
@@ -292,7 +296,7 @@ public
 			Robot_Task_Types::energy => 0 applies to s_8_empty;
 			Robot_Task_Types::energy_sim => 0 applies to s_8_empty;
 			Robot_Task_Types::task_type_enum => Forward applies to s_8_empty;
-			Robot_Task_Types::task_type => 1 applies to s_8_empty;  
+			Robot_Task_Types::task_type => 0 applies to s_8_empty;  
 			Robot_Task_Types::start_loc => 7 applies to s_8_empty;
 			Robot_Task_Types::end_loc => 7 applies to s_8_empty;
 			
@@ -301,7 +305,7 @@ public
 			Robot_Task_Types::energy => 0 applies to s_s_empty;
 			Robot_Task_Types::energy_sim => 0 applies to s_s_empty;
 			Robot_Task_Types::task_type_enum => Forward applies to s_s_empty;
-			Robot_Task_Types::task_type => 1 applies to s_s_empty;  
+			Robot_Task_Types::task_type => 0 applies to s_s_empty;  
 			Robot_Task_Types::start_loc => 8 applies to s_s_empty;
 			Robot_Task_Types::end_loc => 8 applies to s_s_empty;
 			
