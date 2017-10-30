@@ -634,4 +634,4 @@ Robot_Task_Types::task_type => 0 applies to e_l8;
 
 
 end TaskLibrary.fullspeed;
-end tasks_simple;
+end tasks_view;

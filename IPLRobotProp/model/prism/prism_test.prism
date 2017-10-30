@@ -1,5 +1,7 @@
 // Generated with BRASS Robot Map PRISM Renderer
 
+// Can also be referred to as prism_noturns_nocharge_nospeed_map1
+
 mdp
 
 const ET=0;
@@ -27,6 +29,7 @@ const l5=4;
 const l6=5;
 const l7=6;
 const l8=7;
+
 
 
 // Environment process
@@ -57,7 +60,7 @@ formula b_upd_l8_l7= s=HALF_SPEED? max(0,b-390) : max(0,b-656);
 formula b_upd_l7_l8= s=HALF_SPEED? max(0,b-390) : max(0,b-656);
 formula b_upd_l7_l6= s=HALF_SPEED? max(0,b-661) : max(0,b-848);
 formula b_upd_l6_l7= s=HALF_SPEED? max(0,b-661) : max(0,b-848);
-formula b_upd_l3_l6= s=HALF_SPEED? max(0,b-457) : max(0,b-703);
+formula b_upd_l3_l6= s=HALF_SPEED? max(0,b-457) : max(0,b-703); // error, should be the line below
 formula b_upd_l6_l3= s=HALF_SPEED? max(0,b-337) : max(0,b-618);
 formula b_upd_l4_l5= s=HALF_SPEED? max(0,b-457) : max(0,b-703);
 formula b_upd_l5_l4= s=HALF_SPEED? max(0,b-457) : max(0,b-703);
@@ -66,19 +69,17 @@ formula b_upd_l5_l6= s=HALF_SPEED? max(0,b-448) : max(0,b-697);
 formula b_upd_l4_ls= s=HALF_SPEED? max(0,b-377) : max(0,b-646);
 formula b_upd_ls_l4= s=HALF_SPEED? max(0,b-377) : max(0,b-646);
 
+//const s = 0;
+const double c = 0.5;
+
 module bot_module
-b:[0..32560] init INITIAL_BATTERY;
+b:[0..100000] init INITIAL_BATTERY; // was 32560
 l:[0..9] init INITIAL_LOCATION;
-s:[HALF_SPEED..FULL_SPEED] init HALF_SPEED; //FULL_SPEED; // was init half speed -> needs time to change
+s:[HALF_SPEED..FULL_SPEED] init FULL_SPEED;
 robot_done:bool init false;
 	[] true & (turn=RT) & (!stop) & (robot_done) -> (robot_done'=false) & (turn'=ET);
 
-
-	 // * Speed settings
-	 [t_set_half_speed] (s!=HALF_SPEED) & (!stop) & (!robot_done) & (turn=RT) -> (s'=HALF_SPEED) & (robot_done'=true);
-	 [t_set_full_speed] (s!=FULL_SPEED) & (!stop) & (!robot_done) & (turn=RT) -> (s'=FULL_SPEED) & (robot_done'=true);
-
-
+	 //[l1_to_l2] (l=l1) & (!stop) & (turn=RT) & (!robot_done) -> c: (l'=l2)  & (b'=b_upd_l1_l2) & (robot_done'=true) + 1-c: (l'=l1)  & (b'=b_upd_l1_l2) & (robot_done'=true);
 	 [l1_to_l2] (l=l1) & (!stop) & (turn=RT) & (!robot_done) -> (l'=l2)  & (b'=b_upd_l1_l2) & (robot_done'=true);
 	 [l2_to_l1] (l=l2) & (!stop) & (turn=RT) & (!robot_done) -> (l'=l1)  & (b'=b_upd_l2_l1) & (robot_done'=true);
 	 [l2_to_l3] (l=l2) & (!stop) & (turn=RT) & (!robot_done) -> (l'=l3)  & (b'=b_upd_l2_l3) & (robot_done'=true);
@@ -104,8 +105,6 @@ endmodule
 
 
 rewards "time"
-	[t_set_half_speed] true : 1;
-	[t_set_full_speed] true : 1;
 	[l1_to_l2] true :s=HALF_SPEED? 15.5314 : 7.9941;
 	[l2_to_l1] true :s=HALF_SPEED? 15.5314 : 7.9941;
 	[l2_to_l3] true :s=HALF_SPEED? 64.4914 : 33.1941;
@@ -118,7 +117,7 @@ rewards "time"
 	[l7_to_l8] true :s=HALF_SPEED? 17.7429 : 9.1324;
 	[l7_to_l6] true :s=HALF_SPEED? 64.4914 : 33.1941;
 	[l6_to_l7] true :s=HALF_SPEED? 64.4914 : 33.1941;
-	[l3_to_l6] true :s=HALF_SPEED? 29.3143 : 15.0882;
+	[l3_to_l6] true :s=HALF_SPEED? 29.3143 : 15.0882; // error! should be the line below
 	[l6_to_l3] true :s=HALF_SPEED? 8.5714 : 4.4118;
 	[l4_to_l5] true :s=HALF_SPEED? 29.3143 : 15.0882;
 	[l5_to_l4] true :s=HALF_SPEED? 29.3143 : 15.0882;

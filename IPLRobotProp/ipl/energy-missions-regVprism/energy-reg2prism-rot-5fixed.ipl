@@ -7,39 +7,44 @@ use view TaskLibrary.fullspeed as tasklib;
 use view Map.i as mapp;  
 set locs : Location; 
 set tasks: Task;
+   
+bfun distinct(int, int, int, int, int, int) -> bool;
+bfun min_int(int, int) -> int;
 
-bfun distinct(int, int, int, int, int, int) -> bool;    
-
+use model prism_noturns_nocharge_speed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 stvar l: int;
 stvar s: int;
-stvar b: int;
+stvar b: int; 
 
-use model prism_speed_noturns_nocharge(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 
 // assumptions: 
-// - forward tasks have required_heading = resulting_heading
+// - forward tasks have start_head = end_head
 // - rotation tasks have start_loc = end_loc 
-
+ 
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
 forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
-// forward tasks
-t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t1::task_type = 0 & t5::task_type = 0 &
-// rotation tasks
-r12::task_type = 1 & r23::task_type = 1 & r34::task_type = 1 & r45::task_type = 1 &
+// forward tasks; rotation tasks with possibility of emptiness are defined below
+	t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t1::task_type = 0 & t5::task_type = 0 &
 // cohesive path (forward) 
 	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
 	t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc &
 // no circularities
 	distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) &
-// rotations are on the path  
-	r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & r34::start_loc = t4::start_loc & r45::start_loc = t5::start_loc &
-// rotation headings match forward headings (pre and post) 
-	t1::resulting_heading = r12::required_heading & r12::resulting_heading = t2::required_heading & 
-	t2::resulting_heading = r23::required_heading  & r23::resulting_heading = t3::required_heading &
-	t3::resulting_heading = r34::required_heading  & r34::resulting_heading = t4::required_heading &
-	t4::resulting_heading = r45::required_heading  & r45::resulting_heading = t5::required_heading 
-	->    
-	// robot can find its way to the finish  
+	min_int(3, 5) = 3 &   
+// rotations are on the path    
+	//r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & r34::start_loc = t4::start_loc & r45::start_loc = t5::start_loc &
+// rotation tasks connect headings of adjacent forwards (pre and post), 
+// 		unless directions already match and rotation tasks are empty 
+	( r12::task_type = 1 & t1::end_head = r12::start_head & r12::end_head = t2::start_head || 
+		r12::task_type = 2 & t1::end_head = t2::start_head ) & 
+	( r23::task_type = 1 & t2::end_head = r23::start_head & r23::end_head = t3::start_head || 
+		r23::task_type = 2 & t2::end_head = t3::start_head ) &  
+	( r34::task_type = 1 & t3::end_head = r34::start_head & r34::end_head = t4::start_head || 
+		r34::task_type = 2 & t3::end_head = t4::start_head) &
+	( r45::task_type = 1 & t4::end_head = r45::start_head & r45::end_head = t5::start_head || 
+		r45::task_type = 2 & t4::end_head = t5::start_head)
+	->           
+	// robot can find its way to the finish   
 	P max=? [  
 		//(G s = 1) &  
 		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
@@ -47,25 +52,17 @@ r12::task_type = 1 & r23::task_type = 1 & r34::task_type = 1 & r45::task_type = 
 		))))) &
 		(F l = t2::start_loc) &
 		(F l = t3::start_loc) &
-		(F l = t4::start_loc) & 
+		(F l = t4::start_loc) &  
 		(F l = t5::start_loc) 
-	]{|t1::start_loc, t5::end_loc, t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
-		r12::energy + r23::energy + r34::energy + r45::energy + 1|} = 1;
+	]{|t1::start_loc, t5::end_loc, 
+		min_int(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
+			r12::energy + r23::energy + r34::energy + r45::energy + 1, 32560)|} = 1;
 	
-	// very poor performance of automaton building on this one
-	/*P max=? [  
-		(G s = 1) & 
-		((l = t1::start_loc & (F l = t2::start_loc)) U 
-			(l = t2::start_loc & (F l = t3::start_loc) U 
-				(l = t3::start_loc & (F l = t4::start_loc) U 
-					(l = t4::start_loc & (F l = t5::start_loc) U 
-						(l = t5::start_loc U 
-			( l = t5::end_loc & b > 0)
-		))))) 
-	]*/
-	// no circ old:
-			/*t1::start_loc != t3::start_loc & t3::start_loc != t5::start_loc & t1::start_loc != t5::start_loc & 
-		t2::start_loc != t4::start_loc & 
-		t3::end_loc != t5::end_loc & 
-		t1::start_loc != t5::start_loc & 
-		t1::start_loc != t5::end_loc &*/
+// a quick test of existence: 	
+/*exists t1:tasks | exists t2:tasks | exists r: tasks | 
+	t1::task_type = 0 & t2::task_type = 0 &
+	t1::end_loc = t2::start_loc & distinct(t1::start_loc, t2::end_loc) & 
+	(r::task_type = 1 & t1::end_head = r::start_head & r::end_head = t2::start_head || 
+		r::task_type = 3 & t1::end_head = t2::start_head
+	);*/
+ 

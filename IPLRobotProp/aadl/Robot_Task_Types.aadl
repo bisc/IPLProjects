@@ -10,10 +10,10 @@ property set Robot_Task_Types is
 		applies to (process);
 		
 	task_type_enum: enumeration -- duplication of task_type, just for labeling 
-        (Forward, Rotate) 
+        (Forward, Rotate, Empty) 
       	applies to (process); 		
 	 
-	task_type: aadlinteger --type of motion task; 0 = forward, 1 = rotate
+	task_type: aadlinteger --type of motion task; 0 = forward, 1 = rotate, 2 = empty
         applies to (process); 		
         
     start_loc: aadlinteger -- location label
@@ -22,10 +22,10 @@ property set Robot_Task_Types is
     end_loc: aadlinteger -- location label
     	applies to (process);
     	
-    start_head: aadlinteger -- heading label
+    start_head: aadlinteger -- heading label, which heading the robot should have before it can execute this motion
     	applies to (process); 
     
-    end_head: aadlinteger -- heading label
+    end_head: aadlinteger -- heading label, which heading the robot will have after it executes this motion
     	applies to (process);
     
     energy: aadlinteger -- energy predicted for the tasks, written in mwh*s
@@ -34,10 +34,4 @@ property set Robot_Task_Types is
     energy_sim: aadlinteger -- energy simulated for the tasks, written in mwh*s
     	applies to (process); 
     	
-    required_heading: aadlinteger -- which heading the robot should have before it can execute this motion
-    	applies to (process);
-    	
-    resulting_heading: aadlinteger -- which heading the robot will have after it executes this motion
-    	applies to (process);
-		
 end Robot_Task_Types;

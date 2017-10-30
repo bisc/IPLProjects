@@ -2,7 +2,7 @@ import Robot_Task_Types.*;
 import tasks_simple.*;  
    
 use view TaskLibrary.fullspeed as lib; 
-use model prism_probs(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
+use model prism_test(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
     
 stvar l: bool;         
          
