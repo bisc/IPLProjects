@@ -1,5 +1,5 @@
 import Robot_Task_Types.*;
-import tasks_simple.*;
+import tasks_view_simple.*;
 import Map_Types.*;
 import map.*;    
    
@@ -9,7 +9,6 @@ set locs : Location;
 set tasks: Task;
 
 bfun distinct(int, int, int, int, int, int, int, int) -> bool;    
-
 
 stvar l: int;
 stvar s: int;

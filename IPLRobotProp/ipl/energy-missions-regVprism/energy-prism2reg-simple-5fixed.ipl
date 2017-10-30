@@ -1,5 +1,5 @@
 import Robot_Task_Types.*;
-import tasks_simple.*;
+import tasks_view_simple.*;
 import Map_Types.*;
 import map.*;    
    
