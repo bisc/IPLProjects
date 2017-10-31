@@ -572,63 +572,63 @@ Robot_Task_Types::start_loc => 0 applies to e_l1;
 Robot_Task_Types::end_loc => 0 applies to e_l1;
 Robot_Task_Types::energy => 0 applies to e_l1;
 Robot_Task_Types::task_type_enum => Empty applies to e_l1;
-Robot_Task_Types::task_type => 3 applies to e_l1;
+Robot_Task_Types::task_type => 2 applies to e_l1;
 
 Robot_Task_Types::task_id => 54 applies to e_l2;
 Robot_Task_Types::start_loc => 1 applies to e_l2;
 Robot_Task_Types::end_loc => 1 applies to e_l2;
 Robot_Task_Types::energy => 0 applies to e_l2;
 Robot_Task_Types::task_type_enum => Empty applies to e_l2;
-Robot_Task_Types::task_type => 3 applies to e_l2;
+Robot_Task_Types::task_type => 2 applies to e_l2;
 
 Robot_Task_Types::task_id => 55 applies to e_l3;
 Robot_Task_Types::start_loc => 2 applies to e_l3;
 Robot_Task_Types::end_loc => 2 applies to e_l3;
 Robot_Task_Types::energy => 0 applies to e_l3;
 Robot_Task_Types::task_type_enum => Empty applies to e_l3;
-Robot_Task_Types::task_type => 3 applies to e_l3;
+Robot_Task_Types::task_type => 2 applies to e_l3;
 
 Robot_Task_Types::task_id => 56 applies to e_ls;
 Robot_Task_Types::start_loc => 8 applies to e_ls;
 Robot_Task_Types::end_loc => 8 applies to e_ls;
 Robot_Task_Types::energy => 0 applies to e_ls;
 Robot_Task_Types::task_type_enum => Empty applies to e_ls;
-Robot_Task_Types::task_type => 3 applies to e_ls;
+Robot_Task_Types::task_type => 2 applies to e_ls;
 
 Robot_Task_Types::task_id => 57 applies to e_l4;
 Robot_Task_Types::start_loc => 3 applies to e_l4;
 Robot_Task_Types::end_loc => 3 applies to e_l4;
 Robot_Task_Types::energy => 0 applies to e_l4;
 Robot_Task_Types::task_type_enum => Empty applies to e_l4;
-Robot_Task_Types::task_type => 3 applies to e_l4;
+Robot_Task_Types::task_type => 2 applies to e_l4;
 
 Robot_Task_Types::task_id => 58 applies to e_l5;
 Robot_Task_Types::start_loc => 4 applies to e_l5;
 Robot_Task_Types::end_loc => 4 applies to e_l5;
 Robot_Task_Types::energy => 0 applies to e_l5;
 Robot_Task_Types::task_type_enum => Empty applies to e_l5;
-Robot_Task_Types::task_type => 3 applies to e_l5;
+Robot_Task_Types::task_type => 2 applies to e_l5;
 
 Robot_Task_Types::task_id => 59 applies to e_l6;
 Robot_Task_Types::start_loc => 5 applies to e_l6;
 Robot_Task_Types::end_loc => 5 applies to e_l6;
 Robot_Task_Types::energy => 0 applies to e_l6;
 Robot_Task_Types::task_type_enum => Empty applies to e_l6;
-Robot_Task_Types::task_type => 3 applies to e_l6;
+Robot_Task_Types::task_type => 2 applies to e_l6;
 
 Robot_Task_Types::task_id => 60 applies to e_l7;
 Robot_Task_Types::start_loc => 6 applies to e_l7;
 Robot_Task_Types::end_loc => 6 applies to e_l7;
 Robot_Task_Types::energy => 0 applies to e_l7;
 Robot_Task_Types::task_type_enum => Empty applies to e_l7;
-Robot_Task_Types::task_type => 3 applies to e_l7;
+Robot_Task_Types::task_type => 2 applies to e_l7;
 
 Robot_Task_Types::task_id => 61 applies to e_l8;
 Robot_Task_Types::start_loc => 7 applies to e_l8;
 Robot_Task_Types::end_loc => 7 applies to e_l8;
 Robot_Task_Types::energy => 0 applies to e_l8;
 Robot_Task_Types::task_type_enum => Empty applies to e_l8;
-Robot_Task_Types::task_type => 3 applies to e_l8;
+Robot_Task_Types::task_type => 2 applies to e_l8;
 
 
 end TaskLibrary.fullspeed;

@@ -9,15 +9,16 @@ set locs : Location;
 set tasks: Task;
    
 bfun distinct(int, int, int, int, int, int) -> bool;
-bfun min_int(int, int) -> int;
+bfun min_int(int, int) -> int; 
+ 
+//use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 
-use model prism_noturns_nocharge_speed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 stvar l: int;
 stvar s: int;
 stvar b: int; 
 
-
-// assumptions: 
+// Expected: 31 models
+// assumptions:  
 // - forward tasks have start_head = end_head
 // - rotation tasks have start_loc = end_loc 
  
@@ -32,7 +33,8 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
 	distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) &
 	min_int(3, 5) = 3 &   
 // rotations are on the path    
-	//r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & r34::start_loc = t4::start_loc & r45::start_loc = t5::start_loc &
+	r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & 
+		r34::start_loc = t4::start_loc & r45::start_loc = t5::start_loc &
 // rotation tasks connect headings of adjacent forwards (pre and post), 
 // 		unless directions already match and rotation tasks are empty 
 	( r12::task_type = 1 & t1::end_head = r12::start_head & r12::end_head = t2::start_head || 

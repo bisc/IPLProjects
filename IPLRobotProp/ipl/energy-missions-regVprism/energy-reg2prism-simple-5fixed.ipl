@@ -13,8 +13,10 @@ bfun distinct(int, int, int, int, int, int) -> bool;
 stvar l: int;
 stvar s: int;
 stvar b: int;
+ 
+//use model prism_noturns_nocharge_speed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 
-use model prism_noturns_nocharge_speed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+// Expected: 31 models
 
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
 // cohesive path: 
