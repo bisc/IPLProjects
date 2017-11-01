@@ -1,6 +1,6 @@
 -- Created manually
 
-package tasks_simple_empty
+package tasks_manual_simple_empty
 public
 	with Robot_Task_Types;
 	 
