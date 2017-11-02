@@ -1,29 +1,25 @@
 import Robot_Task_Types.*;
-import Map_Types.*;
-import map.*;    
+import tasks_view_map1_wempty.*;
+// this spec is NOT valid with this view (because the view doesn't use task type 2 for empties): 
+//import tasks_manual_simple_empty.*;
     
-// TODO update this map with new style of empty tasks
-import tasks_manual_simple_empty.*;
 use view TaskLibrary.fullspeed as tasklib;
-use view Map.i as mapp;  
-
-set locs : Location; 
 set tasks: Task;
 
 bfun distinct(int, int, int, int, int, int) -> bool;    
-bfun abs (int) -> int;     
+bfun abs (int) -> int; 
 
+//use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 stvar l: int;
 stvar s: int; 
 stvar b: int;
  
-use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
-
 // assumption: monotonicity of missions, so no point in checking budgets too small or too big
 // assumption: empty missions have their start = end
 
-// Expected 529 models (why not divisible by 3?)
+// Expected 546 models 
 
+forall err_prism : {2} | forall err_cons: {1} | 
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
 // cohesive path: 
 	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
@@ -33,34 +29,43 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 			// either all tasks are different 
 			(   
 				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) &
-				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc & 
-				t4::start_loc != t4::end_loc & t5::start_loc != t5::end_loc
+				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & t5::task_type = 0
+//				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc & 
+//				t4::start_loc != t4::end_loc & t5::start_loc != t5::end_loc
 			)  || 
 			// or the last one is empty
 			(
 				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) & 
-				t5::start_loc = t5::end_loc &
-				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc & 
-				t4::start_loc != t4::end_loc
+				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & 
+				t5::task_type = 2
+//				t5::start_loc = t5::end_loc &
+//				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc & 
+//				t4::start_loc != t4::end_loc
 			) || 
 			// or the last two are empty
 			( 
 				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc) & 
-				t4::start_loc = t4::end_loc & t5::start_loc = t5::end_loc & 
-				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc
+				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & 
+				t4::task_type = 2 & t5::task_type = 2
+//				t4::start_loc = t4::end_loc & t5::start_loc = t5::end_loc & 
+//				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc
 			) ||
 			// or the last three are empty
 			( 
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc) & 
-				t3::start_loc = t3::end_loc & t4::start_loc = t4::end_loc & t5::start_loc = t5::end_loc &
-				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc
+				distinct (t1::start_loc, t2::start_loc, t3::start_loc) &
+				t1::task_type = 0 & t2::task_type = 0 & 
+				t3::task_type = 2 &	t4::task_type = 2 & t5::task_type = 2
+//				t3::start_loc = t3::end_loc & t4::start_loc = t4::end_loc & t5::start_loc = t5::end_loc &
+//				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc
 			) ||
 			// or the last four are empty 
 			( 
 				distinct(t1::start_loc, t2::start_loc) & 
-				t2::start_loc = t2::end_loc & t3::start_loc = t3::end_loc & 
-				t4::start_loc = t4::end_loc & t5::start_loc = t5::end_loc & 
-				t1::start_loc != t1::end_loc
+				t1::task_type = 0 & 
+				t2::task_type = 2 &	t3::task_type = 2 &	t4::task_type = 2 & t5::task_type = 2 
+//				t2::start_loc = t2::end_loc & t3::start_loc = t3::end_loc & 
+//				t4::start_loc = t4::end_loc & t5::start_loc = t5::end_loc & 
+//				t1::start_loc != t1::end_loc
 			)
 	// exists such a minimal budget 
 	) ->  (exists ebmin: int |  
@@ -73,7 +78,7 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 				// in order
 				((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
 					( l = t5::end_loc & b > 0)))))) 
-			]{|t1::start_loc, t5::end_loc, ebmin - 2 - 1 |} = 0) &
+			]{|t1::start_loc, t5::end_loc, ebmin - err_prism - 1 |} = 0) &
 			// minimal budget plus prism error (=2 here) plus 1 should always succeed
 			(P max=? [  
 				//(G s = 1) & 
@@ -82,8 +87,8 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 				// in order
 				((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
 					( l = t5::end_loc & b > 0)))))) 
-			]{|t1::start_loc, t5::end_loc, ebmin + 2 + 1 |} = 1) &
+			]{|t1::start_loc, t5::end_loc, ebmin + err_prism + 1 |} = 1) &
 			// min budget & regression are within consistency tolerance (= 1 here) 
-			abs(ebmin - (t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1)) <= 1
+			abs(ebmin - (t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1)) <= err_cons
 		));
 		

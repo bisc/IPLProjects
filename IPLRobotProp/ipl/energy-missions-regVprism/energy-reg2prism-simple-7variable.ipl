@@ -1,21 +1,19 @@
 import Robot_Task_Types.*;
-import tasks_view_empty.*;
-import Map_Types.*;
-import map.*;     
+import tasks_view_map1_wempty.*;
    
 use view TaskLibrary.fullspeed as tasklib;
-use view Map.i as mapp;  
-set locs : Location; 
 set tasks: Task;
-
+// TODO update prop with new style of empty tasks
 bfun distinct(int, int, int, int, int, int, int, int) -> bool;    
 
+//use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+// uncomment speed below if using this model: 
+//use model prism_noturns_nocharge_speed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 stvar l: int;
 stvar s: int;
 stvar b: int; 
  
-//use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
-//use model prism_noturns_nocharge_speed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+// Expected 232 models
 
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | forall t6:tasks | forall t7: tasks |
 // cohesive path: task n-1 connects to task n
@@ -71,12 +69,12 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 	P max=? [   
 		//(G s = 1) & 
 		// robot visits each location 
-		/*(F l = t2::start_loc) &
+		(F l = t2::start_loc) &
 		(F l = t3::start_loc) &
 		(F l = t4::start_loc) & 
 		(F l = t5::start_loc) &
 		(F l = t6::start_loc) &
-		(F l = t7::start_loc) &               otherwise this takes too long when accidentally triggered*/    
+		(F l = t7::start_loc) &               // otherwise this takes too long when accidentally triggered    
 		// in order
 		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U 
 			(l = t4::start_loc U (l = t5::start_loc U (l = t6::start_loc U ( l = t7::start_loc U

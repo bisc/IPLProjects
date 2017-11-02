@@ -1,18 +1,14 @@
 import Robot_Task_Types.*;
-import tasks_view_empty_rot.*;
-import Map_Types.*;
-import map.*;
-   
+
+import tasks_view_map1_wempty_rot.*;
 use view TaskLibrary.fullspeed as tasklib;
-use view Map.i as mapp;  
-set locs : Location; 
 set tasks: Task;
    
 bfun distinct(int, int, int, int, int, int) -> bool;
 bfun min_int(int, int) -> int; 
- 
-//use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 
+// this map not useful: 
+//use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 stvar l: int;
 stvar s: int;
 stvar b: int; 

@@ -313,4 +313,4 @@ public
 			
 	end TaskLibrary.fullspeed;
 	
-end tasks_simple_empty;
+end tasks_manual_simple_empty;

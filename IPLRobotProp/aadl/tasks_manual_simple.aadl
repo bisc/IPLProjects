@@ -1,4 +1,6 @@
 -- Created manually 
+-- Somehow takes slightly less energy than the views from map 1
+-- maybe generated for map 2? 
 
 package tasks_manual_simple
 public
@@ -35,7 +37,7 @@ public
 			s_5_to_6: process Task;
 			s_4_to_s: process Task;
 			s_s_to_4: process Task;
-			   
+			    
 		properties  
 			-- forward motion tasks 
 			Robot_Task_Types::task_id => 0 applies to s_1_to_2;
@@ -97,7 +99,7 @@ public
 			Robot_Task_Types::energy => 630 applies to s_2_to_8;
 			Robot_Task_Types::energy_sim => 640 applies to s_2_to_8;
 			Robot_Task_Types::task_type_enum => Forward applies to s_2_to_8;
-			Robot_Task_Types::task_type => 0 applies to s_2_to_8;  
+			Robot_Task_Types::task_type => 0 applies to s_2_to_8;
 			Robot_Task_Types::start_loc => 1 applies to s_2_to_8;
 			Robot_Task_Types::end_loc => 7 applies to s_2_to_8;
 			
@@ -220,4 +222,4 @@ public
 			
 	end TaskLibrary.fullspeed;
 	
-end tasks_simple;
+end tasks_manual_simple;

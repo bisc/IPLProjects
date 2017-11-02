@@ -8,7 +8,7 @@ stvar l: bool;
 stvar b: int; 
          
 set tasks : Task;                                               
- 
+  
 // giving it some extra energy makes it succeed (expected: valid)
 forall t1 : tasks | forall t2: tasks |     
 	(t1::task_type = 1 & t2::task_type = 1 & // forward motion

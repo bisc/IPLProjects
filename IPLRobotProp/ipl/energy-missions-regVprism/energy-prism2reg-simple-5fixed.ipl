@@ -1,20 +1,21 @@
 import Robot_Task_Types.*;
-import tasks_view_simple.*;
-import Map_Types.*;
-import map.*;    
-   
+import tasks_view_map1_simple.*;   
+// this spec is also valid with:
+//import tasks_manual_simple.*;
+
 use view TaskLibrary.fullspeed as tasklib;
-use view Map.i as mapp;  
-set locs : Location; 
 set tasks: Task;
 
 bfun distinct(int, int, int, int, int, int) -> bool;    
  
+//use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 stvar l: int;
 stvar s: int;
 stvar b: int;
- 
-//use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+
+// assumption: monotonicity of mission success in terms of energy budget (so no point in checking smaller budgets) 
+
+// Expected 80 models
 
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
 // cohesive path: 
@@ -26,8 +27,8 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 	->  (forall eb: int |  
 	// robot can find its way to the finish on this budget
 		(   // constraint: no more energy then the max budget (is weaker than implication so doesn't matter)
+			// actually <= is not useful, so superceded by the one below
 			//(eb <= t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1 +1) &
-			// assumption: monotonicity of missions, so no point in checking smaller budgets 
 			(eb >= (t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1)  - 2) & 
 			P max=? [  
 				// no shortcuts
