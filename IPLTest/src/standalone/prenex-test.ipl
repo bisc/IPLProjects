@@ -5,7 +5,7 @@ stvar goal: bool;
 // valid, need prenexing  
 (1 + 2 = 3 ) & (forall x : {1, 2} |      
 	R{"time"}min=? [F (goal)]{| 0, x, 5000 |} > 5) ;
- 
+  
 ! (exists x : {1, 2} |      
 	R{"time"}min=? [F (goal)]{| 0, x, 5000 |} < 5);      
  

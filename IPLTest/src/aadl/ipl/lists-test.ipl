@@ -1,0 +1,27 @@
+//import Robot_Task_Types.*; 
+//import tasks_simple.*;
+
+import Map_Types.*;
+import map1.*;    
+    
+use view Map.i as mapp;  
+set locs : Location;  
+
+//use view TaskLibrary.fullspeed as tasklib; 
+//set tasks: Task;    
+   
+bfun list_contains_archelem(<<elem>>, elem) -> bool; 
+
+// no node is connected to itself
+forall l1: locs | 
+        not list_contains_archelem(l1::edges, l1); 
+  
+// not all nodes are connected to each other
+forall l1: locs | exists l2: locs | 
+        not list_contains_archelem(l1::edges, l2); 
+
+// for each node, there's one connected and one not connected to it
+forall l1: locs | exists l2: locs | exists l3: locs | 
+        list_contains_archelem(l1::edges, l2) & 
+        l3 != l1 & not list_contains_archelem(l1::edges, l3);
+                  

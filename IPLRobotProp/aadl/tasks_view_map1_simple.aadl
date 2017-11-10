@@ -39,6 +39,7 @@ m_ls_to_l4: process Task;
 properties
 
 -- Forward motion tasks
+-- Assumption:start/end locs are IDs of locations, not refs to them
 Robot_Task_Types::task_id => 0 applies to m_l1_to_l2;
 Robot_Task_Types::start_loc => 0 applies to m_l1_to_l2;
 Robot_Task_Types::end_loc => 1 applies to m_l1_to_l2;
@@ -157,14 +158,14 @@ Robot_Task_Types::end_loc => 7 applies to m_l7_to_l8;
 Robot_Task_Types::energy => 695 applies to m_l7_to_l8;
 Robot_Task_Types::task_type_enum => Forward applies to m_l7_to_l8;
 Robot_Task_Types::task_type => 0 applies to m_l7_to_l8;
-
+ 
 Robot_Task_Types::task_id => 17 applies to m_l8_to_l2;
 Robot_Task_Types::start_loc => 7 applies to m_l8_to_l2;
 Robot_Task_Types::end_loc => 1 applies to m_l8_to_l2;
 Robot_Task_Types::energy => 656 applies to m_l8_to_l2;
 Robot_Task_Types::task_type_enum => Forward applies to m_l8_to_l2;
 Robot_Task_Types::task_type => 0 applies to m_l8_to_l2;
-
+ 
 Robot_Task_Types::task_id => 18 applies to m_l8_to_l7;
 Robot_Task_Types::start_loc => 7 applies to m_l8_to_l7;
 Robot_Task_Types::end_loc => 6 applies to m_l8_to_l7;

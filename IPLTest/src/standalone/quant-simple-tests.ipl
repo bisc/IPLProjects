@@ -10,7 +10,7 @@ exists x : {1, 2, 30} | x + 2 = 32;
 exists y : {1.0, 2.0, 3.0} | y + 2.0 = 3.0;        
 
 exists z : {true, false} | !z;              
- 
+  
 forall xyz : {true, false} | (xyz V !xyz);     
 
 exists x : {1, 2} | exists xy : {0, 1, 2, 3 } | 

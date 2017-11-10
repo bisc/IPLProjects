@@ -2,7 +2,7 @@ use model prism_simple_nospeed(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTER
  
 stvar goal: bool;
    
-// valid   
+// valid    
 forall x : {1, 2, 3} |   
 	R{"time"}min=? [F goal]{| 0, x, 10000 |} > 5; 
        

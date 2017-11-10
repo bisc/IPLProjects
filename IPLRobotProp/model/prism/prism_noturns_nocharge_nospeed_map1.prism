@@ -71,7 +71,7 @@ formula b_upd_ls_l4= s=HALF_SPEED? max(0,b-377) : max(0,b-646);
 const double c = 0.5;
 
 module bot_module
-b:[0..100000] init INITIAL_BATTERY; // was 32560
+b:[0..32560] init INITIAL_BATTERY;
 l:[0..9] init INITIAL_LOCATION;
 s:[HALF_SPEED..FULL_SPEED] init FULL_SPEED;
 robot_done:bool init false;

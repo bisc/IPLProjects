@@ -50,6 +50,7 @@ e_l8: process Task;
 properties
 
 -- Forward motion tasks
+-- Assumption:start/end locs are IDs of locations, not refs to them
 Robot_Task_Types::task_id => 0 applies to m_l1_to_l2;
 Robot_Task_Types::start_loc => 0 applies to m_l1_to_l2;
 Robot_Task_Types::end_loc => 1 applies to m_l1_to_l2;

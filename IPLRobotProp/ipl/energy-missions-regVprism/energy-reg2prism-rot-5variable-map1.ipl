@@ -2,11 +2,12 @@ import Robot_Task_Types.*;
  
 import tasks_view_map1_wempty_rot.*;
 use view TaskLibrary.fullspeed as tasklib;
-set tasks: Task;
-   
+set tasks: Task;  
+     	 
 bfun distinct(int, int, int, int, int, int) -> bool;
 bfun min_int(int, int) -> int;
 
+// TODO this map not useful with rotations
 //use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 
 stvar l: int;
@@ -20,8 +21,10 @@ stvar b: int;
 // modeling choice: - empty steps can only be found in the end of a mission  
 // (without these options, the rotation task spec below would allow too many fake turns
  
-// Expected 145 models  
+// Expected 182 models
+	// 145 models without power constraint
 
+forall maxBatteryCapacity: {32560} |
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
 forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | // rotations between forward tasks
 // cohesive path (forward) 
@@ -42,7 +45,7 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
 		(distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) &
 			t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 
 				& t5::task_type = 2)
-		||
+		|| 
 		// two empty steps
 		(distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc) &
 			t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 
@@ -74,7 +77,10 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
 	  t4::task_type = 2 & r34::task_type = 2) &
 	( t5::task_type = 0 & r45::task_type = 1 & t4::end_head = r45::start_head & r45::end_head = t5::start_head || 
 	  t5::task_type = 0 & r45::task_type = 2 & t4::end_head = t5::start_head ||
-	  t5::task_type = 2 & r45::task_type = 2)
+	  t5::task_type = 2 & r45::task_type = 2) & 
+	  	// regression considers this a power-safe mission 
+	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
+			r12::energy + r23::energy + r34::energy + r45::energy + 1 <= maxBatteryCapacity
 	->  
 	// robot can find its way to the finish   
 	P max=? [  
@@ -86,7 +92,9 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
 		(F l = t3::start_loc) &
 		(F l = t4::start_loc) &  
 		(F l = t5::start_loc) 
-	]{|t1::start_loc, t5::end_loc, 
-		min_int(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
-			r12::energy + r23::energy + r34::energy + r45::energy + 1, 32560)|} = 1;
+	]{|t1::start_loc, t5::end_loc,  t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
+			r12::energy + r23::energy + r34::energy + r45::energy + 1
+		// incorrect to do this because if > 32560 then reg rejected this mission
+		/*min_int(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
+			r12::energy + r23::energy + r34::energy + r45::energy + 1, 32560)*/|} = 1;
  

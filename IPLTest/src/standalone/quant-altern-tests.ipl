@@ -3,7 +3,7 @@ forall x : {1, 2, 3} |
 	exists y : {0, 1, 2} | x + y = 3;
 	     
 forall a : {0, 1, 2} |        
-	exists b : {1, 2, 3} | 
+	exists b : {1, 2, 3} |  
 		forall c: {2, 3, 4} | 
 			exists d: {3, 4, 5} | 
 				a + b + c + d = 10;          

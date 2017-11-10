@@ -2,7 +2,7 @@ import Robot_Task_Types.*;
 import tasks_view_map1_simple.*;   
 // this spec is also valid with:
 //import tasks_manual_simple.*;
-
+ 
 use view TaskLibrary.fullspeed as tasklib;
 set tasks: Task;
 

@@ -2,7 +2,7 @@ property set Robot_Task_Types is
 
 	task_id: aadlinteger -- for referencing 
 		applies to (process);
- 
+  
 	distance: aadlreal -- translational motion distance, meters 
 		applies to (process);
 	 

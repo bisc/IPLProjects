@@ -1,25 +1,33 @@
 use model prism_simple_nospeed; // can use without params; instantiates w/ defaults
-
+ 
 // valid
 exists x : {1, 2, 3} | // existence  
-	P>0.5 [F (x + 1 > 3)]{||};
-	
+	P>0.5 [F (x + 1 > 3)]{||}; 
+	  
 forall x : {1, 2, 3} | // prop abstr  
 	x > 2 ->  P>0.5 [F (x + 1 > 3)]{||};  
-
-exists x : {1, 2, 3} | // prop abstr   
-	x > 2 & P>0.5 [F (x + 1 > 3)]{||};  
-
+    
+exists x : {1, 2, 3} | // prop abstr    
+	x > 2 & P>0.5 [F (x + 1 > 3)]{||};    
+  
 forall x : int | // unbounded domain
 	x > 2 & x < 5 ->  P>0.5 [F (x + 1 > 3)]{||};       
- 
+   
 exists x : {0, 1, 2} |  // alternation
 	forall y : {0, 1, 2} |      
 		P>0.5 [F (x + y > 1)]{||};  
 		          
-exists x : {0, 1} | // reduced flex arg
+exists x : {0, 1} | // clause uses only one var, need to remove only quant y
 	forall y : {1, 2} |        
 		P>0.5 [F (y + 1 > 1)]{||};     
+               
+forall x : int | // an extreme example of the above, which wouldn't terminate with full qrem
+	forall y : {1, 2} |        
+		P>0.5 [F (y + 1 > 1)]{||};      
+
+forall y : {1, 2} | // same as above, but in a different order
+	forall x : int | 
+		P>0.5 [F (y + 1 > 1)]{||};      
               
 // invalid
 forall x : {1, 2, 3} | // not for all

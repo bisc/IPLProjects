@@ -2,11 +2,15 @@ use model prism_simple_nospeed(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTER
 
 // a priori valid   
 P>0.5 [true]{| 0, 1, 3000 |} -> true; 
-  
+   
 // valid, but checking needed
-P>0.5 [true]{| 0, 1, 3000 |}; 
-P>0.5 [true]{| 0, 1, 3000 |} || false;  
+// TODO rabinizer does not like simple formulas like true or false, so it crashes on just "true" inside [ ] 
+// had to add globally to make it work
+P>0.5 [G true]{| 0, 1, 3000 |};  
+P>0.5 [G true]{| 0, 1, 3000 |} || false;
+
+P max=? [G true]{| 0, 1, 3000 |} =1 ;      
       
 // invalid
-P<0.5 [true]{| 0, 1, 3000 |};
-R{"time"}min=? [true]{| 0, 1, 3000 |} > 5; 
+P<0.5 [G true]{| 0, 1, 3000 |};
+R{"time"}min=? [F true]{| 0, 1, 3000 |} > 5; // has to have a co-safe LTL formula

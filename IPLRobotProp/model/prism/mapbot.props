@@ -88,3 +88,6 @@ Pmax=? [ (F l=1)&(F l=2)&(F l=3)&(F l=4)&(F l=5)&(l=7 U (l=1 U (l=2 U (l=3 U (l=
 // mission 8-3-2-1-7-6, energy 3477 (needs 3478 to satisfy)
 Pmax=? [ (F l=3)&(F l=2)&(F l=1)&(F l=7)&(F l=6)&(l=8 U (l=3 U (l=2 U (l=1 U (l=7 U (l=6&b>0)))))) ]
 
+// init l with 8, goal 8, on map1 where max loc is 7. 
+Pmax=? [ F l=8 ]
+
