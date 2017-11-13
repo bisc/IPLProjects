@@ -1,0 +1,80 @@
+-- a view for file map3.json
+package map3
+public
+	with Map_Types;
+	
+	system Map 
+		
+	end Map; 
+	
+	data Number 
+		
+	end Number;
+	
+	memory Location
+		features
+			edge: in out data port;
+	end Location;
+	
+	memory LocationWithoutCharge extends Location
+		
+		properties
+			Map_Types::hasChargingSt => false;
+	end LocationWithoutCharge;
+	
+	memory LocationWithCharge extends Location
+		properties
+			Map_Types::hasChargingSt => true;
+	end LocationWithCharge;
+	
+	system implementation Map.i
+		subcomponents 
+			l1: memory LocationWithoutCharge;
+			l2: memory LocationWithoutCharge;
+			l3: memory LocationWithoutCharge;
+			l4: memory LocationWithoutCharge;
+			l5: memory LocationWithoutCharge;
+			l6: memory LocationWithoutCharge;
+			l7: memory LocationWithoutCharge;
+			ls: memory LocationWithoutCharge;
+			c1: memory LocationWithCharge;
+			c2: memory LocationWithCharge;
+			c3: memory LocationWithCharge;
+			c4: memory LocationWithCharge;
+
+--		connections -- does not work because it's only one to one...
+--		-- try out port groups, or worst case can go with properties
+--			cn1 : port l2.edge -> l1.edge;
+--			cn2 : port l4.edge -> l2.edge;
+--			cn3 : port l3.edge -> l1.edge;
+
+		properties
+			Map_Types::id => 0 applies to l1;
+			Map_Types::id => 1 applies to l2;
+			Map_Types::id => 2 applies to l3; 
+			Map_Types::id => 3 applies to l4; 
+			Map_Types::id => 4 applies to l5; 
+			Map_Types::id => 5 applies to l6; 
+			Map_Types::id => 6 applies to l7; 
+			Map_Types::id => 7 applies to ls;    
+			Map_Types::id => 8 applies to c1;
+			Map_Types::id => 9 applies to c2;
+			Map_Types::id => 10 applies to c3;
+			Map_Types::id =>11 applies to c4;
+			
+			Map_Types::edges => ( reference (l2) ) applies to l1;
+			Map_Types::edges => ( reference (l1), reference (c1), reference (c2) ) applies to l2;
+			Map_Types::edges => ( reference (c2), reference (c3), reference (l4) ) applies to l3;
+			Map_Types::edges => ( reference (l3), reference (ls), reference (l5) ) applies to l4;
+			Map_Types::edges => ( reference (l4), reference (l6) ) applies to l5;
+			Map_Types::edges => ( reference (l5), reference (c3), reference (c4) ) applies to l6;
+			Map_Types::edges => ( reference (c4), reference (c1) ) applies to l7;
+			Map_Types::edges => ( reference (l4) ) applies to ls;
+			Map_Types::edges => ( reference (l2), reference (l7) ) applies to c1;
+			Map_Types::edges => ( reference (l2), reference (l3) ) applies to c2;
+			Map_Types::edges => ( reference (l3), reference (l6) ) applies to c3;
+			Map_Types::edges => ( reference (l6), reference (l7) ) applies to c4;
+		
+	end Map.i;
+	
+end map3;

@@ -8,7 +8,7 @@ use view Map.i as mapp;
 set locs : Location; 
 
 use view TaskLibrary.fullspeed as tasklib; 
-set tasks: Task;   
+set tasks: Task;    
 
 //bfun list_contains_elem(<<elem>>, elem) -> bool;
 bfun list_contains_archelem(<<elem>>, elem) -> bool; 
@@ -46,16 +46,21 @@ stvar b: int;
 // cannot reach the max + 1 location from any other (supposedly valid) one
 //forall init: locs | 
 //	forall locMax : locs |  
-//		(forall locOther: locs | locMax::id >= locOther::id)  -> // 
-//			P max=?[F l = locMax::id + 1] {|init::id, locMax::id + 1, 30000 |} = 0;
+//		init != locMax & (forall locOther: locs | locMax::id >= locOther::id)  -> // 
+//			P max=?[F l = locMax::id + 1] {|init::id, locMax::id + 1, 10000 |} = 0;
   
 // cannot reach the min - 1 location from any other (supposedly valid) one		   
-//forall init: locs | 
-//	forall locMin : locs | 
-//		(forall locOther: locs | locMin::id <= locOther::id)  -> 
-//			P max=?[F l = locMin::id - 1] {|init::id, locMin::id - 1, 30000 |} = 0;
+forall init: locs |  	
+	forall locMin : locs | 
+		init != locMin & (forall locOther: locs | locMin::id <= locOther::id)   -> 
+			P max=?[F l = locMin::id - 1] {|init::id, locMin::id - 1, 10000 |} = 0;
        
 // EDGES  
+// sanity checking: every map view is symmetric 
+               forall l1 : locs | forall l2 : locs |
+               		list_contains_archelem(l1::edges, l2) <=>
+               		list_contains_archelem(l2::edges, l1);    
+
 // every task corresponds to an edge in prism 
           
 // map to tasklib: there is an edge in the map iff there is a pair of tasks in the task lib with the same start and end/vice versa
@@ -80,7 +85,9 @@ stvar b: int;
  
 //           prism to tasklib: <how do we know that there is no other way in prism to jump the edges?>
 //               for each pair of locations without an edge, prism cannot go between locations directly:
+// 			Expected: 53 models
                forall l1: locs | forall l2: locs |
                		l1!=l2 & !list_contains_archelem(l1::edges, l2) => 
-               			P max=? [ l = l1::id U (l = l2::id & b>0) ] {|l1::id , l2::id, 10000 |} = 0; // TODO implement typechecking for model parameters
+               			P max=? [ l = l1::id U (l = l2::id & b>0) ] {|l1::id , l2::id, 5000 |} = 0; // TODO implement typechecking for model parameters
 
+ 

@@ -175,7 +175,7 @@ formula b_upd_c4_l7 = k = LOC_LO ? b_upd_c4_l7_LOC_LO : ( k = LOC_MED ? b_upd_c4
 
 module bot_module
 b:[0..MAX_BATTERY] init INITIAL_BATTERY;
-l:[0..12] init INITIAL_LOCATION;
+l:[0..11] init INITIAL_LOCATION;
 s:[HALF_SPEED..FULL_SPEED] init HALF_SPEED;
 k:[LOC_LO..LOC_HI] init LOC_HI;
 r:[0..8] init INITIAL_HEADING;
