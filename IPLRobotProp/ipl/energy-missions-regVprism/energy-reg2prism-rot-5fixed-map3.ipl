@@ -10,7 +10,7 @@ bfun min_int(int, int) -> int;
 //use model prism_turns_nocharge_nospeed_map3(
 //	INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY, INITIAL_HEADING);
 
-stvar l: int;
+stvar l: int; 
 stvar s: int;
 stvar b: int; 
 
@@ -20,13 +20,14 @@ stvar b: int;
 // - forward tasks have start_head = end_head
 // - rotation tasks have start_loc = end_loc 
 // - in prism model, cannot move without turning/taking turn into acct
-// - (optional) initial heading faces the same direction as the first step
- 
-forall initHead: {0, 1, 2, 3, 4, 5, 6, 7} | // a full version, but takes too long  
+// - (optional, currently enabled) initial heading faces the same direction as the first step
+  
+	// forall initHead: {0, 1, 2, 3, 4, 5, 6, 7} | // a full version, but takes too long  
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
-forall r01: tasks | forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
-// a fixed heading, see assumption 
-initHead = t1::start_head & 
+	//		forall r01: tasks | 
+forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
+	// a heading fixed to the first step, see assumption 
+	// initHead = t1::start_head & 
 // forward tasks; rotation tasks with possibility of emptiness are defined below
 	t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t1::task_type = 0 & t5::task_type = 0 &
 // cohesive path (forward) 
@@ -35,12 +36,13 @@ initHead = t1::start_head &
 // no circularities
 	distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) &
 // rotations are on the path    
-	r01::start_loc = t1::start_loc & r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & 
+//	r01::start_loc = t1::start_loc & 
+	r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & 
 		r34::start_loc = t4::start_loc & r45::start_loc = t5::start_loc &
 // rotation tasks connect headings of adjacent forwards (pre and post), 
 // 		unless directions already match and rotation tasks are empty 
-	( r01::task_type = 1 & r01::start_head = initHead & r01::end_head = t1::start_head || 
-		r01::task_type = 2 & initHead = t1::start_head ) &
+//	( r01::task_type = 1 & r01::start_head = initHead & r01::end_head = t1::start_head || 
+//		r01::task_type = 2 & initHead = t1::start_head ) &
 	( r12::task_type = 1 & t1::end_head = r12::start_head & r12::end_head = t2::start_head || 
 		r12::task_type = 2 & t1::end_head = t2::start_head ) & 
 	( r23::task_type = 1 & t2::end_head = r23::start_head & r23::end_head = t3::start_head || 
@@ -51,7 +53,8 @@ initHead = t1::start_head &
 		r45::task_type = 2 & t4::end_head = t5::start_head)	& 
 	// regression considers this a power-safe mission 
 	(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
-	r01::energy + r12::energy + r23::energy + r34::energy + r45::energy + 1 <= 32560)
+//	r01::energy + 
+	r12::energy + r23::energy + r34::energy + r45::energy + 1 <= 32560)
 	->           
 	// robot can find its way to the finish   
 	P max=? [  
@@ -64,7 +67,8 @@ initHead = t1::start_head &
 		(F l = t4::start_loc) &  
 		(F l = t5::start_loc) 
 	]{|t1::start_loc, t5::end_loc, t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
-			r01::energy + r12::energy + r23::energy + r34::energy + r45::energy + 1, initHead
+//			r01::energy + 
+			r12::energy + r23::energy + r34::energy + r45::energy + 1, t1::start_head
 		// incorrect to do this because if > 32560 then reg rejected this mission
 		/*min_int(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
 			r12::energy + r23::energy + r34::energy + r45::energy + 1, 32560)*/|} = 1;
