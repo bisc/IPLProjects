@@ -9,7 +9,7 @@ bfun abs (int) -> int;
   
 var err_prism: int = 2; // by how much prism can be inaccurate by itself (from ground truth). Does not affect verification times.
 var err_cons: int = 0; // by how much prism can deviate from regression. Affects verification times. 
-
+    
 //use model prism_turns_nocharge_nospeed_map3(
 //	INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY, INITIAL_HEADING);
 
@@ -22,7 +22,9 @@ stvar b: int;
 
 // An integration property to establish two-way consistency between Prism energy and regression mdl energy
 // uses 2 flex clauses 
-// Expected 696 models on map 1 (needs more validation)
+// Expected: 
+// - partial quant removal: this property doesn't verify (the first SMT gets to 9 GB RAM in a couple of minutes)
+// - full quant removal: over 200 models, did not wait to terminate
 
 // TODO maybe have two different sorts with appropriate task types? that would necessitate the view
 // forward tasks:
@@ -112,7 +114,7 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
 				// constraint above guarantees no overflow over max bat
 			]{|t1::start_loc, t5::end_loc, ebmin + err_prism + 1, t1::start_head |} = 1) &
 			// min budget & regression are within consistency tolerance (= 1 here) 
-			// this constraint determines the spread of ebmin and proprotionally affects the size of verification space
+			// this constraint determines the spread of ebmin and proportionally affects the size of verification space
 			abs(ebmin - (t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +
 				r12::energy + r23::energy + r34::energy + r45::energy + 1)) <= err_cons
 		));

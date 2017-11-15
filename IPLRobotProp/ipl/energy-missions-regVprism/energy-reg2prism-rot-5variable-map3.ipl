@@ -7,8 +7,8 @@ set tasks: Task;
 bfun distinct(int, int, int, int, int, int) -> bool;
 bfun min_int(int, int) -> int;
  
-use model prism_turns_nocharge_nospeed_map3(
-	INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY, INITIAL_HEADING);
+//use model prism_turns_nocharge_nospeed_map3(
+//	INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY, INITIAL_HEADING);
 
 stvar l: int;
 stvar s: int;

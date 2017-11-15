@@ -22,7 +22,7 @@ stvar b: int;
 
 // An integration property to establish two-way consistency between Prism energy and regression mdl energy
 // uses 2 flex clauses 
-// Expected 696 models on map 1 (needs more validation)
+// Expected: this property doesn't verify (the first SMT gets to 9 GB RAM in a couple of minutes)
 
 // TODO maybe have two different sorts with appropriate task types? that would necessitate the view
 // forward tasks:
@@ -40,12 +40,14 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
 		// no circularities/shortcuts, and the tail of the path can be empty: 
 		(
 			(   // either all tasks are real ones
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) &
+				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, 
+					t6::start_loc, t7::start_loc, t7::end_loc) &
 				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & 
-				t5::task_type = 0 
-			) ||
+				t5::task_type = 0 & t6::task_type = 0 &	t7::task_type = 0
+			) || 
 			(  // one empty task
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) &
+				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc,
+					t6::start_loc, t7::start_loc) &
 				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & 
 				t5::task_type = 0 & t6::task_type = 0 &	t7::task_type = 2
 			) ||
@@ -128,7 +130,7 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
 				// constraint above guarantees no overflow over max bat
 			]{|t1::start_loc, t7::end_loc, ebmin + err_prism + 1, t1::start_head |} = 1) &
 			// min budget & regression are within consistency tolerance (= 1 here) 
-			// this constraint determines the spread of ebmin and proprotionally affects the size of verification space
+			// this constraint determines the spread of ebmin and proportionally affects the size of verification space
 			abs(ebmin - (t1::energy + t2::energy + t3::energy + t4::energy + 
 				t5::energy + t6::energy + t7::energy +
 				r12::energy + r23::energy + r34::energy + r45::energy + r56::energy + r67::energy + 1)) <= err_cons
