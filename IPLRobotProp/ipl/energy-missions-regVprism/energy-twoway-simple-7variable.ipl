@@ -9,7 +9,7 @@ set tasks: Task;
 bfun distinct(int, int, int, int, int, int, int, int) -> bool;    
 bfun abs (int) -> int; 
   
-use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+//use model prism_noturns_nocharge_nospeed_map1(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 stvar l: int;
 stvar s: int; 
 stvar b: int;
@@ -61,7 +61,7 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 				t1::task_type = 0 & t2::task_type = 0 & 
 				t3::task_type = 2 &	t4::task_type = 2 &	t5::task_type = 2 & t6::task_type = 2 &	t7::task_type = 2
 			) || 
-			( 
+			( // or one non-empty task
 				distinct (t1::start_loc, t2::start_loc) &
 				t1::task_type = 0 & t2::task_type = 2 & t3::task_type = 2 & t4::task_type = 2 
 				&	t5::task_type = 2 & t6::task_type = 2 &	t7::task_type = 2

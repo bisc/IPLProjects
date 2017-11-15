@@ -6,10 +6,10 @@ set tasks: Task;
 
 bfun distinct(int, int, int, int, int, int, int, int) -> bool;    
 bfun abs (int) -> int; 
-
+  
 var err_prism: int = 2; // by how much prism can be inaccurate by itself (from ground truth). Does not affect verification times.
 var err_cons: int = 0; // by how much prism can deviate from regression. Affects verification times. 
-  
+
 //use model prism_turns_nocharge_nospeed_map3(
 //	INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY, INITIAL_HEADING);
 
@@ -26,53 +26,45 @@ stvar b: int;
 
 // TODO maybe have two different sorts with appropriate task types? that would necessitate the view
 // forward tasks:
-forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | forall t6: tasks | forall t7: tasks |
+forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | 
 // rotations between forward tasks
-forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | forall r56: tasks | forall r67: tasks | 
+forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
 // cohesive path (forward)
 	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
 		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc & 
-				t5::end_loc = t6::start_loc & t6::end_loc = t7::start_loc & 
 		// rotations are located on the path 
 		r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & 
 		r34::start_loc = t4::start_loc & r45::start_loc = t5::start_loc &
-				r56::start_loc = t6::start_loc & r67::start_loc = t7::start_loc &
 		// no circularities/shortcuts, and the tail of the path can be empty: 
 		(
-			(   // either all tasks are real ones
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) &
+			   // either all tasks are real ones
+			(   
+				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) &
+				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & t5::task_type = 0
+			)  || 
+			// or the last one is empty
+			(
+				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) & 
 				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & 
-				t5::task_type = 0 
-			) ||
-			(  // one empty task
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) &
-				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & 
-				t5::task_type = 0 & t6::task_type = 0 &	t7::task_type = 2
-			) ||
-			(  // two empty tasks
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t6::start_loc) &
-				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & t5::task_type = 0 & 
-				t6::task_type = 2 &	t7::task_type = 2
+				t5::task_type = 2
 			) || 
-			( // three empty tasks
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) &
-				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & 
-				t5::task_type = 2 & t6::task_type = 2 &	t7::task_type = 2
-			) || 
-			( // four empty tasks 
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc) &
+			// or the last two are empty
+			( 
+				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc) & 
 				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & 
-				t4::task_type = 2 &	t5::task_type = 2 & t6::task_type = 2 &	t7::task_type = 2
+				t4::task_type = 2 & t5::task_type = 2
 			) ||
-			( // five empty tasks
+			// or the last three are empty
+			( 
 				distinct (t1::start_loc, t2::start_loc, t3::start_loc) &
 				t1::task_type = 0 & t2::task_type = 0 & 
-				t3::task_type = 2 &	t4::task_type = 2 &	t5::task_type = 2 & t6::task_type = 2 &	t7::task_type = 2
-			) || 
-			( // six empty tasks 
-				distinct (t1::start_loc, t2::start_loc) &
-				t1::task_type = 0 & t2::task_type = 2 & t3::task_type = 2 & t4::task_type = 2 
-				&	t5::task_type = 2 & t6::task_type = 2 &	t7::task_type = 2
+				t3::task_type = 2 &	t4::task_type = 2 & t5::task_type = 2
+			) ||
+			// or the last four are empty 
+			( 
+				distinct(t1::start_loc, t2::start_loc) & 
+				t1::task_type = 0 & 
+				t2::task_type = 2 &	t3::task_type = 2 &	t4::task_type = 2 & t5::task_type = 2 
 			)
 	) &
 	// rotation tasks connect headings of adjacent forwards (pre and post), with exclusions for empty ones
@@ -94,15 +86,9 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
 	  t4::task_type = 2 & r34::task_type = 2) &
 	( t5::task_type = 0 & r45::task_type = 1 & t4::end_head = r45::start_head & r45::end_head = t5::start_head || 
 	  t5::task_type = 0 & r45::task_type = 2 & t4::end_head = t5::start_head ||
-	  t5::task_type = 2 & r45::task_type = 2) &   	
-	 ( t6::task_type = 0 & r56::task_type = 1 & t5::end_head = r56::start_head & r56::end_head = t6::start_head || 
-	  t6::task_type = 0 & r56::task_type = 2 & t5::end_head = t6::start_head ||
-	  t6::task_type = 2 & r56::task_type = 2) &
-	 ( t7::task_type = 0 & r67::task_type = 1 & t6::end_head = r67::start_head & r67::end_head = t7::start_head || 
-	  t7::task_type = 0 & r67::task_type = 2 & t6::end_head = t7::start_head ||
-	  t7::task_type = 2 & r67::task_type = 2)
+	  t5::task_type = 2 & r45::task_type = 2) 	  	
 	// exists such a minimal budget
-	->  (exists ebmin: int |  
+	 ->  (exists ebmin: int |  
 		// the budget fits into the battery  
 	ebmin >= 0 & ebmin <= 32560 - err_prism - 1  &
 	// robot can find its way to the finish on this budget 
@@ -111,26 +97,23 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
 				//(G s = 1) & 
 				// no shortcuts
 				(F l = t2::start_loc) & (F l = t3::start_loc) &	(F l = t4::start_loc) & (F l = t5::start_loc) &
-				(F l = t6::start_loc) & (F l = t7::start_loc) &
 				// in order
 				((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
-					(l = t6::start_loc U (l = t7::start_loc U ( l = t7::end_loc & b > 0))))))))
-			]{|t1::start_loc, t7::end_loc, ebmin - err_prism - 1,  t1::start_head |} = 0) &
+					( l = t5::end_loc & b > 0))))))
+			]{|t1::start_loc, t5::end_loc, ebmin - err_prism - 1,  t1::start_head |} = 0) &
 			// minimal budget plus prism error (=2 here) plus 1 should always succeed
 			(P max=? [  
 				//(G s = 1) & 
 				// no shortcuts
 				(F l = t2::start_loc) & (F l = t3::start_loc) &	(F l = t4::start_loc) & (F l = t5::start_loc) &
-				(F l = t6::start_loc) & (F l = t7::start_loc) &
 				// in order
 				((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
-					(l = t6::start_loc U (l = t7::start_loc U ( l = t7::end_loc & b > 0))))))))
+					( l = t5::end_loc & b > 0))))))
 				// constraint above guarantees no overflow over max bat
-			]{|t1::start_loc, t7::end_loc, ebmin + err_prism + 1, t1::start_head |} = 1) &
+			]{|t1::start_loc, t5::end_loc, ebmin + err_prism + 1, t1::start_head |} = 1) &
 			// min budget & regression are within consistency tolerance (= 1 here) 
 			// this constraint determines the spread of ebmin and proprotionally affects the size of verification space
-			abs(ebmin - (t1::energy + t2::energy + t3::energy + t4::energy + 
-				t5::energy + t6::energy + t7::energy +
-				r12::energy + r23::energy + r34::energy + r45::energy + r56::energy + r67::energy + 1)) <= err_cons
+			abs(ebmin - (t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +
+				r12::energy + r23::energy + r34::energy + r45::energy + 1)) <= err_cons
 		));
 		

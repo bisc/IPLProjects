@@ -7,8 +7,8 @@ set tasks: Task;
 bfun distinct(int, int, int, int, int, int) -> bool;
 bfun min_int(int, int) -> int;
  
-//use model prism_turns_nocharge_nospeed_map3(
-//	INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY, INITIAL_HEADING);
+use model prism_turns_nocharge_nospeed_map3(
+	INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY, INITIAL_HEADING);
 
 stvar l: int;
 stvar s: int;
@@ -24,8 +24,9 @@ stvar b: int;
 // modeling choice: 
 //	- empty steps can only be found in the end of a mission  (otherwise, the rotation task spec below would allow too many fake turns  
  
-// Expected 182 models with single heading on map 1
-	// ?? on map 3
+// Expected:
+	// 182 models on map 1, with single heading 
+	// 222 on map 3, with single heading 
  
 // TODO missing variable t1? or fix the anon set procedure
 	//forall initHead: {0, 1, 2, 3, 4, 5, 6, 7} |   // a full-scale version, but takes too long
