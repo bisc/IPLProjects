@@ -1,0 +1,148 @@
+// Generated with BRASS Robot Map PRISM Renderer
+
+mdp
+
+const ET=0;
+const RT=1;
+
+global turn:[ET..RT] init ET;
+
+
+// Map location constants
+
+const INITIAL_LOCATION;
+const TARGET_LOCATION;
+
+formula goal = l=TARGET_LOCATION;
+
+formula stop = goal | b<723;
+
+const l1=0;
+const l2=1;
+const l3=2;
+const l4=3;
+const l5=4;
+const l6=5;
+const l7=6;
+const l8=7;
+const l9=8;
+const l10=9;
+
+// Topological constraints
+
+formula can_move_to_l1= false | l=l2;
+formula can_move_to_l2= false | l=l1 | l=l3 | l=l9;
+formula can_move_to_l3= false | l=l2 | l=l4;
+formula can_move_to_l4= false | l=l3 | l=l5;
+formula can_move_to_l5= false | l=l4 | l=l6;
+formula can_move_to_l6= false | l=l5 | l=l7;
+formula can_move_to_l7= false | l=l6 | l=l8;
+formula can_move_to_l8= false | l=l7 | l=l10 | l=l9;
+formula can_move_to_l9= false | l=l8 | l=l2;
+formula can_move_to_l10= false | l=l8;
+
+// Environment process
+
+module env_module
+end:bool init false;
+
+	[] true & (turn=ET) & (!stop)->  (turn'=RT);
+	[] stop  & !end -> (end'=true);
+endmodule
+
+// Robot process
+
+const INITIAL_BATTERY;
+const HALF_SPEED=0;
+const FULL_SPEED=1;
+
+formula b_upd_l1_l2= s=HALF_SPEED? max(0,b-320) : max(0,b-606);
+formula b_upd_l2_l1= s=HALF_SPEED? max(0,b-320) : max(0,b-606);
+formula b_upd_l2_l3= s=HALF_SPEED? max(0,b-453) : max(0,b-700);
+formula b_upd_l3_l2= s=HALF_SPEED? max(0,b-453) : max(0,b-700);
+formula b_upd_l3_l4= s=HALF_SPEED? max(0,b-486) : max(0,b-723);
+formula b_upd_l4_l3= s=HALF_SPEED? max(0,b-486) : max(0,b-723);
+formula b_upd_l4_l5= s=HALF_SPEED? max(0,b-386) : max(0,b-653);
+formula b_upd_l5_l4= s=HALF_SPEED? max(0,b-386) : max(0,b-653);
+formula b_upd_l5_l6= s=HALF_SPEED? max(0,b-386) : max(0,b-653);
+formula b_upd_l6_l5= s=HALF_SPEED? max(0,b-386) : max(0,b-653);
+formula b_upd_l6_l7= s=HALF_SPEED? max(0,b-486) : max(0,b-723);
+formula b_upd_l7_l6= s=HALF_SPEED? max(0,b-486) : max(0,b-723);
+formula b_upd_l7_l8= s=HALF_SPEED? max(0,b-453) : max(0,b-700);
+formula b_upd_l8_l7= s=HALF_SPEED? max(0,b-453) : max(0,b-700);
+formula b_upd_l8_l10= s=HALF_SPEED? max(0,b-453) : max(0,b-700);
+formula b_upd_l10_l8= s=HALF_SPEED? max(0,b-453) : max(0,b-700);
+formula b_upd_l8_l9= s=HALF_SPEED? max(0,b-386) : max(0,b-653);
+formula b_upd_l9_l8= s=HALF_SPEED? max(0,b-386) : max(0,b-653);
+formula b_upd_l9_l2= s=HALF_SPEED? max(0,b-386) : max(0,b-653);
+formula b_upd_l2_l9= s=HALF_SPEED? max(0,b-386) : max(0,b-653);
+
+module bot_module
+b:[0..32560] init INITIAL_BATTERY;
+l:[0..9] init INITIAL_LOCATION;
+s:[HALF_SPEED..FULL_SPEED] init FULL_SPEED;
+robot_done:bool init false;
+	[] true & (turn=RT) & (!stop) & (robot_done) -> (robot_done'=false) & (turn'=ET);
+
+//	 [set_speed_half] (s=FULL_SPEED) & (!stop) & (turn=RT) & (!robot_done) -> (s'=HALF_SPEED) & (l'=l) & (robot_done'=true);
+//	 [set_speed_full] (s=HALF_SPEED) & (!stop) & (turn=RT) & (!robot_done) -> (s'=FULL_SPEED) & (l'=l) & (robot_done'=true);
+	 [l1_to_l2] can_move_to_l2 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l2)  & (b'=b_upd_l1_l2) & (robot_done'=true);
+	 [l2_to_l1] can_move_to_l1 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l1)  & (b'=b_upd_l2_l1) & (robot_done'=true);
+	 [l2_to_l3] can_move_to_l3 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l3)  & (b'=b_upd_l2_l3) & (robot_done'=true);
+	 [l3_to_l2] can_move_to_l2 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l2)  & (b'=b_upd_l3_l2) & (robot_done'=true);
+	 [l3_to_l4] can_move_to_l4 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l4)  & (b'=b_upd_l3_l4) & (robot_done'=true);
+	 [l4_to_l3] can_move_to_l3 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l3)  & (b'=b_upd_l4_l3) & (robot_done'=true);
+	 [l4_to_l5] can_move_to_l5 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l5)  & (b'=b_upd_l4_l5) & (robot_done'=true);
+	 [l5_to_l4] can_move_to_l4 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l4)  & (b'=b_upd_l5_l4) & (robot_done'=true);
+	 [l5_to_l6] can_move_to_l6 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l6)  & (b'=b_upd_l5_l6) & (robot_done'=true);
+	 [l6_to_l5] can_move_to_l5 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l5)  & (b'=b_upd_l6_l5) & (robot_done'=true);
+	 [l6_to_l7] can_move_to_l7 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l7)  & (b'=b_upd_l6_l7) & (robot_done'=true);
+	 [l7_to_l6] can_move_to_l6 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l6)  & (b'=b_upd_l7_l6) & (robot_done'=true);
+	 [l7_to_l8] can_move_to_l8 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l8)  & (b'=b_upd_l7_l8) & (robot_done'=true);
+	 [l8_to_l7] can_move_to_l7 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l7)  & (b'=b_upd_l8_l7) & (robot_done'=true);
+	 [l8_to_l10] can_move_to_l10 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l10)  & (b'=b_upd_l8_l10) & (robot_done'=true);
+	 [l10_to_l8] can_move_to_l8 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l8)  & (b'=b_upd_l10_l8) & (robot_done'=true);
+	 [l8_to_l9] can_move_to_l9 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l9)  & (b'=b_upd_l8_l9) & (robot_done'=true);
+	 [l9_to_l8] can_move_to_l8 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l8)  & (b'=b_upd_l9_l8) & (robot_done'=true);
+	 [l9_to_l2] can_move_to_l2 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l2)  & (b'=b_upd_l9_l2) & (robot_done'=true);
+	 [l2_to_l9] can_move_to_l9 & (!stop) & (turn=RT) & (!robot_done) -> (l'=l9)  & (b'=b_upd_l2_l9) & (robot_done'=true);
+
+endmodule
+
+rewards "time"
+	[l1_to_l2] true :s=HALF_SPEED? 5.7143 : 2.9412;
+	[l2_to_l1] true :s=HALF_SPEED? 5.7143 : 2.9412;
+	[l2_to_l3] true :s=HALF_SPEED? 28.5714 : 14.7059;
+	[l3_to_l2] true :s=HALF_SPEED? 28.5714 : 14.7059;
+	[l3_to_l4] true :s=HALF_SPEED? 34.2857 : 17.6471;
+	[l4_to_l3] true :s=HALF_SPEED? 34.2857 : 17.6471;
+	[l4_to_l5] true :s=HALF_SPEED? 17.1429 : 8.8235;
+	[l5_to_l4] true :s=HALF_SPEED? 17.1429 : 8.8235;
+	[l5_to_l6] true :s=HALF_SPEED? 17.1429 : 8.8235;
+	[l6_to_l5] true :s=HALF_SPEED? 17.1429 : 8.8235;
+	[l6_to_l7] true :s=HALF_SPEED? 34.2857 : 17.6471;
+	[l7_to_l6] true :s=HALF_SPEED? 34.2857 : 17.6471;
+	[l7_to_l8] true :s=HALF_SPEED? 28.5714 : 14.7059;
+	[l8_to_l7] true :s=HALF_SPEED? 28.5714 : 14.7059;
+	[l8_to_l10] true :s=HALF_SPEED? 28.5714 : 14.7059;
+	[l10_to_l8] true :s=HALF_SPEED? 28.5714 : 14.7059;
+	[l8_to_l9] true :s=HALF_SPEED? 17.1429 : 8.8235;
+	[l9_to_l8] true :s=HALF_SPEED? 17.1429 : 8.8235;
+	[l9_to_l2] true :s=HALF_SPEED? 17.1429 : 8.8235;
+	[l2_to_l9] true :s=HALF_SPEED? 17.1429 : 8.8235;
+endrewards
+
+rewards "distance"
+	stop & TARGET_LOCATION=l1 : l=l10 ? 24 : l=l6 ? 36 : l=l7 ? 24 : l=l4 ? 24 : l=l5 ? 30 : l=l2 ? 2 : l=l3 ? 12 : l=l8 ? 14 : l=l9 ? 8 :  0;
+	stop & TARGET_LOCATION=l2 : l=l10 ? 22 : l=l6 ? 34 : l=l7 ? 22 : l=l4 ? 22 : l=l5 ? 28 : l=l3 ? 10 : l=l1 ? 2 : l=l8 ? 12 : l=l9 ? 6 :  0;
+	stop & TARGET_LOCATION=l3 : l=l10 ? 32 : l=l6 ? 24 : l=l7 ? 32 : l=l4 ? 12 : l=l5 ? 18 : l=l2 ? 10 : l=l1 ? 12 : l=l8 ? 22 : l=l9 ? 16 :  0;
+	stop & TARGET_LOCATION=l4 : l=l10 ? 44 : l=l6 ? 12 : l=l7 ? 24 : l=l5 ? 6 : l=l2 ? 22 : l=l3 ? 12 : l=l1 ? 24 : l=l8 ? 34 : l=l9 ? 28 :  0;
+	stop & TARGET_LOCATION=l5 : l=l10 ? 38 : l=l6 ? 6 : l=l7 ? 18 : l=l4 ? 6 : l=l2 ? 28 : l=l3 ? 18 : l=l1 ? 30 : l=l8 ? 28 : l=l9 ? 34 :  0;
+	stop & TARGET_LOCATION=l6 : l=l10 ? 32 : l=l7 ? 12 : l=l4 ? 12 : l=l5 ? 6 : l=l2 ? 34 : l=l3 ? 24 : l=l1 ? 36 : l=l8 ? 22 : l=l9 ? 28 :  0;
+	stop & TARGET_LOCATION=l7 : l=l10 ? 20 : l=l6 ? 12 : l=l4 ? 24 : l=l5 ? 18 : l=l2 ? 22 : l=l3 ? 32 : l=l1 ? 24 : l=l8 ? 10 : l=l9 ? 16 :  0;
+	stop & TARGET_LOCATION=l8 : l=l10 ? 10 : l=l6 ? 22 : l=l7 ? 10 : l=l4 ? 34 : l=l5 ? 28 : l=l2 ? 12 : l=l3 ? 22 : l=l1 ? 14 : l=l9 ? 6 :  0;
+	stop & TARGET_LOCATION=l9 : l=l10 ? 16 : l=l6 ? 28 : l=l7 ? 16 : l=l4 ? 28 : l=l5 ? 34 : l=l2 ? 6 : l=l3 ? 16 : l=l1 ? 8 : l=l8 ? 6 :  0;
+	stop & TARGET_LOCATION=l10 : l=l6 ? 32 : l=l7 ? 20 : l=l4 ? 44 : l=l5 ? 38 : l=l2 ? 22 : l=l3 ? 32 : l=l1 ? 24 : l=l8 ? 10 : l=l9 ? 16 :  0;
+endrewards
+
+// --- End of generated code ---

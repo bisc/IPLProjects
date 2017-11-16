@@ -1,5 +1,5 @@
--- a view for file map1.json
--- topologically identical to map0 and map2 
+-- a view for map0
+-- identical topologically to map1 and map2
 package map1
 public
 	with Map_Types;

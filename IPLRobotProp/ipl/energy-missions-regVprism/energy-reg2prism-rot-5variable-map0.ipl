@@ -1,0 +1,101 @@
+import Robot_Task_Types.*;
+ 
+// a view with rotations doesn't exist for map 0, so no meaningful verification here 
+import tasks_view_map0_wempty_rot.*; // no such file, to be expected
+use view TaskLibrary.fullspeed as tasklib;
+set tasks: Task;  
+     	 
+bfun distinct(int, int, int, int, int, int) -> bool;
+bfun min_int(int, int) -> int;
+
+// TODO this map not useful with rotations
+//use model prism_noturns_nocharge_nospeed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+
+stvar l: int;
+stvar s: int;
+stvar b: int; 
+
+// assumptions: 
+// - forward tasks have start_head = end_head
+// - rotation tasks have start_loc = end_loc 
+// - need not rotate when arriving at mission's goal
+// modeling choice: - empty steps can only be found in the end of a mission  
+// (without these options, the rotation task spec below would allow too many fake turns
+ 
+// Expected 182 models
+	// 145 models without power constraint
+
+forall maxBatteryCapacity: {32560} |
+forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
+forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | // rotations between forward tasks
+// cohesive path (forward) 
+	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
+		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc &
+// rotations are located on the path 
+	r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & 
+		r34::start_loc = t4::start_loc & r45::start_loc = t5::start_loc &
+// no circularities/shortcuts for the first part, and the tail of the path must be empty
+// every task moves to a new spot unless empty
+// no empty followed by legit forward
+	(
+		// no empty steps
+		(distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) & 
+			t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & t5::task_type = 0)
+		|| 
+		// one empty step
+		(distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) &
+			t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 
+				& t5::task_type = 2)
+		|| 
+		// two empty steps
+		(distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc) &
+			t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 
+				& t4::task_type = 2 & t5::task_type = 2)
+		||
+		// three empty steps
+		(distinct (t1::start_loc, t2::start_loc, t3::start_loc) &
+			t1::task_type = 0 & t2::task_type = 0 &  
+				t3::task_type = 2 & t4::task_type = 2 & t5::task_type = 2)
+		||
+		// four empty steps
+		(distinct (t1::start_loc, t2::start_loc) &
+			t1::task_type = 0 & 
+				t2::task_type = 2 &	t3::task_type = 2 & t4::task_type = 2 & t5::task_type = 2)
+	) & 
+// rotation tasks connect headings of adjacent forwards (pre and post), with exclusions for empty ones
+// 3 options are possible: 
+//      1. legit next forward + legit rotation + matching rotation to both forwards
+//  	2. legit next forward + empty rotation + matching headings of forwards
+//		3. empty next forward + empty rotation
+	( t2::task_type = 0 & r12::task_type = 1 & t1::end_head = r12::start_head & r12::end_head = t2::start_head || 
+	  t2::task_type = 0 & r12::task_type = 2 & t1::end_head = t2::start_head || 
+	  t2::task_type = 2 & r12::task_type = 2 ) &  
+	( t3::task_type = 0 & r23::task_type = 1 & t2::end_head = r23::start_head & r23::end_head = t3::start_head || 
+	  t3::task_type = 0 & r23::task_type = 2 & t2::end_head = t3::start_head || 
+	  t3::task_type = 2 & r23::task_type = 2) &  
+	( t4::task_type = 0 & r34::task_type = 1 & t3::end_head = r34::start_head & r34::end_head = t4::start_head || 
+	  t4::task_type = 0 & r34::task_type = 2 & t3::end_head = t4::start_head ||
+	  t4::task_type = 2 & r34::task_type = 2) &
+	( t5::task_type = 0 & r45::task_type = 1 & t4::end_head = r45::start_head & r45::end_head = t5::start_head || 
+	  t5::task_type = 0 & r45::task_type = 2 & t4::end_head = t5::start_head ||
+	  t5::task_type = 2 & r45::task_type = 2) & 
+	  	// regression considers this a power-safe mission 
+	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
+			r12::energy + r23::energy + r34::energy + r45::energy + 1 <= maxBatteryCapacity
+	->  
+	// robot can find its way to the finish   
+	P max=? [  
+		//(G s = 1) &  
+		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
+			( l = t5::end_loc & b > 0)
+		))))) &
+		(F l = t2::start_loc) &
+		(F l = t3::start_loc) &
+		(F l = t4::start_loc) &  
+		(F l = t5::start_loc) 
+	]{|t1::start_loc, t5::end_loc,  t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
+			r12::energy + r23::energy + r34::energy + r45::energy + 1
+		// incorrect to do this because if > 32560 then reg rejected this mission
+		/*min_int(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
+			r12::energy + r23::energy + r34::energy + r45::energy + 1, 32560)*/|} = 1;
+ 
