@@ -1,14 +1,14 @@
 import Robot_Task_Types.*;
-import tasks_view_map1_simple.*;
+import tasks_view_map0_simple.*;
    
-import Map_Types.*;
-import map1.*;     
+import Map_Types.*; 
+import map0.*;     
   
 use view Map.i as mapp;  
 set Locs : Location; 
 
-use view TaskLibrary.fullspeed; 
-set Tasks: Task; 
+use view TaskLibrary.fullspeed;   
+set Tasks: Task;
 
 bfun list_contains_archelem(<<elem>>, elem) -> bool; 
 

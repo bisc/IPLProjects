@@ -1,7 +1,7 @@
-import Robot_Task_Types.*;
+import Robot_Task_Types.*; 
 import tasks_view_map3b_simple.*;
 import Map_Types.*;
-import map3.*;    
+import map3b.*;    
     
 use view TaskLibrary.fullspeed as tasklib;
 use view Map.i as mapp;  
@@ -54,21 +54,21 @@ stvar b: int;
 			locInit != locMin & (forall locOther: locs | locMin::id <= locOther::id)  -> 
 				P max=?[F l = locMin::id - 1] {|locInit::id, locMin::id - 1, 10000, initHead |} = 0;
         
-// EDGES: consistent between map, tasklib, and prism
+// EDGES: consistent between map, tasklib, and prism <redundant with map3b-tasklib
 // sanity checking: every map view is symmetric 
-               forall l1 : locs | forall l2 : locs |
-               		list_contains_archelem(l1::edges, l2) <=>
-               		list_contains_archelem(l2::edges, l1);    
-
-				// map to tasklib:  (combines two views)
-				// "there is an edge in the map iff there is a pair of tasks in the task lib with the same start and end/vice versa"
-				// assumption: forward motion tasks are the only ones that change your location              
-               forall l1: locs | exists l2: locs |   
-               //  two locations are connected iff     
-               	l1 != l2 & list_contains_archelem(l1::edges, l2) <=>
-               // there are tasks that let you go both ways between the locations
-               			(exists t: tasks | t::start_loc = l1::id & t::end_loc = l2::id) 
-               			& (exists t: tasks | t::start_loc = l2::id & t::end_loc = l1::id);
+//               forall l1 : locs | forall l2 : locs |
+//               		list_contains_archelem(l1::edges, l2) <=>
+//               		list_contains_archelem(l2::edges, l1);    
+//
+//				// map to tasklib:  (combines two views)
+//				// "there is an edge in the map iff there is a pair of tasks in the task lib with the same start and end/vice versa"
+//				// assumption: forward motion tasks are the only ones that change your location              
+//               forall l1: locs | exists l2: locs |   
+//               //  two locations are connected iff     
+//               	l1 != l2 & list_contains_archelem(l1::edges, l2) <=>
+//               // there are tasks that let you go both ways between the locations
+//               			(exists t: tasks | t::start_loc = l1::id & t::end_loc = l2::id) 
+//               			& (exists t: tasks | t::start_loc = l2::id & t::end_loc = l1::id);
   
 //           tasklib to map: 
 //			 "for each task in the lib, start and end are locations on the map

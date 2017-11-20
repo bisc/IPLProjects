@@ -1,5 +1,7 @@
 -- a view for file map3.json
 -- topologically equivalent to map3b
+-- different in power requirements in the task view
+
 package map3a
 public
 	with Map_Types;

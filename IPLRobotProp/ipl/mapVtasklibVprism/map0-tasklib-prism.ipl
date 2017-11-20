@@ -63,22 +63,22 @@ forall init: locs |
 
 // every task corresponds to an edge in prism 
           
-// map to tasklib: 
+// map to tasklib: <redundant with map0-tasklib.ipl>
 // "there is an edge in the map iff there is a pair of tasks in the task lib with the same start and end/vice versa"
 // combines two views
 // assumption: forward motion tasks are the only ones that change your location
-               // two locations       
-               forall l1: locs | exists l2: locs |   
-               // are connected iff     
-               	l1 != l2 & list_contains_archelem(l1::edges, l2) <=>
-               // there are tasks that let you go both ways between the locations
-               			(exists t: tasks | t::start_loc = l1::id & t::end_loc = l2::id) 
-               			& (exists t: tasks | t::start_loc = l2::id & t::end_loc = l1::id);
+//               // two locations       
+//               forall l1: locs | exists l2: locs |   
+//               // are connected iff     
+//               	l1 != l2 & list_contains_archelem(l1::edges, l2) <=>
+//               // there are tasks that let you go both ways between the locations
+//               			(exists t: tasks | t::start_loc = l1::id & t::end_loc = l2::id) 
+//               			& (exists t: tasks | t::start_loc = l2::id & t::end_loc = l1::id);
   
 //           tasklib to map: 
 // 				"for each task in the lib, start and end are locations on the map"
-               forall t: tasks | exists i : locs | exists j : locs |
-               		t::start_loc = i::id & t::end_loc = j::id;   
+//               forall t: tasks | exists i : locs | exists j : locs |
+//               		t::start_loc = i::id & t::end_loc = j::id;   
         
 //           tasklib to prism:   
 //               "for each edge, prism can go from start to end in one step (excluding all other locations)"

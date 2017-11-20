@@ -1,14 +1,14 @@
 import Robot_Task_Types.*;
-import tasks_view_map1_simple.*;
+import tasks_view_map3b_simple.*;
    
 import Map_Types.*;
-import map1.*;     
+import map3b.*;    
   
 use view Map.i as mapp;  
 set Locs : Location; 
 
-use view TaskLibrary.fullspeed; 
-set Tasks: Task; 
+use view TaskLibrary.fullspeed as tasklib; 
+set Tasks: Task;
 
 bfun list_contains_archelem(<<elem>>, elem) -> bool; 
 
@@ -16,12 +16,14 @@ bfun list_contains_archelem(<<elem>>, elem) -> bool;
 forall loc : Locs | 
 	(exists t1: Tasks | t1::start_loc = loc::id) & 
 	(exists t2: Tasks | t2::end_loc = loc::id);  
-		
+		    
 // "each edge corresponds to a forward & backward task" 
-               forall l1 : Locs | forall l2 : Locs |
-               		list_contains_archelem(l1::edges, l2) <=>
-	               		(exists t1:Tasks | t1::start_loc = l1::id & t1::end_loc = l2::id ) & 
-	               		(exists t2:Tasks | t2::start_loc = l2::id & t2::end_loc = l1::id );  
+               forall l1 : Locs | forall l2 : Locs | 
+               		(list_contains_archelem(l1::edges, l2) <=>
+	               		(exists t1:Tasks | t1::start_loc = l1::id & t1::end_loc = l2::id )) 
+	             & 
+	               	(list_contains_archelem(l2::edges, l1) <=>
+	               		(exists t2:Tasks | t2::start_loc = l2::id & t2::end_loc = l1::id ));  
                			
 // "each task corresponds to an edge" 
 	forall t:Tasks | exists l1:Locs | exists l2:Locs | 

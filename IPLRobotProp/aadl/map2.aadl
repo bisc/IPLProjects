@@ -65,6 +65,7 @@ public
 			Map_Types::edges => ( reference (l5), reference (l7) ) applies to l6;
 			Map_Types::edges => ( reference (l6), reference (l8) ) applies to l7;
 			Map_Types::edges => ( reference (l2), reference (l7) ) applies to l8;
+			Map_Types::edges => ( reference (l4)) applies to ls;
 		
 	end Map.i;
 	

@@ -18,7 +18,7 @@ forall loc : Locs |
 	(exists t2: Tasks | t2::end_loc = loc::id);  
 		    
 // "each edge corresponds to a forward & backward task" 
-               forall l1 : Locs | forall l2 : Locs |
+               forall l1 : Locs | forall l2 : Locs | 
                		(list_contains_archelem(l1::edges, l2) <=>
 	               		(exists t1:Tasks | t1::start_loc = l1::id & t1::end_loc = l2::id )) 
 	             & 
