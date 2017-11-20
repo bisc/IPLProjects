@@ -1,5 +1,5 @@
 -- a view for file map1.json
--- topologically identical to map0 and map2 
+-- topologically identical to map0 and almost to map2 (this one has l3-to-l6 and vice versa)
 package map1
 public
 	with Map_Types;

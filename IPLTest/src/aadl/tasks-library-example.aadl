@@ -1,0 +1,55 @@
+package tasks_library_example
+public
+	with Robot_Task_Types, Robot_Task_Properties;
+	
+	system Library 
+		
+	end Library;
+	
+	system implementation Library.i
+		subcomponents
+			s1: process Robot_Task_Types::Task;
+			s2: process Robot_Task_Types::Task;
+			s3: process Robot_Task_Types::Task;
+			s4: process Robot_Task_Types::Task;
+			 
+		properties 
+			Robot_Task_Properties::distance => 5.0 applies to s1; 
+			Robot_Task_Properties::duration => 3.5 applies to s1;
+			Robot_Task_Properties::task_type_enum => Rotate applies to s1;
+			Robot_Task_Properties::task_type => 1 applies to s1;  
+			Robot_Task_Properties::start_loc => 0 applies to s1;
+			Robot_Task_Properties::end_loc => 0 applies to s1;  
+			Robot_Task_Properties::start_head => 0 applies to s1;
+			Robot_Task_Properties::end_head => 1 applies to s1;  
+			  
+			Robot_Task_Properties::distance => 7.1 applies to s2; 
+			Robot_Task_Properties::duration => 4.8 applies to s2;
+			Robot_Task_Properties::task_type_enum => Forward applies to s2;
+			Robot_Task_Properties::task_type => 0 applies to s2; 
+			Robot_Task_Properties::start_loc => 0 applies to s2;
+			Robot_Task_Properties::end_loc => 1 applies to s2;  
+			Robot_Task_Properties::start_head => 1 applies to s2;
+			Robot_Task_Properties::end_head => 1 applies to s2;  
+			
+			Robot_Task_Properties::distance => 0.0 applies to s3; 
+			Robot_Task_Properties::duration => 2.0 applies to s3;
+			Robot_Task_Properties::task_type_enum => Rotate applies to s3;
+			Robot_Task_Properties::task_type => 1 applies to s3; 
+			Robot_Task_Properties::start_loc => 1 applies to s3;
+			Robot_Task_Properties::end_loc => 1 applies to s3;  
+			Robot_Task_Properties::start_head => 1 applies to s3;
+			Robot_Task_Properties::end_head => 3 applies to s3;  
+			
+			Robot_Task_Properties::distance => 2.3 applies to s4; 
+			Robot_Task_Properties::duration => 1.1 applies to s4;
+			Robot_Task_Properties::task_type_enum => Forward applies to s4;
+			Robot_Task_Properties::task_type => 0 applies to s4; 
+			Robot_Task_Properties::start_loc => 1 applies to s4;
+			Robot_Task_Properties::end_loc => 2 applies to s4;  
+			Robot_Task_Properties::start_head => 1 applies to s4;
+			Robot_Task_Properties::end_head => 1 applies to s4;  
+			
+	end Library.i;
+	
+end tasks_library_example;

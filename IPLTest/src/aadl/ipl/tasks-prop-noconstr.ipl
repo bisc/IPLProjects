@@ -1,10 +1,10 @@
 import Robot_Task_Types.*;
-import tasks_simple.*;  
+import tasks_library_simple.*;  
    
 use view TaskLibrary.fullspeed as lib; 
 use model prism_test(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY );
     
-stvar l: bool;         
+stvar l: int;         
          
 set tasks : Task;                            
                   

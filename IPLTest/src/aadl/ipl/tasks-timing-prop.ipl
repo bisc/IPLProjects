@@ -1,13 +1,13 @@
 import Robot_Task_Types.*;
-import tasks_simple.*;  
+import tasks_library_simple.*;  
    
 use view TaskLibrary.fullspeed as lib; 
 use model prism_test(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
       
-stvar l: bool;             
-         
+stvar l: int;             
+          
 set tasks : Task;                                          
-    
+     
  // presumably valid with 0.05, not valid with 0.5
 forall t1 : tasks | forall t2: tasks |     
 	(t1::task_type = 1 & t2::task_type = 1 & // forward motion

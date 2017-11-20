@@ -1,0 +1,33 @@
+import Robot_Task_Properties.*;
+import Robot_Task_Types.*;
+
+//import tasks_view_map1_simple;
+//import tasks_view_map2_simple;
+import tasks_view_map1_simple.*;
+import tasks_view_map2_simple.*;
+
+use view tasks_view_map1_simple::TaskLibrary.fullspeed as tasklib1;
+use view tasks_view_map2_simple::TaskLibrary.fullspeed as tasklib2;
+
+bfun isSubcomponentOf(elem, elem) -> bool;
+  
+//set tasks1: tasks_view_map1_simple::Task; 
+//set tasks2: tasks_view_map2_simple::Task; 
+//set tasks:tasks_view_map1_simple::Task; // does not matter which type to pick, they are the same type
+  
+set AllTasks: Task;
+
+// "tasks for map 1 are bijective to tasks for map 2" 
+// for each task in one library
+forall t1: AllTasks | isSubcomponentOf(t1, tasklib1) -> 
+// exists a task in another one 
+	(exists t2:AllTasks | isSubcomponentOf(t2, tasklib2) &
+	// such that they match starts and ends
+	t1::start_loc = t2::start_loc & t1::end_loc = t2::end_loc);  
+	
+forall t1: AllTasks | exists t2:AllTasks | 
+	t1::start_loc = t2::start_loc &
+	t1::end_loc = t2::end_loc & t1::energy = t2::energy;
+
+// use isSubcomp of? Then tasklib is a specific ID 
+

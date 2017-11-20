@@ -3,7 +3,7 @@ import Robot_Task_Types.*;
 import tasks_view_map3b_wempty_rot.*;
 use view TaskLibrary.fullspeed as tasklib;
 set tasks: Task;  
-     	 
+     	   
 bfun distinct(int, int, int, int, int, int) -> bool;
 bfun min_int(int, int) -> int;
  

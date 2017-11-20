@@ -1,0 +1,22 @@
+import Robot_Task_Types.*;
+import tasks_library_example.*;
+import tasks_library_simple.*;
+ 
+use view tasks_library_example::Library.i as libexample; 
+use view tasks_library_simple::TaskLibrary.fullspeed as libsimple;
+         
+set tasks : Task;    
+
+bfun isSubcomponentOf(elem, elem) -> bool;
+  
+// for one lib
+exists t: tasks | isSubcomponentOf(t, libexample);
+not (forall t: tasks | isSubcomponentOf(t, libexample));
+
+// for another lib
+exists t: tasks | isSubcomponentOf(t, libsimple);
+not (forall t: tasks | isSubcomponentOf(t, libsimple));
+
+// never in both
+not (exists t: tasks | isSubcomponentOf(t, libexample) & 
+			isSubcomponentOf(t, libsimple));

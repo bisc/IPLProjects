@@ -1,6 +1,6 @@
 -- a view for map0
 -- identical topologically to map1 and map2
-package map1
+package map0
 public
 	with Map_Types;
 	
@@ -69,4 +69,4 @@ public
 		
 	end Map.i;
 	
-end map1;
+end map0;
