@@ -1,5 +1,5 @@
 -- a view for file map2.json
--- initially thought topologically identical to map1, but it's missing l3_to_l6 task 
+-- initially thought topologically identical to map0/map1, but it's missing l3_to_l6 task 
 package map2
 public
 	with Map_Types;

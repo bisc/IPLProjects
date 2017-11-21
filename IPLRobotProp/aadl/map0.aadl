@@ -1,5 +1,5 @@
 -- a view for map0
--- identical topologically to map1 and map2
+-- identical topologically to map1 (and almost map2 -- this one has an extra edge l3-l6)
 package map0
 public
 	with Map_Types;

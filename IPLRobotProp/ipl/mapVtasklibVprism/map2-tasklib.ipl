@@ -7,7 +7,7 @@ import map2.*;
 use view Map.i as mapp;  
 set Locs : Location; 
 
-use view TaskLibrary.fullspeed as tasklib; 
+use view TaskLibrary.fullspeed; 
 set Tasks: Task;
 
 bfun list_contains_archelem(<<elem>>, elem) -> bool; 

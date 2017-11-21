@@ -1,0 +1,41 @@
+import Robot_Task_Properties.*;
+import Robot_Task_Types.*;
+
+import tasks_view_map0_simple.*;
+import tasks_view_map1_simple.*;
+
+use view tasks_view_map0_simple::TaskLibrary.fullspeed as tasklib0;
+use view tasks_view_map1_simple::TaskLibrary.fullspeed as tasklib1;
+
+bfun isSubcomponentOf(elem, elem) -> bool;
+bfun abs_int(int, int) -> int; 
+ 
+set AllTasks: Task;
+
+// "if a task in map 0, then it is in map 1"
+// Expected: valid
+// for each task in one library 
+forall t0: AllTasks | isSubcomponentOf(t0, tasklib0) -> 
+// exists a task in another one 
+	(exists t1:AllTasks | isSubcomponentOf(t1, tasklib1) &
+	// such that they match starts and ends
+	t0::start_loc = t1::start_loc & t0::end_loc = t1::end_loc);  
+	
+// "if a task in map 2, then it is in map 1"
+// Expected: valid
+// for each task in one library 
+forall t1: AllTasks | isSubcomponentOf(t1, tasklib1) -> 
+// exists a task in another one 
+	(exists t0:AllTasks | isSubcomponentOf(t0, tasklib0) &
+	// such that they match starts and ends
+	t0::start_loc = t1::start_loc & t0::end_loc = t1::end_loc); 	
+
+// "for matching tasks in two libraries, the energy is not too different" 
+// Expected: valid for 175, invalid for 150 (empirically established numbers) 
+forall t0: AllTasks | forall t1:AllTasks |
+	// if tasks match
+	isSubcomponentOf(t0, tasklib0) & isSubcomponentOf(t1, tasklib1) 
+	& t0::start_loc = t1::start_loc & t0::end_loc = t1::end_loc -> 
+	// the different between their energies is bounded
+	abs_int(t0::energy - t1::energy) <= 175 ;
+
