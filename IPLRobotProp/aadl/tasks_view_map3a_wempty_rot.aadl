@@ -1,0 +1,847 @@
+-- Created manually by adjusting tasks_view_map3b_wempty_rot
+-- 		using the numbers from model "prism_turns_nocharge_nospeed_map3a.prism"
+package tasks_view_map3a_wempty_rot 
+public
+with Robot_Task_Properties, Robot_Task_Types;
+
+system TaskLibrary
+end TaskLibrary;
+system implementation TaskLibrary.fullspeed
+
+subcomponents
+
+-- Motion task decls
+m_l1_to_l2: process Robot_Task_Types::Task;
+m_l2_to_l1: process Robot_Task_Types::Task;
+m_l2_to_c1: process Robot_Task_Types::Task;
+m_l2_to_c2: process Robot_Task_Types::Task;
+m_l3_to_c2: process Robot_Task_Types::Task;
+m_l3_to_c3: process Robot_Task_Types::Task;
+m_l3_to_l4: process Robot_Task_Types::Task;
+m_l4_to_l3: process Robot_Task_Types::Task;
+m_l4_to_ls: process Robot_Task_Types::Task;
+m_l4_to_l5: process Robot_Task_Types::Task;
+m_l5_to_l4: process Robot_Task_Types::Task;
+m_l5_to_l6: process Robot_Task_Types::Task;
+m_l6_to_l5: process Robot_Task_Types::Task;
+m_l6_to_c3: process Robot_Task_Types::Task;
+m_l6_to_c4: process Robot_Task_Types::Task;
+m_l7_to_c4: process Robot_Task_Types::Task;
+m_l7_to_c1: process Robot_Task_Types::Task;
+m_ls_to_l4: process Robot_Task_Types::Task;
+m_c1_to_l2: process Robot_Task_Types::Task;
+m_c1_to_l7: process Robot_Task_Types::Task;
+m_c2_to_l2: process Robot_Task_Types::Task;
+m_c2_to_l3: process Robot_Task_Types::Task;
+m_c3_to_l3: process Robot_Task_Types::Task;
+m_c3_to_l6: process Robot_Task_Types::Task;
+m_c4_to_l6: process Robot_Task_Types::Task;
+m_c4_to_l7: process Robot_Task_Types::Task;
+
+-- Rotation task decls
+r_in_c3_from_l3_to_l3: process Robot_Task_Types::Task;
+r_in_c3_from_l6_to_l6: process Robot_Task_Types::Task;
+r_in_c4_from_l6_to_l6: process Robot_Task_Types::Task;
+r_in_c4_from_l7_to_l7: process Robot_Task_Types::Task;
+r_in_l1_from_l2_to_l2: process Robot_Task_Types::Task;
+r_in_l2_from_l1_to_l1: process Robot_Task_Types::Task;
+r_in_l2_from_l1_to_c1: process Robot_Task_Types::Task;
+r_in_l2_from_c1_to_l1: process Robot_Task_Types::Task;
+r_in_l2_from_c1_to_c1: process Robot_Task_Types::Task;
+r_in_l2_from_c1_to_c2: process Robot_Task_Types::Task;
+r_in_l2_from_c2_to_c1: process Robot_Task_Types::Task;
+r_in_l2_from_c2_to_c2: process Robot_Task_Types::Task;
+r_in_l3_from_l4_to_c3: process Robot_Task_Types::Task;
+r_in_l3_from_l4_to_l4: process Robot_Task_Types::Task;
+r_in_l3_from_c2_to_c2: process Robot_Task_Types::Task;
+r_in_l3_from_c2_to_c3: process Robot_Task_Types::Task;
+r_in_l3_from_c3_to_c2: process Robot_Task_Types::Task;
+r_in_l3_from_c3_to_c3: process Robot_Task_Types::Task;
+r_in_l3_from_c3_to_l4: process Robot_Task_Types::Task;
+r_in_ls_from_l4_to_l4: process Robot_Task_Types::Task;
+r_in_l4_from_l3_to_l3: process Robot_Task_Types::Task;
+r_in_l4_from_l3_to_ls: process Robot_Task_Types::Task;
+r_in_l4_from_l3_to_l5: process Robot_Task_Types::Task;
+r_in_l4_from_l5_to_l3: process Robot_Task_Types::Task;
+r_in_l4_from_l5_to_l5: process Robot_Task_Types::Task;
+r_in_l4_from_ls_to_l3: process Robot_Task_Types::Task;
+r_in_l4_from_ls_to_ls: process Robot_Task_Types::Task;
+r_in_l5_from_l4_to_l4: process Robot_Task_Types::Task;
+r_in_l5_from_l4_to_l6: process Robot_Task_Types::Task;
+r_in_l5_from_l6_to_l4: process Robot_Task_Types::Task;
+r_in_l5_from_l6_to_l6: process Robot_Task_Types::Task;
+r_in_l6_from_l5_to_l5: process Robot_Task_Types::Task;
+r_in_l6_from_l5_to_c3: process Robot_Task_Types::Task;
+r_in_l6_from_c3_to_l5: process Robot_Task_Types::Task;
+r_in_l6_from_c3_to_c3: process Robot_Task_Types::Task;
+r_in_l6_from_c3_to_c4: process Robot_Task_Types::Task;
+r_in_l6_from_c4_to_c3: process Robot_Task_Types::Task;
+r_in_l6_from_c4_to_c4: process Robot_Task_Types::Task;
+r_in_l7_from_c1_to_c4: process Robot_Task_Types::Task;
+r_in_l7_from_c1_to_c1: process Robot_Task_Types::Task;
+r_in_l7_from_c4_to_c4: process Robot_Task_Types::Task;
+r_in_l7_from_c4_to_c1: process Robot_Task_Types::Task;
+r_in_c1_from_l2_to_l2: process Robot_Task_Types::Task;
+r_in_c1_from_l7_to_l7: process Robot_Task_Types::Task;
+r_in_c2_from_l2_to_l2: process Robot_Task_Types::Task;
+r_in_c2_from_l3_to_l3: process Robot_Task_Types::Task;
+
+
+-- Empty task decls
+e_c3: process Robot_Task_Types::Task;
+e_c4: process Robot_Task_Types::Task;
+e_l1: process Robot_Task_Types::Task;
+e_l2: process Robot_Task_Types::Task;
+e_l3: process Robot_Task_Types::Task;
+e_ls: process Robot_Task_Types::Task;
+e_l4: process Robot_Task_Types::Task;
+e_l5: process Robot_Task_Types::Task;
+e_l6: process Robot_Task_Types::Task;
+e_l7: process Robot_Task_Types::Task;
+e_c1: process Robot_Task_Types::Task;
+e_c2: process Robot_Task_Types::Task;
+
+
+properties
+
+-- Forward motion tasks
+-- Assumption:start/end locs are IDs of locations, not refs to them
+Robot_Task_Properties::task_id => 0 applies to m_l1_to_l2;
+Robot_Task_Properties::start_loc => 0 applies to m_l1_to_l2;
+Robot_Task_Properties::end_loc => 1 applies to m_l1_to_l2;
+Robot_Task_Properties::start_head => 2 applies to m_l1_to_l2;
+Robot_Task_Properties::end_head => 2 applies to m_l1_to_l2;
+Robot_Task_Properties::energy => 3291 applies to m_l1_to_l2;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l1_to_l2;
+Robot_Task_Properties::task_type => 0 applies to m_l1_to_l2;
+
+Robot_Task_Properties::task_id => 1 applies to m_l2_to_l1;
+Robot_Task_Properties::start_loc => 1 applies to m_l2_to_l1;
+Robot_Task_Properties::end_loc => 0 applies to m_l2_to_l1;
+Robot_Task_Properties::start_head => 6 applies to m_l2_to_l1;
+Robot_Task_Properties::end_head => 6 applies to m_l2_to_l1;
+Robot_Task_Properties::energy => 3291 applies to m_l2_to_l1;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l2_to_l1;
+Robot_Task_Properties::task_type => 0 applies to m_l2_to_l1;
+
+Robot_Task_Properties::task_id => 2 applies to m_l2_to_c1;
+Robot_Task_Properties::start_loc => 1 applies to m_l2_to_c1;
+Robot_Task_Properties::end_loc => 8 applies to m_l2_to_c1;
+Robot_Task_Properties::start_head => 4 applies to m_l2_to_c1;
+Robot_Task_Properties::end_head => 4 applies to m_l2_to_c1;
+Robot_Task_Properties::energy => 3215 applies to m_l2_to_c1;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l2_to_c1;
+Robot_Task_Properties::task_type => 0 applies to m_l2_to_c1;
+
+Robot_Task_Properties::task_id => 3 applies to m_l2_to_c2;
+Robot_Task_Properties::start_loc => 1 applies to m_l2_to_c2;
+Robot_Task_Properties::end_loc => 9 applies to m_l2_to_c2;
+Robot_Task_Properties::start_head => 2 applies to m_l2_to_c2;
+Robot_Task_Properties::end_head => 2 applies to m_l2_to_c2;
+Robot_Task_Properties::energy => 3767 applies to m_l2_to_c2;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l2_to_c2;
+Robot_Task_Properties::task_type => 0 applies to m_l2_to_c2;
+
+Robot_Task_Properties::task_id => 4 applies to m_l3_to_c2;
+Robot_Task_Properties::start_loc => 2 applies to m_l3_to_c2;
+Robot_Task_Properties::end_loc => 9 applies to m_l3_to_c2;
+Robot_Task_Properties::start_head => 6 applies to m_l3_to_c2;
+Robot_Task_Properties::end_head => 6 applies to m_l3_to_c2;
+Robot_Task_Properties::energy => 3775 applies to m_l3_to_c2;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l3_to_c2;
+Robot_Task_Properties::task_type => 0 applies to m_l3_to_c2;
+
+Robot_Task_Properties::task_id => 5 applies to m_l3_to_c3;
+Robot_Task_Properties::start_loc => 2 applies to m_l3_to_c3;
+Robot_Task_Properties::end_loc => 10 applies to m_l3_to_c3;
+Robot_Task_Properties::start_head => 4 applies to m_l3_to_c3;
+Robot_Task_Properties::end_head => 4 applies to m_l3_to_c3;
+Robot_Task_Properties::energy => 3215 applies to m_l3_to_c3;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l3_to_c3;
+Robot_Task_Properties::task_type => 0 applies to m_l3_to_c3;
+
+Robot_Task_Properties::task_id => 6 applies to m_l3_to_l4;
+Robot_Task_Properties::start_loc => 2 applies to m_l3_to_l4;
+Robot_Task_Properties::end_loc => 3 applies to m_l3_to_l4;
+Robot_Task_Properties::start_head => 2 applies to m_l3_to_l4;
+Robot_Task_Properties::end_head => 2 applies to m_l3_to_l4;
+Robot_Task_Properties::energy => 3646 applies to m_l3_to_l4;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l3_to_l4;
+Robot_Task_Properties::task_type => 0 applies to m_l3_to_l4;
+
+Robot_Task_Properties::task_id => 7 applies to m_l4_to_l3;
+Robot_Task_Properties::start_loc => 3 applies to m_l4_to_l3;
+Robot_Task_Properties::end_loc => 2 applies to m_l4_to_l3;
+Robot_Task_Properties::start_head => 6 applies to m_l4_to_l3;
+Robot_Task_Properties::end_head => 6 applies to m_l4_to_l3;
+Robot_Task_Properties::energy => 3646 applies to m_l4_to_l3;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l4_to_l3;
+Robot_Task_Properties::task_type => 0 applies to m_l4_to_l3;
+
+Robot_Task_Properties::task_id => 8 applies to m_l4_to_ls;
+Robot_Task_Properties::start_loc => 3 applies to m_l4_to_ls;
+Robot_Task_Properties::end_loc => 7 applies to m_l4_to_ls;
+Robot_Task_Properties::start_head => 0 applies to m_l4_to_ls;
+Robot_Task_Properties::end_head => 0 applies to m_l4_to_ls;
+Robot_Task_Properties::energy => 3321 applies to m_l4_to_ls;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l4_to_ls;
+Robot_Task_Properties::task_type => 0 applies to m_l4_to_ls;
+
+Robot_Task_Properties::task_id => 9 applies to m_l4_to_l5;
+Robot_Task_Properties::start_loc => 3 applies to m_l4_to_l5;
+Robot_Task_Properties::end_loc => 4 applies to m_l4_to_l5;
+Robot_Task_Properties::start_head => 4 applies to m_l4_to_l5;
+Robot_Task_Properties::end_head => 4 applies to m_l4_to_l5;
+Robot_Task_Properties::energy => 3684 applies to m_l4_to_l5;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l4_to_l5;
+Robot_Task_Properties::task_type => 0 applies to m_l4_to_l5;
+
+Robot_Task_Properties::task_id => 10 applies to m_l5_to_l4;
+Robot_Task_Properties::start_loc => 4 applies to m_l5_to_l4;
+Robot_Task_Properties::end_loc => 3 applies to m_l5_to_l4;
+Robot_Task_Properties::start_head => 0 applies to m_l5_to_l4;
+Robot_Task_Properties::end_head => 0 applies to m_l5_to_l4;
+Robot_Task_Properties::energy => 3684 applies to m_l5_to_l4;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l5_to_l4;
+Robot_Task_Properties::task_type => 0 applies to m_l5_to_l4;
+
+Robot_Task_Properties::task_id => 11 applies to m_l5_to_l6;
+Robot_Task_Properties::start_loc => 4 applies to m_l5_to_l6;
+Robot_Task_Properties::end_loc => 5 applies to m_l5_to_l6;
+Robot_Task_Properties::start_head => 6 applies to m_l5_to_l6;
+Robot_Task_Properties::end_head => 6 applies to m_l5_to_l6;
+Robot_Task_Properties::energy => 3646 applies to m_l5_to_l6;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l5_to_l6;
+Robot_Task_Properties::task_type => 0 applies to m_l5_to_l6;
+
+Robot_Task_Properties::task_id => 12 applies to m_l6_to_l5;
+Robot_Task_Properties::start_loc => 5 applies to m_l6_to_l5;
+Robot_Task_Properties::end_loc => 4 applies to m_l6_to_l5;
+Robot_Task_Properties::start_head => 2 applies to m_l6_to_l5;
+Robot_Task_Properties::end_head => 2 applies to m_l6_to_l5;
+Robot_Task_Properties::energy => 3646 applies to m_l6_to_l5;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l6_to_l5;
+Robot_Task_Properties::task_type => 0 applies to m_l6_to_l5;
+
+Robot_Task_Properties::task_id => 13 applies to m_l6_to_c3;
+Robot_Task_Properties::start_loc => 5 applies to m_l6_to_c3;
+Robot_Task_Properties::end_loc => 10 applies to m_l6_to_c3;
+Robot_Task_Properties::start_head => 0 applies to m_l6_to_c3;
+Robot_Task_Properties::end_head => 0 applies to m_l6_to_c3;
+Robot_Task_Properties::energy => 3382 applies to m_l6_to_c3;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l6_to_c3;
+Robot_Task_Properties::task_type => 0 applies to m_l6_to_c3;
+
+Robot_Task_Properties::task_id => 14 applies to m_l6_to_c4;
+Robot_Task_Properties::start_loc => 5 applies to m_l6_to_c4;
+Robot_Task_Properties::end_loc => 11 applies to m_l6_to_c4;
+Robot_Task_Properties::start_head => 6 applies to m_l6_to_c4;
+Robot_Task_Properties::end_head => 6 applies to m_l6_to_c4;
+Robot_Task_Properties::energy => 3775 applies to m_l6_to_c4;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l6_to_c4;
+Robot_Task_Properties::task_type => 0 applies to m_l6_to_c4;
+
+Robot_Task_Properties::task_id => 15 applies to m_l7_to_c4;
+Robot_Task_Properties::start_loc => 6 applies to m_l7_to_c4;
+Robot_Task_Properties::end_loc => 11 applies to m_l7_to_c4;
+Robot_Task_Properties::start_head => 2 applies to m_l7_to_c4;
+Robot_Task_Properties::end_head => 2 applies to m_l7_to_c4;
+Robot_Task_Properties::energy => 3767 applies to m_l7_to_c4;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l7_to_c4;
+Robot_Task_Properties::task_type => 0 applies to m_l7_to_c4;
+
+Robot_Task_Properties::task_id => 16 applies to m_l7_to_c1;
+Robot_Task_Properties::start_loc => 6 applies to m_l7_to_c1;
+Robot_Task_Properties::end_loc => 8 applies to m_l7_to_c1;
+Robot_Task_Properties::start_head => 0 applies to m_l7_to_c1;
+Robot_Task_Properties::end_head => 0 applies to m_l7_to_c1;
+Robot_Task_Properties::energy => 3382 applies to m_l7_to_c1;
+Robot_Task_Properties::task_type_enum => Forward applies to m_l7_to_c1;
+Robot_Task_Properties::task_type => 0 applies to m_l7_to_c1;
+
+Robot_Task_Properties::task_id => 17 applies to m_ls_to_l4;
+Robot_Task_Properties::start_loc => 7 applies to m_ls_to_l4;
+Robot_Task_Properties::end_loc => 3 applies to m_ls_to_l4;
+Robot_Task_Properties::start_head => 4 applies to m_ls_to_l4;
+Robot_Task_Properties::end_head => 4 applies to m_ls_to_l4;
+Robot_Task_Properties::energy => 3321 applies to m_ls_to_l4;
+Robot_Task_Properties::task_type_enum => Forward applies to m_ls_to_l4;
+Robot_Task_Properties::task_type => 0 applies to m_ls_to_l4;
+
+Robot_Task_Properties::task_id => 18 applies to m_c1_to_l2;
+Robot_Task_Properties::start_loc => 8 applies to m_c1_to_l2;
+Robot_Task_Properties::end_loc => 1 applies to m_c1_to_l2;
+Robot_Task_Properties::start_head => 0 applies to m_c1_to_l2;
+Robot_Task_Properties::end_head => 0 applies to m_c1_to_l2;
+Robot_Task_Properties::energy => 3215 applies to m_c1_to_l2;
+Robot_Task_Properties::task_type_enum => Forward applies to m_c1_to_l2;
+Robot_Task_Properties::task_type => 0 applies to m_c1_to_l2;
+
+Robot_Task_Properties::task_id => 19 applies to m_c1_to_l7;
+Robot_Task_Properties::start_loc => 8 applies to m_c1_to_l7;
+Robot_Task_Properties::end_loc => 6 applies to m_c1_to_l7;
+Robot_Task_Properties::start_head => 4 applies to m_c1_to_l7;
+Robot_Task_Properties::end_head => 4 applies to m_c1_to_l7;
+Robot_Task_Properties::energy => 3382 applies to m_c1_to_l7;
+Robot_Task_Properties::task_type_enum => Forward applies to m_c1_to_l7;
+Robot_Task_Properties::task_type => 0 applies to m_c1_to_l7;
+
+Robot_Task_Properties::task_id => 20 applies to m_c2_to_l2;
+Robot_Task_Properties::start_loc => 9 applies to m_c2_to_l2;
+Robot_Task_Properties::end_loc => 1 applies to m_c2_to_l2;
+Robot_Task_Properties::start_head => 6 applies to m_c2_to_l2;
+Robot_Task_Properties::end_head => 6 applies to m_c2_to_l2;
+Robot_Task_Properties::energy => 3767 applies to m_c2_to_l2;
+Robot_Task_Properties::task_type_enum => Forward applies to m_c2_to_l2;
+Robot_Task_Properties::task_type => 0 applies to m_c2_to_l2;
+
+Robot_Task_Properties::task_id => 21 applies to m_c2_to_l3;
+Robot_Task_Properties::start_loc => 9 applies to m_c2_to_l3;
+Robot_Task_Properties::end_loc => 2 applies to m_c2_to_l3;
+Robot_Task_Properties::start_head => 2 applies to m_c2_to_l3;
+Robot_Task_Properties::end_head => 2 applies to m_c2_to_l3;
+Robot_Task_Properties::energy => 3775 applies to m_c2_to_l3;
+Robot_Task_Properties::task_type_enum => Forward applies to m_c2_to_l3;
+Robot_Task_Properties::task_type => 0 applies to m_c2_to_l3;
+
+Robot_Task_Properties::task_id => 22 applies to m_c3_to_l3;
+Robot_Task_Properties::start_loc => 10 applies to m_c3_to_l3;
+Robot_Task_Properties::end_loc => 2 applies to m_c3_to_l3;
+Robot_Task_Properties::start_head => 0 applies to m_c3_to_l3;
+Robot_Task_Properties::end_head => 0 applies to m_c3_to_l3;
+Robot_Task_Properties::energy => 3215 applies to m_c3_to_l3;
+Robot_Task_Properties::task_type_enum => Forward applies to m_c3_to_l3;
+Robot_Task_Properties::task_type => 0 applies to m_c3_to_l3;
+
+Robot_Task_Properties::task_id => 23 applies to m_c3_to_l6;
+Robot_Task_Properties::start_loc => 10 applies to m_c3_to_l6;
+Robot_Task_Properties::end_loc => 5 applies to m_c3_to_l6;
+Robot_Task_Properties::start_head => 4 applies to m_c3_to_l6;
+Robot_Task_Properties::end_head => 4 applies to m_c3_to_l6;
+Robot_Task_Properties::energy => 3382 applies to m_c3_to_l6;
+Robot_Task_Properties::task_type_enum => Forward applies to m_c3_to_l6;
+Robot_Task_Properties::task_type => 0 applies to m_c3_to_l6;
+
+Robot_Task_Properties::task_id => 24 applies to m_c4_to_l6;
+Robot_Task_Properties::start_loc => 11 applies to m_c4_to_l6;
+Robot_Task_Properties::end_loc => 5 applies to m_c4_to_l6;
+Robot_Task_Properties::start_head => 2 applies to m_c4_to_l6;
+Robot_Task_Properties::end_head => 2 applies to m_c4_to_l6;
+Robot_Task_Properties::energy => 3775 applies to m_c4_to_l6;
+Robot_Task_Properties::task_type_enum => Forward applies to m_c4_to_l6;
+Robot_Task_Properties::task_type => 0 applies to m_c4_to_l6;
+
+Robot_Task_Properties::task_id => 25 applies to m_c4_to_l7;
+Robot_Task_Properties::start_loc => 11 applies to m_c4_to_l7;
+Robot_Task_Properties::end_loc => 6 applies to m_c4_to_l7;
+Robot_Task_Properties::start_head => 6 applies to m_c4_to_l7;
+Robot_Task_Properties::end_head => 6 applies to m_c4_to_l7;
+Robot_Task_Properties::energy => 3767 applies to m_c4_to_l7;
+Robot_Task_Properties::task_type_enum => Forward applies to m_c4_to_l7;
+Robot_Task_Properties::task_type => 0 applies to m_c4_to_l7;
+
+-- Rotation tasks
+Robot_Task_Properties::task_id => 26 applies to r_in_c3_from_l3_to_l3;
+Robot_Task_Properties::start_loc => 10 applies to r_in_c3_from_l3_to_l3;
+Robot_Task_Properties::end_loc => 10 applies to r_in_c3_from_l3_to_l3;
+Robot_Task_Properties::start_head => 4 applies to r_in_c3_from_l3_to_l3;
+Robot_Task_Properties::end_head => 0 applies to r_in_c3_from_l3_to_l3;
+Robot_Task_Properties::energy => 3613 applies to r_in_c3_from_l3_to_l3;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_c3_from_l3_to_l3;
+Robot_Task_Properties::task_type => 1 applies to r_in_c3_from_l3_to_l3;
+
+Robot_Task_Properties::task_id => 27 applies to r_in_c3_from_l6_to_l6;
+Robot_Task_Properties::start_loc => 10 applies to r_in_c3_from_l6_to_l6;
+Robot_Task_Properties::end_loc => 10 applies to r_in_c3_from_l6_to_l6;
+Robot_Task_Properties::start_head => 0 applies to r_in_c3_from_l6_to_l6;
+Robot_Task_Properties::end_head => 4 applies to r_in_c3_from_l6_to_l6;
+Robot_Task_Properties::energy => 3613 applies to r_in_c3_from_l6_to_l6;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_c3_from_l6_to_l6;
+Robot_Task_Properties::task_type => 1 applies to r_in_c3_from_l6_to_l6;
+
+Robot_Task_Properties::task_id => 28 applies to r_in_c4_from_l6_to_l6;
+Robot_Task_Properties::start_loc => 11 applies to r_in_c4_from_l6_to_l6;
+Robot_Task_Properties::end_loc => 11 applies to r_in_c4_from_l6_to_l6;
+Robot_Task_Properties::start_head => 6 applies to r_in_c4_from_l6_to_l6;
+Robot_Task_Properties::end_head => 2 applies to r_in_c4_from_l6_to_l6;
+Robot_Task_Properties::energy => 3613 applies to r_in_c4_from_l6_to_l6;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_c4_from_l6_to_l6;
+Robot_Task_Properties::task_type => 1 applies to r_in_c4_from_l6_to_l6;
+
+Robot_Task_Properties::task_id => 29 applies to r_in_c4_from_l7_to_l7;
+Robot_Task_Properties::start_loc => 11 applies to r_in_c4_from_l7_to_l7;
+Robot_Task_Properties::end_loc => 11 applies to r_in_c4_from_l7_to_l7;
+Robot_Task_Properties::start_head => 2 applies to r_in_c4_from_l7_to_l7;
+Robot_Task_Properties::end_head => 6 applies to r_in_c4_from_l7_to_l7;
+Robot_Task_Properties::energy => 3613 applies to r_in_c4_from_l7_to_l7;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_c4_from_l7_to_l7;
+Robot_Task_Properties::task_type => 1 applies to r_in_c4_from_l7_to_l7;
+
+Robot_Task_Properties::task_id => 30 applies to r_in_l1_from_l2_to_l2;
+Robot_Task_Properties::start_loc => 0 applies to r_in_l1_from_l2_to_l2;
+Robot_Task_Properties::end_loc => 0 applies to r_in_l1_from_l2_to_l2;
+Robot_Task_Properties::start_head => 6 applies to r_in_l1_from_l2_to_l2;
+Robot_Task_Properties::end_head => 2 applies to r_in_l1_from_l2_to_l2;
+Robot_Task_Properties::energy => 3613 applies to r_in_l1_from_l2_to_l2;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l1_from_l2_to_l2;
+Robot_Task_Properties::task_type => 1 applies to r_in_l1_from_l2_to_l2;
+
+Robot_Task_Properties::task_id => 31 applies to r_in_l2_from_l1_to_l1;
+Robot_Task_Properties::start_loc => 1 applies to r_in_l2_from_l1_to_l1;
+Robot_Task_Properties::end_loc => 1 applies to r_in_l2_from_l1_to_l1;
+Robot_Task_Properties::start_head => 2 applies to r_in_l2_from_l1_to_l1;
+Robot_Task_Properties::end_head => 6 applies to r_in_l2_from_l1_to_l1;
+Robot_Task_Properties::energy => 3613 applies to r_in_l2_from_l1_to_l1;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l2_from_l1_to_l1;
+Robot_Task_Properties::task_type => 1 applies to r_in_l2_from_l1_to_l1;
+
+Robot_Task_Properties::task_id => 32 applies to r_in_l2_from_l1_to_c1;
+Robot_Task_Properties::start_loc => 1 applies to r_in_l2_from_l1_to_c1;
+Robot_Task_Properties::end_loc => 1 applies to r_in_l2_from_l1_to_c1;
+Robot_Task_Properties::start_head => 2 applies to r_in_l2_from_l1_to_c1;
+Robot_Task_Properties::end_head => 4 applies to r_in_l2_from_l1_to_c1;
+Robot_Task_Properties::energy => 3554 applies to r_in_l2_from_l1_to_c1;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l2_from_l1_to_c1;
+Robot_Task_Properties::task_type => 1 applies to r_in_l2_from_l1_to_c1;
+
+Robot_Task_Properties::task_id => 33 applies to r_in_l2_from_c1_to_l1;
+Robot_Task_Properties::start_loc => 1 applies to r_in_l2_from_c1_to_l1;
+Robot_Task_Properties::end_loc => 1 applies to r_in_l2_from_c1_to_l1;
+Robot_Task_Properties::start_head => 0 applies to r_in_l2_from_c1_to_l1;
+Robot_Task_Properties::end_head => 6 applies to r_in_l2_from_c1_to_l1;
+Robot_Task_Properties::energy => 3554 applies to r_in_l2_from_c1_to_l1;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l2_from_c1_to_l1;
+Robot_Task_Properties::task_type => 1 applies to r_in_l2_from_c1_to_l1;
+
+Robot_Task_Properties::task_id => 34 applies to r_in_l2_from_c1_to_c1;
+Robot_Task_Properties::start_loc => 1 applies to r_in_l2_from_c1_to_c1;
+Robot_Task_Properties::end_loc => 1 applies to r_in_l2_from_c1_to_c1;
+Robot_Task_Properties::start_head => 0 applies to r_in_l2_from_c1_to_c1;
+Robot_Task_Properties::end_head => 4 applies to r_in_l2_from_c1_to_c1;
+Robot_Task_Properties::energy => 3613 applies to r_in_l2_from_c1_to_c1;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l2_from_c1_to_c1;
+Robot_Task_Properties::task_type => 1 applies to r_in_l2_from_c1_to_c1;
+
+Robot_Task_Properties::task_id => 35 applies to r_in_l2_from_c1_to_c2;
+Robot_Task_Properties::start_loc => 1 applies to r_in_l2_from_c1_to_c2;
+Robot_Task_Properties::end_loc => 1 applies to r_in_l2_from_c1_to_c2;
+Robot_Task_Properties::start_head => 0 applies to r_in_l2_from_c1_to_c2;
+Robot_Task_Properties::end_head => 2 applies to r_in_l2_from_c1_to_c2;
+Robot_Task_Properties::energy => 3554 applies to r_in_l2_from_c1_to_c2;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l2_from_c1_to_c2;
+Robot_Task_Properties::task_type => 1 applies to r_in_l2_from_c1_to_c2;
+
+Robot_Task_Properties::task_id => 36 applies to r_in_l2_from_c2_to_c1;
+Robot_Task_Properties::start_loc => 1 applies to r_in_l2_from_c2_to_c1;
+Robot_Task_Properties::end_loc => 1 applies to r_in_l2_from_c2_to_c1;
+Robot_Task_Properties::start_head => 6 applies to r_in_l2_from_c2_to_c1;
+Robot_Task_Properties::end_head => 4 applies to r_in_l2_from_c2_to_c1;
+Robot_Task_Properties::energy => 3554 applies to r_in_l2_from_c2_to_c1;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l2_from_c2_to_c1;
+Robot_Task_Properties::task_type => 1 applies to r_in_l2_from_c2_to_c1;
+
+Robot_Task_Properties::task_id => 37 applies to r_in_l2_from_c2_to_c2;
+Robot_Task_Properties::start_loc => 1 applies to r_in_l2_from_c2_to_c2;
+Robot_Task_Properties::end_loc => 1 applies to r_in_l2_from_c2_to_c2;
+Robot_Task_Properties::start_head => 6 applies to r_in_l2_from_c2_to_c2;
+Robot_Task_Properties::end_head => 2 applies to r_in_l2_from_c2_to_c2;
+Robot_Task_Properties::energy => 3613 applies to r_in_l2_from_c2_to_c2;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l2_from_c2_to_c2;
+Robot_Task_Properties::task_type => 1 applies to r_in_l2_from_c2_to_c2;
+
+Robot_Task_Properties::task_id => 38 applies to r_in_l3_from_l4_to_c3;
+Robot_Task_Properties::start_loc => 2 applies to r_in_l3_from_l4_to_c3;
+Robot_Task_Properties::end_loc => 2 applies to r_in_l3_from_l4_to_c3;
+Robot_Task_Properties::start_head => 6 applies to r_in_l3_from_l4_to_c3;
+Robot_Task_Properties::end_head => 4 applies to r_in_l3_from_l4_to_c3;
+Robot_Task_Properties::energy => 3554 applies to r_in_l3_from_l4_to_c3;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l3_from_l4_to_c3;
+Robot_Task_Properties::task_type => 1 applies to r_in_l3_from_l4_to_c3;
+
+Robot_Task_Properties::task_id => 39 applies to r_in_l3_from_l4_to_l4;
+Robot_Task_Properties::start_loc => 2 applies to r_in_l3_from_l4_to_l4;
+Robot_Task_Properties::end_loc => 2 applies to r_in_l3_from_l4_to_l4;
+Robot_Task_Properties::start_head => 6 applies to r_in_l3_from_l4_to_l4;
+Robot_Task_Properties::end_head => 2 applies to r_in_l3_from_l4_to_l4;
+Robot_Task_Properties::energy => 3613 applies to r_in_l3_from_l4_to_l4;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l3_from_l4_to_l4;
+Robot_Task_Properties::task_type => 1 applies to r_in_l3_from_l4_to_l4;
+
+Robot_Task_Properties::task_id => 40 applies to r_in_l3_from_c2_to_c2;
+Robot_Task_Properties::start_loc => 2 applies to r_in_l3_from_c2_to_c2;
+Robot_Task_Properties::end_loc => 2 applies to r_in_l3_from_c2_to_c2;
+Robot_Task_Properties::start_head => 2 applies to r_in_l3_from_c2_to_c2;
+Robot_Task_Properties::end_head => 6 applies to r_in_l3_from_c2_to_c2;
+Robot_Task_Properties::energy => 3613 applies to r_in_l3_from_c2_to_c2;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l3_from_c2_to_c2;
+Robot_Task_Properties::task_type => 1 applies to r_in_l3_from_c2_to_c2;
+
+Robot_Task_Properties::task_id => 41 applies to r_in_l3_from_c2_to_c3;
+Robot_Task_Properties::start_loc => 2 applies to r_in_l3_from_c2_to_c3;
+Robot_Task_Properties::end_loc => 2 applies to r_in_l3_from_c2_to_c3;
+Robot_Task_Properties::start_head => 2 applies to r_in_l3_from_c2_to_c3;
+Robot_Task_Properties::end_head => 4 applies to r_in_l3_from_c2_to_c3;
+Robot_Task_Properties::energy => 3554 applies to r_in_l3_from_c2_to_c3;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l3_from_c2_to_c3;
+Robot_Task_Properties::task_type => 1 applies to r_in_l3_from_c2_to_c3;
+
+Robot_Task_Properties::task_id => 42 applies to r_in_l3_from_c3_to_c2;
+Robot_Task_Properties::start_loc => 2 applies to r_in_l3_from_c3_to_c2;
+Robot_Task_Properties::end_loc => 2 applies to r_in_l3_from_c3_to_c2;
+Robot_Task_Properties::start_head => 0 applies to r_in_l3_from_c3_to_c2;
+Robot_Task_Properties::end_head => 6 applies to r_in_l3_from_c3_to_c2;
+Robot_Task_Properties::energy => 3554 applies to r_in_l3_from_c3_to_c2;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l3_from_c3_to_c2;
+Robot_Task_Properties::task_type => 1 applies to r_in_l3_from_c3_to_c2;
+
+Robot_Task_Properties::task_id => 43 applies to r_in_l3_from_c3_to_c3;
+Robot_Task_Properties::start_loc => 2 applies to r_in_l3_from_c3_to_c3;
+Robot_Task_Properties::end_loc => 2 applies to r_in_l3_from_c3_to_c3;
+Robot_Task_Properties::start_head => 0 applies to r_in_l3_from_c3_to_c3;
+Robot_Task_Properties::end_head => 4 applies to r_in_l3_from_c3_to_c3;
+Robot_Task_Properties::energy => 3613 applies to r_in_l3_from_c3_to_c3;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l3_from_c3_to_c3;
+Robot_Task_Properties::task_type => 1 applies to r_in_l3_from_c3_to_c3;
+
+Robot_Task_Properties::task_id => 44 applies to r_in_l3_from_c3_to_l4;
+Robot_Task_Properties::start_loc => 2 applies to r_in_l3_from_c3_to_l4;
+Robot_Task_Properties::end_loc => 2 applies to r_in_l3_from_c3_to_l4;
+Robot_Task_Properties::start_head => 0 applies to r_in_l3_from_c3_to_l4;
+Robot_Task_Properties::end_head => 2 applies to r_in_l3_from_c3_to_l4;
+Robot_Task_Properties::energy => 3554 applies to r_in_l3_from_c3_to_l4;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l3_from_c3_to_l4;
+Robot_Task_Properties::task_type => 1 applies to r_in_l3_from_c3_to_l4;
+
+Robot_Task_Properties::task_id => 45 applies to r_in_ls_from_l4_to_l4;
+Robot_Task_Properties::start_loc => 7 applies to r_in_ls_from_l4_to_l4;
+Robot_Task_Properties::end_loc => 7 applies to r_in_ls_from_l4_to_l4;
+Robot_Task_Properties::start_head => 0 applies to r_in_ls_from_l4_to_l4;
+Robot_Task_Properties::end_head => 4 applies to r_in_ls_from_l4_to_l4;
+Robot_Task_Properties::energy => 3613 applies to r_in_ls_from_l4_to_l4;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_ls_from_l4_to_l4;
+Robot_Task_Properties::task_type => 1 applies to r_in_ls_from_l4_to_l4;
+
+Robot_Task_Properties::task_id => 46 applies to r_in_l4_from_l3_to_l3;
+Robot_Task_Properties::start_loc => 3 applies to r_in_l4_from_l3_to_l3;
+Robot_Task_Properties::end_loc => 3 applies to r_in_l4_from_l3_to_l3;
+Robot_Task_Properties::start_head => 2 applies to r_in_l4_from_l3_to_l3;
+Robot_Task_Properties::end_head => 6 applies to r_in_l4_from_l3_to_l3;
+Robot_Task_Properties::energy => 3613 applies to r_in_l4_from_l3_to_l3;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l4_from_l3_to_l3;
+Robot_Task_Properties::task_type => 1 applies to r_in_l4_from_l3_to_l3;
+
+Robot_Task_Properties::task_id => 47 applies to r_in_l4_from_l3_to_ls;
+Robot_Task_Properties::start_loc => 3 applies to r_in_l4_from_l3_to_ls;
+Robot_Task_Properties::end_loc => 3 applies to r_in_l4_from_l3_to_ls;
+Robot_Task_Properties::start_head => 2 applies to r_in_l4_from_l3_to_ls;
+Robot_Task_Properties::end_head => 0 applies to r_in_l4_from_l3_to_ls;
+Robot_Task_Properties::energy => 3554 applies to r_in_l4_from_l3_to_ls;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l4_from_l3_to_ls;
+Robot_Task_Properties::task_type => 1 applies to r_in_l4_from_l3_to_ls;
+
+Robot_Task_Properties::task_id => 48 applies to r_in_l4_from_l3_to_l5;
+Robot_Task_Properties::start_loc => 3 applies to r_in_l4_from_l3_to_l5;
+Robot_Task_Properties::end_loc => 3 applies to r_in_l4_from_l3_to_l5;
+Robot_Task_Properties::start_head => 2 applies to r_in_l4_from_l3_to_l5;
+Robot_Task_Properties::end_head => 4 applies to r_in_l4_from_l3_to_l5;
+Robot_Task_Properties::energy => 3554 applies to r_in_l4_from_l3_to_l5;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l4_from_l3_to_l5;
+Robot_Task_Properties::task_type => 1 applies to r_in_l4_from_l3_to_l5;
+
+Robot_Task_Properties::task_id => 49 applies to r_in_l4_from_l5_to_l3;
+Robot_Task_Properties::start_loc => 3 applies to r_in_l4_from_l5_to_l3;
+Robot_Task_Properties::end_loc => 3 applies to r_in_l4_from_l5_to_l3;
+Robot_Task_Properties::start_head => 0 applies to r_in_l4_from_l5_to_l3;
+Robot_Task_Properties::end_head => 6 applies to r_in_l4_from_l5_to_l3;
+Robot_Task_Properties::energy => 3554 applies to r_in_l4_from_l5_to_l3;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l4_from_l5_to_l3;
+Robot_Task_Properties::task_type => 1 applies to r_in_l4_from_l5_to_l3;
+
+Robot_Task_Properties::task_id => 50 applies to r_in_l4_from_l5_to_l5;
+Robot_Task_Properties::start_loc => 3 applies to r_in_l4_from_l5_to_l5;
+Robot_Task_Properties::end_loc => 3 applies to r_in_l4_from_l5_to_l5;
+Robot_Task_Properties::start_head => 0 applies to r_in_l4_from_l5_to_l5;
+Robot_Task_Properties::end_head => 4 applies to r_in_l4_from_l5_to_l5;
+Robot_Task_Properties::energy => 3613 applies to r_in_l4_from_l5_to_l5;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l4_from_l5_to_l5;
+Robot_Task_Properties::task_type => 1 applies to r_in_l4_from_l5_to_l5;
+
+Robot_Task_Properties::task_id => 51 applies to r_in_l4_from_ls_to_l3;
+Robot_Task_Properties::start_loc => 3 applies to r_in_l4_from_ls_to_l3;
+Robot_Task_Properties::end_loc => 3 applies to r_in_l4_from_ls_to_l3;
+Robot_Task_Properties::start_head => 4 applies to r_in_l4_from_ls_to_l3;
+Robot_Task_Properties::end_head => 6 applies to r_in_l4_from_ls_to_l3;
+Robot_Task_Properties::energy => 3554 applies to r_in_l4_from_ls_to_l3;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l4_from_ls_to_l3;
+Robot_Task_Properties::task_type => 1 applies to r_in_l4_from_ls_to_l3;
+
+Robot_Task_Properties::task_id => 52 applies to r_in_l4_from_ls_to_ls;
+Robot_Task_Properties::start_loc => 3 applies to r_in_l4_from_ls_to_ls;
+Robot_Task_Properties::end_loc => 3 applies to r_in_l4_from_ls_to_ls;
+Robot_Task_Properties::start_head => 4 applies to r_in_l4_from_ls_to_ls;
+Robot_Task_Properties::end_head => 0 applies to r_in_l4_from_ls_to_ls;
+Robot_Task_Properties::energy => 3613 applies to r_in_l4_from_ls_to_ls;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l4_from_ls_to_ls;
+Robot_Task_Properties::task_type => 1 applies to r_in_l4_from_ls_to_ls;
+
+Robot_Task_Properties::task_id => 53 applies to r_in_l5_from_l4_to_l4;
+Robot_Task_Properties::start_loc => 4 applies to r_in_l5_from_l4_to_l4;
+Robot_Task_Properties::end_loc => 4 applies to r_in_l5_from_l4_to_l4;
+Robot_Task_Properties::start_head => 4 applies to r_in_l5_from_l4_to_l4;
+Robot_Task_Properties::end_head => 0 applies to r_in_l5_from_l4_to_l4;
+Robot_Task_Properties::energy => 3613 applies to r_in_l5_from_l4_to_l4;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l5_from_l4_to_l4;
+Robot_Task_Properties::task_type => 1 applies to r_in_l5_from_l4_to_l4;
+
+Robot_Task_Properties::task_id => 54 applies to r_in_l5_from_l4_to_l6;
+Robot_Task_Properties::start_loc => 4 applies to r_in_l5_from_l4_to_l6;
+Robot_Task_Properties::end_loc => 4 applies to r_in_l5_from_l4_to_l6;
+Robot_Task_Properties::start_head => 4 applies to r_in_l5_from_l4_to_l6;
+Robot_Task_Properties::end_head => 6 applies to r_in_l5_from_l4_to_l6;
+Robot_Task_Properties::energy => 3554 applies to r_in_l5_from_l4_to_l6;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l5_from_l4_to_l6;
+Robot_Task_Properties::task_type => 1 applies to r_in_l5_from_l4_to_l6;
+
+Robot_Task_Properties::task_id => 55 applies to r_in_l5_from_l6_to_l4;
+Robot_Task_Properties::start_loc => 4 applies to r_in_l5_from_l6_to_l4;
+Robot_Task_Properties::end_loc => 4 applies to r_in_l5_from_l6_to_l4;
+Robot_Task_Properties::start_head => 2 applies to r_in_l5_from_l6_to_l4;
+Robot_Task_Properties::end_head => 0 applies to r_in_l5_from_l6_to_l4;
+Robot_Task_Properties::energy => 3554 applies to r_in_l5_from_l6_to_l4;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l5_from_l6_to_l4;
+Robot_Task_Properties::task_type => 1 applies to r_in_l5_from_l6_to_l4;
+
+Robot_Task_Properties::task_id => 56 applies to r_in_l5_from_l6_to_l6;
+Robot_Task_Properties::start_loc => 4 applies to r_in_l5_from_l6_to_l6;
+Robot_Task_Properties::end_loc => 4 applies to r_in_l5_from_l6_to_l6;
+Robot_Task_Properties::start_head => 2 applies to r_in_l5_from_l6_to_l6;
+Robot_Task_Properties::end_head => 6 applies to r_in_l5_from_l6_to_l6;
+Robot_Task_Properties::energy => 3613 applies to r_in_l5_from_l6_to_l6;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l5_from_l6_to_l6;
+Robot_Task_Properties::task_type => 1 applies to r_in_l5_from_l6_to_l6;
+
+Robot_Task_Properties::task_id => 57 applies to r_in_l6_from_l5_to_l5;
+Robot_Task_Properties::start_loc => 5 applies to r_in_l6_from_l5_to_l5;
+Robot_Task_Properties::end_loc => 5 applies to r_in_l6_from_l5_to_l5;
+Robot_Task_Properties::start_head => 6 applies to r_in_l6_from_l5_to_l5;
+Robot_Task_Properties::end_head => 2 applies to r_in_l6_from_l5_to_l5;
+Robot_Task_Properties::energy => 3613 applies to r_in_l6_from_l5_to_l5;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l6_from_l5_to_l5;
+Robot_Task_Properties::task_type => 1 applies to r_in_l6_from_l5_to_l5;
+
+Robot_Task_Properties::task_id => 58 applies to r_in_l6_from_l5_to_c3;
+Robot_Task_Properties::start_loc => 5 applies to r_in_l6_from_l5_to_c3;
+Robot_Task_Properties::end_loc => 5 applies to r_in_l6_from_l5_to_c3;
+Robot_Task_Properties::start_head => 6 applies to r_in_l6_from_l5_to_c3;
+Robot_Task_Properties::end_head => 0 applies to r_in_l6_from_l5_to_c3;
+Robot_Task_Properties::energy => 3554 applies to r_in_l6_from_l5_to_c3;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l6_from_l5_to_c3;
+Robot_Task_Properties::task_type => 1 applies to r_in_l6_from_l5_to_c3;
+
+Robot_Task_Properties::task_id => 59 applies to r_in_l6_from_c3_to_l5;
+Robot_Task_Properties::start_loc => 5 applies to r_in_l6_from_c3_to_l5;
+Robot_Task_Properties::end_loc => 5 applies to r_in_l6_from_c3_to_l5;
+Robot_Task_Properties::start_head => 4 applies to r_in_l6_from_c3_to_l5;
+Robot_Task_Properties::end_head => 2 applies to r_in_l6_from_c3_to_l5;
+Robot_Task_Properties::energy => 3554 applies to r_in_l6_from_c3_to_l5;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l6_from_c3_to_l5;
+Robot_Task_Properties::task_type => 1 applies to r_in_l6_from_c3_to_l5;
+
+Robot_Task_Properties::task_id => 60 applies to r_in_l6_from_c3_to_c3;
+Robot_Task_Properties::start_loc => 5 applies to r_in_l6_from_c3_to_c3;
+Robot_Task_Properties::end_loc => 5 applies to r_in_l6_from_c3_to_c3;
+Robot_Task_Properties::start_head => 4 applies to r_in_l6_from_c3_to_c3;
+Robot_Task_Properties::end_head => 0 applies to r_in_l6_from_c3_to_c3;
+Robot_Task_Properties::energy => 3613 applies to r_in_l6_from_c3_to_c3;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l6_from_c3_to_c3;
+Robot_Task_Properties::task_type => 1 applies to r_in_l6_from_c3_to_c3;
+
+Robot_Task_Properties::task_id => 61 applies to r_in_l6_from_c3_to_c4;
+Robot_Task_Properties::start_loc => 5 applies to r_in_l6_from_c3_to_c4;
+Robot_Task_Properties::end_loc => 5 applies to r_in_l6_from_c3_to_c4;
+Robot_Task_Properties::start_head => 4 applies to r_in_l6_from_c3_to_c4;
+Robot_Task_Properties::end_head => 6 applies to r_in_l6_from_c3_to_c4;
+Robot_Task_Properties::energy => 3554 applies to r_in_l6_from_c3_to_c4;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l6_from_c3_to_c4;
+Robot_Task_Properties::task_type => 1 applies to r_in_l6_from_c3_to_c4;
+
+Robot_Task_Properties::task_id => 62 applies to r_in_l6_from_c4_to_c3;
+Robot_Task_Properties::start_loc => 5 applies to r_in_l6_from_c4_to_c3;
+Robot_Task_Properties::end_loc => 5 applies to r_in_l6_from_c4_to_c3;
+Robot_Task_Properties::start_head => 2 applies to r_in_l6_from_c4_to_c3;
+Robot_Task_Properties::end_head => 0 applies to r_in_l6_from_c4_to_c3;
+Robot_Task_Properties::energy => 3554 applies to r_in_l6_from_c4_to_c3;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l6_from_c4_to_c3;
+Robot_Task_Properties::task_type => 1 applies to r_in_l6_from_c4_to_c3;
+
+Robot_Task_Properties::task_id => 63 applies to r_in_l6_from_c4_to_c4;
+Robot_Task_Properties::start_loc => 5 applies to r_in_l6_from_c4_to_c4;
+Robot_Task_Properties::end_loc => 5 applies to r_in_l6_from_c4_to_c4;
+Robot_Task_Properties::start_head => 2 applies to r_in_l6_from_c4_to_c4;
+Robot_Task_Properties::end_head => 6 applies to r_in_l6_from_c4_to_c4;
+Robot_Task_Properties::energy => 3613 applies to r_in_l6_from_c4_to_c4;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l6_from_c4_to_c4;
+Robot_Task_Properties::task_type => 1 applies to r_in_l6_from_c4_to_c4;
+
+Robot_Task_Properties::task_id => 64 applies to r_in_l7_from_c1_to_c4;
+Robot_Task_Properties::start_loc => 6 applies to r_in_l7_from_c1_to_c4;
+Robot_Task_Properties::end_loc => 6 applies to r_in_l7_from_c1_to_c4;
+Robot_Task_Properties::start_head => 4 applies to r_in_l7_from_c1_to_c4;
+Robot_Task_Properties::end_head => 2 applies to r_in_l7_from_c1_to_c4;
+Robot_Task_Properties::energy => 3554 applies to r_in_l7_from_c1_to_c4;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l7_from_c1_to_c4;
+Robot_Task_Properties::task_type => 1 applies to r_in_l7_from_c1_to_c4;
+
+Robot_Task_Properties::task_id => 65 applies to r_in_l7_from_c1_to_c1;
+Robot_Task_Properties::start_loc => 6 applies to r_in_l7_from_c1_to_c1;
+Robot_Task_Properties::end_loc => 6 applies to r_in_l7_from_c1_to_c1;
+Robot_Task_Properties::start_head => 4 applies to r_in_l7_from_c1_to_c1;
+Robot_Task_Properties::end_head => 0 applies to r_in_l7_from_c1_to_c1;
+Robot_Task_Properties::energy => 3613 applies to r_in_l7_from_c1_to_c1;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l7_from_c1_to_c1;
+Robot_Task_Properties::task_type => 1 applies to r_in_l7_from_c1_to_c1;
+
+Robot_Task_Properties::task_id => 66 applies to r_in_l7_from_c4_to_c4;
+Robot_Task_Properties::start_loc => 6 applies to r_in_l7_from_c4_to_c4;
+Robot_Task_Properties::end_loc => 6 applies to r_in_l7_from_c4_to_c4;
+Robot_Task_Properties::start_head => 6 applies to r_in_l7_from_c4_to_c4;
+Robot_Task_Properties::end_head => 2 applies to r_in_l7_from_c4_to_c4;
+Robot_Task_Properties::energy => 3613 applies to r_in_l7_from_c4_to_c4;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l7_from_c4_to_c4;
+Robot_Task_Properties::task_type => 1 applies to r_in_l7_from_c4_to_c4;
+
+Robot_Task_Properties::task_id => 67 applies to r_in_l7_from_c4_to_c1;
+Robot_Task_Properties::start_loc => 6 applies to r_in_l7_from_c4_to_c1;
+Robot_Task_Properties::end_loc => 6 applies to r_in_l7_from_c4_to_c1;
+Robot_Task_Properties::start_head => 6 applies to r_in_l7_from_c4_to_c1;
+Robot_Task_Properties::end_head => 0 applies to r_in_l7_from_c4_to_c1;
+Robot_Task_Properties::energy => 3554 applies to r_in_l7_from_c4_to_c1;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_l7_from_c4_to_c1;
+Robot_Task_Properties::task_type => 1 applies to r_in_l7_from_c4_to_c1;
+
+Robot_Task_Properties::task_id => 68 applies to r_in_c1_from_l2_to_l2;
+Robot_Task_Properties::start_loc => 8 applies to r_in_c1_from_l2_to_l2;
+Robot_Task_Properties::end_loc => 8 applies to r_in_c1_from_l2_to_l2;
+Robot_Task_Properties::start_head => 4 applies to r_in_c1_from_l2_to_l2;
+Robot_Task_Properties::end_head => 0 applies to r_in_c1_from_l2_to_l2;
+Robot_Task_Properties::energy => 3613 applies to r_in_c1_from_l2_to_l2;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_c1_from_l2_to_l2;
+Robot_Task_Properties::task_type => 1 applies to r_in_c1_from_l2_to_l2;
+
+Robot_Task_Properties::task_id => 69 applies to r_in_c1_from_l7_to_l7;
+Robot_Task_Properties::start_loc => 8 applies to r_in_c1_from_l7_to_l7;
+Robot_Task_Properties::end_loc => 8 applies to r_in_c1_from_l7_to_l7;
+Robot_Task_Properties::start_head => 0 applies to r_in_c1_from_l7_to_l7;
+Robot_Task_Properties::end_head => 4 applies to r_in_c1_from_l7_to_l7;
+Robot_Task_Properties::energy => 3613 applies to r_in_c1_from_l7_to_l7;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_c1_from_l7_to_l7;
+Robot_Task_Properties::task_type => 1 applies to r_in_c1_from_l7_to_l7;
+
+Robot_Task_Properties::task_id => 70 applies to r_in_c2_from_l2_to_l2;
+Robot_Task_Properties::start_loc => 9 applies to r_in_c2_from_l2_to_l2;
+Robot_Task_Properties::end_loc => 9 applies to r_in_c2_from_l2_to_l2;
+Robot_Task_Properties::start_head => 2 applies to r_in_c2_from_l2_to_l2;
+Robot_Task_Properties::end_head => 6 applies to r_in_c2_from_l2_to_l2;
+Robot_Task_Properties::energy => 3613 applies to r_in_c2_from_l2_to_l2;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_c2_from_l2_to_l2;
+Robot_Task_Properties::task_type => 1 applies to r_in_c2_from_l2_to_l2;
+
+Robot_Task_Properties::task_id => 71 applies to r_in_c2_from_l3_to_l3;
+Robot_Task_Properties::start_loc => 9 applies to r_in_c2_from_l3_to_l3;
+Robot_Task_Properties::end_loc => 9 applies to r_in_c2_from_l3_to_l3;
+Robot_Task_Properties::start_head => 6 applies to r_in_c2_from_l3_to_l3;
+Robot_Task_Properties::end_head => 2 applies to r_in_c2_from_l3_to_l3;
+Robot_Task_Properties::energy => 3613 applies to r_in_c2_from_l3_to_l3;
+Robot_Task_Properties::task_type_enum => Rotate applies to r_in_c2_from_l3_to_l3;
+Robot_Task_Properties::task_type => 1 applies to r_in_c2_from_l3_to_l3;
+
+
+
+-- Empty tasks
+Robot_Task_Properties::task_id => 72 applies to e_c3;
+Robot_Task_Properties::start_loc => 10 applies to e_c3;
+Robot_Task_Properties::end_loc => 10 applies to e_c3;
+Robot_Task_Properties::energy => 0 applies to e_c3;
+Robot_Task_Properties::task_type_enum => Empty applies to e_c3;
+Robot_Task_Properties::task_type => 2 applies to e_c3;
+
+Robot_Task_Properties::task_id => 73 applies to e_c4;
+Robot_Task_Properties::start_loc => 11 applies to e_c4;
+Robot_Task_Properties::end_loc => 11 applies to e_c4;
+Robot_Task_Properties::energy => 0 applies to e_c4;
+Robot_Task_Properties::task_type_enum => Empty applies to e_c4;
+Robot_Task_Properties::task_type => 2 applies to e_c4;
+
+Robot_Task_Properties::task_id => 74 applies to e_l1;
+Robot_Task_Properties::start_loc => 0 applies to e_l1;
+Robot_Task_Properties::end_loc => 0 applies to e_l1;
+Robot_Task_Properties::energy => 0 applies to e_l1;
+Robot_Task_Properties::task_type_enum => Empty applies to e_l1;
+Robot_Task_Properties::task_type => 2 applies to e_l1;
+
+Robot_Task_Properties::task_id => 75 applies to e_l2;
+Robot_Task_Properties::start_loc => 1 applies to e_l2;
+Robot_Task_Properties::end_loc => 1 applies to e_l2;
+Robot_Task_Properties::energy => 0 applies to e_l2;
+Robot_Task_Properties::task_type_enum => Empty applies to e_l2;
+Robot_Task_Properties::task_type => 2 applies to e_l2;
+
+Robot_Task_Properties::task_id => 76 applies to e_l3;
+Robot_Task_Properties::start_loc => 2 applies to e_l3;
+Robot_Task_Properties::end_loc => 2 applies to e_l3;
+Robot_Task_Properties::energy => 0 applies to e_l3;
+Robot_Task_Properties::task_type_enum => Empty applies to e_l3;
+Robot_Task_Properties::task_type => 2 applies to e_l3;
+
+Robot_Task_Properties::task_id => 77 applies to e_ls;
+Robot_Task_Properties::start_loc => 7 applies to e_ls;
+Robot_Task_Properties::end_loc => 7 applies to e_ls;
+Robot_Task_Properties::energy => 0 applies to e_ls;
+Robot_Task_Properties::task_type_enum => Empty applies to e_ls;
+Robot_Task_Properties::task_type => 2 applies to e_ls;
+
+Robot_Task_Properties::task_id => 78 applies to e_l4;
+Robot_Task_Properties::start_loc => 3 applies to e_l4;
+Robot_Task_Properties::end_loc => 3 applies to e_l4;
+Robot_Task_Properties::energy => 0 applies to e_l4;
+Robot_Task_Properties::task_type_enum => Empty applies to e_l4;
+Robot_Task_Properties::task_type => 2 applies to e_l4;
+
+Robot_Task_Properties::task_id => 79 applies to e_l5;
+Robot_Task_Properties::start_loc => 4 applies to e_l5;
+Robot_Task_Properties::end_loc => 4 applies to e_l5;
+Robot_Task_Properties::energy => 0 applies to e_l5;
+Robot_Task_Properties::task_type_enum => Empty applies to e_l5;
+Robot_Task_Properties::task_type => 2 applies to e_l5;
+
+Robot_Task_Properties::task_id => 80 applies to e_l6;
+Robot_Task_Properties::start_loc => 5 applies to e_l6;
+Robot_Task_Properties::end_loc => 5 applies to e_l6;
+Robot_Task_Properties::energy => 0 applies to e_l6;
+Robot_Task_Properties::task_type_enum => Empty applies to e_l6;
+Robot_Task_Properties::task_type => 2 applies to e_l6;
+
+Robot_Task_Properties::task_id => 81 applies to e_l7;
+Robot_Task_Properties::start_loc => 6 applies to e_l7;
+Robot_Task_Properties::end_loc => 6 applies to e_l7;
+Robot_Task_Properties::energy => 0 applies to e_l7;
+Robot_Task_Properties::task_type_enum => Empty applies to e_l7;
+Robot_Task_Properties::task_type => 2 applies to e_l7;
+
+Robot_Task_Properties::task_id => 82 applies to e_c1;
+Robot_Task_Properties::start_loc => 8 applies to e_c1;
+Robot_Task_Properties::end_loc => 8 applies to e_c1;
+Robot_Task_Properties::energy => 0 applies to e_c1;
+Robot_Task_Properties::task_type_enum => Empty applies to e_c1;
+Robot_Task_Properties::task_type => 2 applies to e_c1;
+
+Robot_Task_Properties::task_id => 83 applies to e_c2;
+Robot_Task_Properties::start_loc => 9 applies to e_c2;
+Robot_Task_Properties::end_loc => 9 applies to e_c2;
+Robot_Task_Properties::energy => 0 applies to e_c2;
+Robot_Task_Properties::task_type_enum => Empty applies to e_c2;
+Robot_Task_Properties::task_type => 2 applies to e_c2;
+
+
+end TaskLibrary.fullspeed;
+end tasks_view_map3a_wempty_rot;

@@ -1,5 +1,5 @@
 -- View for map0, created manually
--- Somehow takes slightly less energy than the views from map 1
+-- Somehow takes slightly less energy on forward motion than the views from map 1
 
 package tasks_view_map0_simple
 public

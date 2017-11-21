@@ -1,5 +1,4 @@
 import Robot_Task_Types.*;
-import tasks_view_map2_simple.*;
    
 import Map_Types.*;
 import map2.*;    
@@ -7,27 +6,61 @@ import map2.*;
 use view Map.i as mapp;  
 set Locs : Location; 
 
-use view TaskLibrary.fullspeed; 
-set Tasks: Task;
-
 bfun list_contains_archelem(<<elem>>, elem) -> bool; 
 
-// "each location in the map has at least one incoming and outgoing task" 
+// pick 1 out of 3 views; otherwise too large a scope
+// use view tasks_view_map2_simple::TaskLibrary.fullspeed;
+// use view tasks_view_map2_wempty::TaskLibrary.fullspeed;
+// use view tasks_view_map2_wempty_rot::TaskLibrary.fullspeed;  
+
+set Tasks: Task;
+
+// "each location in the map has at least one outgoing motion task" 
+// Expected: valid for all 3 views
 forall loc : Locs | 
-	(exists t1: Tasks | t1::start_loc = loc::id) & 
-	(exists t2: Tasks | t2::end_loc = loc::id);  
-		    
-// "each edge corresponds to a forward & backward task" 
+	(exists t: Tasks | t::task_type = 0 & 
+		t::start_loc = loc::id );
+		
+// "each location in the map has at least one incoming motion task"
+// Expected: valid for all 3 views
+forall loc : Locs | 
+	(exists t: Tasks | t::task_type = 0 & 
+		t::end_loc = loc::id );
+
+// "each edge corresponds to a forward & backward motion task" 
+// Expected: valid for all 3 views
                forall l1 : Locs | forall l2 : Locs | 
                		(list_contains_archelem(l1::edges, l2) <=>
-	               		(exists t1:Tasks | t1::start_loc = l1::id & t1::end_loc = l2::id )) 
-	             & 
-	               	(list_contains_archelem(l2::edges, l1) <=>
-	               		(exists t2:Tasks | t2::start_loc = l2::id & t2::end_loc = l1::id ));  
+	               		(exists t:Tasks | t::task_type = 0 &
+	               			t::start_loc = l1::id & t::end_loc = l2::id)) ;
                			
-// "each task corresponds to an edge" 
-	forall t:Tasks | exists l1:Locs | exists l2:Locs | 
+// "each motion task corresponds to an edge" 
+// Expected: valid for all 3 views
+	forall t:Tasks | t::task_type = 0 -> 
+		(exists l1:Locs | exists l2:Locs | 
 		l1::id = t::start_loc & l2::id = t::end_loc &  
 		list_contains_archelem(l1::edges, l2) & 
-		list_contains_archelem(l2::edges, l1); 
+		list_contains_archelem(l2::edges, l1));
+		
+// "each empty or rotation task corresponds to a location"
+// Expected: valid for all 3 views
+forall t:Tasks | t::task_type = 1 || t::task_type = 2 -> 
+	(exists l: Locs | t::start_loc = l::id & t::end_loc = l::id); 
+ 
+// "each location has at least one empty task" 
+// Expected: valid for wempty & rot, invalid for simple
+forall l: Locs | exists t:Tasks | 
+		t::task_type = 2 & t::start_loc = l::id & t::end_loc = l::id; 
+		
+// "each location has at least one rotation task" 
+// Expected: valid for rot, invalid for wempty & simple
+forall l: Locs | exists t:Tasks | 
+		t::task_type = 1 & t::start_loc = l::id & t::end_loc = l::id; 
+		
+// "each motion task has a rotation task that points in the direction of the task" 
+// Expected: valid for rot, invalid for wempty & simple 
+forall tm:Tasks | tm::task_type = 0 -> 
+	(exists tr:Tasks | tr::task_type = 1 & 
+		tr::start_loc = tm::start_loc & tr::end_head = tm::start_head	);
+ 
  

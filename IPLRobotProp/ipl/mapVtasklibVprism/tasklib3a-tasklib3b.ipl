@@ -1,0 +1,42 @@
+// TODO adjust this for map3a & 3b
+
+import Robot_Task_Properties.*;
+import Robot_Task_Types.*;
+
+import tasks_view_map1_simple.*;
+import tasks_view_map2_simple.*;
+ 
+use view tasks_view_map3a_simple::TaskLibrary.fullspeed as tasklib1;
+use view tasks_view_map3b_simple::TaskLibrary.fullspeed as tasklib2;
+
+bfun isSubcomponentOf(elem, elem) -> bool;
+  
+set AllTasks: Task;
+
+// "if a task in map 1, then it is in map 2"
+// Expected: invalid -- map2 is missing an edge
+// for each task in one library 
+forall t1: AllTasks | isSubcomponentOf(t1, tasklib1) -> 
+// exists a task in another one 
+	(exists t2:AllTasks | isSubcomponentOf(t2, tasklib2) &
+	// such that they match starts and ends
+	t1::start_loc = t2::start_loc & t1::end_loc = t2::end_loc);  
+	
+// "if a task in map 2, then it is in map 1"
+// Expected: valid - map 1 edges are a superset of map 2
+// for each task in one library 
+forall t2: AllTasks | isSubcomponentOf(t2, tasklib2) -> 
+// exists a task in another one 
+	(exists t1:AllTasks | isSubcomponentOf(t1, tasklib1) &
+	// such that they match starts and ends
+	t1::start_loc = t2::start_loc & t1::end_loc = t2::end_loc); 	
+
+// "for matching tasks in two libraries, the energy is not too different" 
+// Expected: valid for 10, invalid for 5 (empirically established numbers) 
+forall t1: AllTasks | forall t2:AllTasks |
+	// if tasks match
+	isSubcomponentOf(t1, tasklib1) & isSubcomponentOf(t2, tasklib2) 
+	// FIXME specify the task type
+	& t1::start_loc = t2::start_loc & t1::end_loc = t2::end_loc ->
+	// the different between their energies is bounded
+	abs_int(t1::energy - t2::energy) <= 10 ;
