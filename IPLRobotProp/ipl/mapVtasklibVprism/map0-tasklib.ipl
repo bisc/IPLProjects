@@ -7,13 +7,13 @@ use view Map.i as mapp;
 set Locs : Location; 
 
 bfun list_contains_archelem(<<elem>>, elem) -> bool; 
-
+ 
 // pick 1 out of 3 views; otherwise too large a scope
-// use view tasks_view_map0_simple::TaskLibrary.fullspeed;
+ use view tasks_view_map0_simple::TaskLibrary.fullspeed;
 // use view tasks_view_map0_wempty::TaskLibrary.fullspeed;
-// use view tasks_view_map0_wempty_rot::TaskLibrary.fullspeed; // DOES NOT EXIST
-
-set Tasks: Task;
+//use view tasks_view_map0_wempty_rot::TaskLibrary.fullspeed; // DOES NOT EXIST
+   
+set Tasks: Task; 
 
 // "each location in the map has at least one outgoing motion task" 
 // Expected: valid for all 3 views
