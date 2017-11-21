@@ -7,8 +7,8 @@ import Robot_Task_Types.*;
 //use view tasks_view_map3a_wempty::TaskLibrary.fullspeed as tasklib1;
 //use view tasks_view_map3b_wempty::TaskLibrary.fullspeed as tasklib2;
 
-use view tasks_view_map3a_wempty_rot::TaskLibrary.fullspeed as tasklib1;
-use view tasks_view_map3b_wempty_rot::TaskLibrary.fullspeed as tasklib2;
+//use view tasks_view_map3a_wempty_rot::TaskLibrary.fullspeed as tasklib1;
+//use view tasks_view_map3b_wempty_rot::TaskLibrary.fullspeed as tasklib2;
 
 bfun isSubcomponentOf(elem, elem) -> bool;
   
@@ -43,16 +43,16 @@ forall t1: AllTasks | forall t2:AllTasks |
 	abs_int(t1::energy - t2::energy) <= 200;
 
 // "if a rotation task is in library 1, then it is in library 2" 
-// Expected: invalid for simple & wempty (unrecognized props), valid for rot
+// Expected: trivially valid for simple & wempty, valid for rot
 forall t1: AllTasks |
 	isSubcomponentOf(t1, tasklib1) & t1::task_type = 1 -> 
 	(exists t2: AllTasks |	isSubcomponentOf(t2, tasklib2) & t2::task_type = 1 & 
 		t1::start_loc = t2::start_loc & 
 		t1::start_head = t2::start_head &
 		t1::end_head = t2::end_head);  
-
+ 
 // "Matching rotation tasks don't take energy that is too different"
-// Expected: invalid for simple & wempty (unrecognized props);  perfect matching (0) for rot
+// Expected: trivially valid for simple & wempty;  perfect matching (0) for rot
 forall t1: AllTasks | forall t2:AllTasks |
 	// if tasks match
 	isSubcomponentOf(t1, tasklib1) & t1::task_type = 1 & 

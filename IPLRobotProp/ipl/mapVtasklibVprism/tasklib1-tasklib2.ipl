@@ -1,6 +1,6 @@
 import Robot_Task_Properties.*;
 import Robot_Task_Types.*;
-
+ 
 // Choose 1 out of 3 pairs of views; otherwise the scope is too large
 //use view tasks_view_map1_simple::TaskLibrary.fullspeed as tasklib1;
 //use view tasks_view_map2_simple::TaskLibrary.fullspeed as tasklib2;
@@ -44,7 +44,7 @@ forall t1: AllTasks | forall t2:AllTasks |
 	abs_int(t1::energy - t2::energy) <= 10 ;
 
 // "if a rotation task is in library 1, then it is in library 2" 
-// Expected: invalid for all 3 views (no rotation in the direction of the missing edge)
+// Expected: trivially valid in simple & wempty, invalid for rot (no rotation in the direction of the missing edge)
 forall t1: AllTasks |
 	isSubcomponentOf(t1, tasklib1) & t1::task_type = 1 -> 
 	(exists t2: AllTasks |	isSubcomponentOf(t2, tasklib2) & t2::task_type = 1 & 
@@ -53,7 +53,7 @@ forall t1: AllTasks |
 		t1::end_head = t2::end_head);  
 
 // "Matching rotation tasks don't take energy that is too different"
-// Expected: invalid for simple & wempty; perfect matching (0) for rot
+// Expected: trivially valid for simple & wempty; perfect matching (0) for rot
 forall t1: AllTasks | forall t2:AllTasks |
 	// if tasks match
 	isSubcomponentOf(t1, tasklib1) & t1::task_type = 1 & 

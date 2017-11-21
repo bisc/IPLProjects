@@ -2,7 +2,7 @@ import Robot_Task_Properties.*;
 import Robot_Task_Types.*;
 
 import tasks_view_map0_simple.*;
-import tasks_view_map1_simple.*;
+import tasks_view_map1_simple.*; 
 
 // Choose 1 out of 3 pairs of views; otherwise the scope is too large
 //use view tasks_view_map0_simple::TaskLibrary.fullspeed as tasklib0;
@@ -26,7 +26,7 @@ forall t0: AllTasks | isSubcomponentOf(t0, tasklib0) & t0::task_type = 0 ->
 // exists a task in another one 
 	(exists t1:AllTasks | isSubcomponentOf(t1, tasklib1) & t1::task_type = 0 &
 	// such that they match starts and ends
-	t0::start_loc = t1::start_loc & t0::end_loc = t1::end_loc);  
+	t0::start_loc = t1::start_loc & t0::end_loc = t1::end_loc);   
 	
 // "if a forward motion task is in tasklib 2, then it is in tasklib 1"
 // Expected: valid
@@ -48,7 +48,7 @@ forall t0: AllTasks | forall t1:AllTasks |
 	abs_int(t0::energy - t1::energy) <= 175 ;
 
 // "if a rotation task is in library 1, then it is in library 2" 
-// Expected: invalid for simple & wempty, ?? for rot
+// Expected: trivially valid for simple & wempty, ?? for rot
 forall t0: AllTasks |
 	isSubcomponentOf(t0, tasklib0) & t0::task_type = 1 -> 
 	(exists t1: AllTasks |	isSubcomponentOf(t1, tasklib1) & t1::task_type = 1 & 
@@ -57,7 +57,7 @@ forall t0: AllTasks |
 		t0::end_head = t1::end_head);  
 
 // "Matching rotation tasks don't take energy that is too different"
-// Expected: invalid for simple & wempty, ?? for rot
+// Expected: trivially valid for simple & wempty, ?? for rot
 forall t0: AllTasks | forall t1:AllTasks |
 	// if tasks match
 	isSubcomponentOf(t0, tasklib0) & t0::task_type = 1 & 
