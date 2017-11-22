@@ -86,6 +86,7 @@ e_l7: process Robot_Task_Types::Task;
 e_l8: process Robot_Task_Types::Task;
 
 
+
 properties
 
 -- Forward motion tasks
@@ -698,6 +699,7 @@ Robot_Task_Properties::end_loc => 7 applies to e_l8;
 Robot_Task_Properties::energy => 0 applies to e_l8;
 Robot_Task_Properties::task_type_enum => Empty applies to e_l8;
 Robot_Task_Properties::task_type => 2 applies to e_l8;
+
 
 
 end TaskLibrary.fullspeed;

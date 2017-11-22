@@ -1,7 +1,7 @@
 {"map": [
          {"node-id": "l1", "coord" : {"x" : 14.8, "y" : 69}, "connected-to": ["l2" ] },
          {"node-id": "l2", "coord" : {"x" : 19.8, "y" : 69}, "connected-to": ["l1", "l3", "l8" ] },
-         {"node-id": "l3", "coord" : {"x" : 42.5, "y" : 69}, "connected-to": ["l2", "l4" ] },
+         {"node-id": "l3", "coord" : {"x" : 42.5, "y" : 69}, "connected-to": ["l2", "l4" ] , "charging":true},
          {"node-id": "l4", "coord" : {"x" : 52.2, "y" : 69}, "connected-to": ["l3", "ls", "l5" ] },
          {"node-id": "l5", "coord" : {"x" : 52.2, "y" : 58.8}, "connected-to": ["l4", "l6" ] },
          {"node-id": "l6", "coord" : {"x" : 42.5, "y" : 58.8}, "connected-to": ["l5", "l7" ] },

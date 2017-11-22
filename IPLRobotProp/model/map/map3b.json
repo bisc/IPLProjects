@@ -7,10 +7,10 @@
          {"node-id": "l6", "coord" : {"x" : 42.5, "y" : 58.8}, "connected-to": ["l5", "c3", "c4" ] },
          {"node-id": "l7", "coord" : {"x" : 19.8, "y" : 58.8}, "connected-to": ["c4", "c1" ] },
          {"node-id": "ls", "coord" : {"x" : 52.2, "y" : 74.4}, "connected-to": ["l4" ] },
-         {"node-id": "c1", "coord" : {"x" : 19.8, "y" : 65}, "connected-to": ["l2", "l7" ] },
-         {"node-id": "c2", "coord" : {"x" : 31.1, "y" : 69}, "connected-to": ["l2", "l3" ] },
-         {"node-id": "c3", "coord" : {"x" : 42.5, "y" : 65}, "connected-to": ["l3", "l6" ] },
-         {"node-id": "c4", "coord" : {"x" : 31.1, "y" : 58.8}, "connected-to": ["l6", "l7" ] }
+         {"node-id": "c1", "coord" : {"x" : 19.8, "y" : 65}, "connected-to": ["l2", "l7" ], "charging":true },
+         {"node-id": "c2", "coord" : {"x" : 31.1, "y" : 69}, "connected-to": ["l2", "l3" ], "charging":true },
+         {"node-id": "c3", "coord" : {"x" : 42.5, "y" : 65}, "connected-to": ["l3", "l6" ], "charging":true },
+         {"node-id": "c4", "coord" : {"x" : 31.1, "y" : 58.8}, "connected-to": ["l6", "l7" ], "charging":true }
    ],
     "unsafe-rects": [
         {

@@ -54,6 +54,7 @@ e_c1: process Robot_Task_Types::Task;
 e_c2: process Robot_Task_Types::Task;
 
 
+
 properties
 
 -- Forward motion tasks
@@ -327,6 +328,7 @@ Robot_Task_Properties::end_loc => 9 applies to e_c2;
 Robot_Task_Properties::energy => 0 applies to e_c2;
 Robot_Task_Properties::task_type_enum => Empty applies to e_c2;
 Robot_Task_Properties::task_type => 2 applies to e_c2;
+
 
 
 end TaskLibrary.fullspeed;

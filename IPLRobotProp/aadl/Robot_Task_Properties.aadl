@@ -10,10 +10,10 @@ property set Robot_Task_Properties is
 		applies to (process);
 		
 	task_type_enum: enumeration -- duplication of task_type, just for labeling 
-        (Forward, Rotate, Empty) 
+        (Forward, Rotate, Empty, Charging) 
       	applies to (process); 		
 	 
-	task_type: aadlinteger --type of motion task; 0 = forward, 1 = rotate, 2 = empty
+	task_type: aadlinteger --type of motion task; 0 = forward, 1 = rotate, 2 = empty, 3 = charging
         applies to (process); 		
         
     start_loc: aadlinteger -- location label
