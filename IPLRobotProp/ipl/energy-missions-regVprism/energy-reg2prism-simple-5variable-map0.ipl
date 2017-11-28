@@ -1,9 +1,8 @@
 import Robot_Task_Types.*;
-import tasks_view_map0_wempty.*;
-// FIXME something fishy here, how was it valid with a wrong map? 
-        
-use view TaskLibrary.fullspeed as tasklib;
 set tasks: Task;
+       
+use view tasks_view_map0_wempty::TaskLibrary.fullspeed as tasklib;
+// FIXME something fishy here, how was it valid with a wrong map? 
 
 bfun distinct(int, int, int, int, int, int) -> bool;    
 bfun min_int(int, int) -> int;
@@ -11,13 +10,12 @@ bfun min_int(int, int) -> int;
 //use model prism_noturns_nocharge_nospeed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 // uncomment constraint on speed below if using this model:
 //use model prism_noturns_nocharge_speed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
-
+ 
 stvar l: int; 
 stvar s: int;
 stvar b: int;
 
 // Expected: 182 models 
-
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | 
 // cohesive path: 
 	( t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
@@ -26,43 +24,32 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 		(	
 			(   
 				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) &
-				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & t5::task_type = 0
-//				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc & 
-//				t4::start_loc != t4::end_loc & t5::start_loc != t5::end_loc
+				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & 
+				t4::task_type = 0 & t5::task_type = 0
 			)  || 
 			// or the last one is empty
 			(
 				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) & 
 				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & 
 				t5::task_type = 2
-//				t5::start_loc = t5::end_loc &
-//				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc & 
-//				t4::start_loc != t4::end_loc
 			) || 
 			// or the last two are empty
-			( 
+			(  
 				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc) & 
 				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & 
 				t4::task_type = 2 & t5::task_type = 2
-//				t4::start_loc = t4::end_loc & t5::start_loc = t5::end_loc & 
-//				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc & t3::start_loc != t3::end_loc
 			) ||
 			// or the last three are empty
 			( 
 				distinct (t1::start_loc, t2::start_loc, t3::start_loc) &
 				t1::task_type = 0 & t2::task_type = 0 & 
 				t3::task_type = 2 &	t4::task_type = 2 & t5::task_type = 2
-//				t3::start_loc = t3::end_loc & t4::start_loc = t4::end_loc & t5::start_loc = t5::end_loc &
-//				t1::start_loc != t1::end_loc & t2::start_loc != t2::end_loc
 			) ||
 			// or the last four are empty 
 			( 
 				distinct(t1::start_loc, t2::start_loc) & 
 				t1::task_type = 0 & 
 				t2::task_type = 2 &	t3::task_type = 2 &	t4::task_type = 2 & t5::task_type = 2 
-//				t2::start_loc = t2::end_loc & t3::start_loc = t3::end_loc & 
-//				t4::start_loc = t4::end_loc & t5::start_loc = t5::end_loc & 
-//				t1::start_loc != t1::end_loc
 			)
 	) ->     
 	// robot can find its way to the finish  

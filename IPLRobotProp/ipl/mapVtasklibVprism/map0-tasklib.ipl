@@ -11,7 +11,7 @@ bfun list_contains_archelem(<<elem>>, elem) -> bool;
 // pick 1 out of 3 views; otherwise too large a scope
 // use view tasks_view_map0_simple::TaskLibrary.fullspeed;
 // use view tasks_view_map0_wempty::TaskLibrary.fullspeed;
-//use view tasks_view_map0_wempty_rot::TaskLibrary.fullspeed; // DOES NOT EXIST
+use view tasks_view_map0_wempty_rot::TaskLibrary.fullspeed; 
    
 set Tasks: Task; 
 
@@ -63,4 +63,8 @@ forall tm:Tasks | tm::task_type = 0 ->
 	(exists tr:Tasks | tr::task_type = 1 & 
 		tr::start_loc = tm::start_loc & tr::end_head = tm::start_head	);
  
+ // "charging task happens iff the location has a charging station"
+ // Excepted: trivially valid for simple/wempty/rot, valid for char 
+forall loc:Locs | 
+	(exists t:Tasks | t::task_type = 3 & t::start_loc = loc::id) <=> loc::hasChargingSt;
  

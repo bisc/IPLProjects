@@ -1,7 +1,7 @@
 -- View for map0, created manually
 -- Somehow takes slightly less energy on forward motion than the views from map 1
 
-package tasks_view_map0_wempty
+package tasks_view_map0_wempty_char
 public
 	with Robot_Task_Types, Robot_Task_Properties;
 	 
@@ -12,7 +12,7 @@ public
 	system implementation TaskLibrary.fullspeed
 		subcomponents
 			-- forward motion tasks
-		s_1_to_2: process Robot_Task_Types::Task;
+		    s_1_to_2: process Robot_Task_Types::Task;
 			s_2_to_1: process Robot_Task_Types::Task;
 			s_2_to_3: process Robot_Task_Types::Task;
 			s_3_to_2: process Robot_Task_Types::Task;
@@ -32,7 +32,7 @@ public
 			s_5_to_6: process Robot_Task_Types::Task;
 			s_4_to_s: process Robot_Task_Types::Task;
 			s_s_to_4: process Robot_Task_Types::Task;
-				
+						 
 			-- empty tasks (to model missions of varied length)
 			s_1_empty: process Robot_Task_Types::Task;
 			s_2_empty: process Robot_Task_Types::Task;
@@ -43,7 +43,10 @@ public
 			s_7_empty: process Robot_Task_Types::Task;
 			s_8_empty: process Robot_Task_Types::Task;
 			s_s_empty: process Robot_Task_Types::Task;
-			   
+			
+			-- Charging task decls
+			ch_l3: process Robot_Task_Types::Task;
+			
 		properties  
 	-- forward motion tasks 
 			Robot_Task_Properties::task_id => 0 applies to s_1_to_2;
@@ -308,6 +311,14 @@ public
 			Robot_Task_Properties::start_loc => 8 applies to s_s_empty;
 			Robot_Task_Properties::end_loc => 8 applies to s_s_empty;
 			
+			-- Charging tasks
+			Robot_Task_Properties::task_id => 25 applies to ch_l3;
+			Robot_Task_Properties::start_loc => 2 applies to ch_l3;
+			Robot_Task_Properties::end_loc => 2 applies to ch_l3;
+			Robot_Task_Properties::energy => -125 applies to ch_l3;
+			Robot_Task_Properties::task_type_enum => Charging applies to ch_l3;
+			Robot_Task_Properties::task_type => 3 applies to ch_l3;
+			
 	end TaskLibrary.fullspeed;
 	
-end tasks_view_map0_wempty;
+end tasks_view_map0_wempty_char;

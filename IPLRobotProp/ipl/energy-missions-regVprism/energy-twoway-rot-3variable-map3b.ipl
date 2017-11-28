@@ -10,9 +10,9 @@ bfun abs (int) -> int;
 var err_prism: int = 2; // by how much prism can be inaccurate by itself (from ground truth). Does not affect verification times.
 var err_cons: int = 0; // by how much prism can deviate from regression. Affects verification times. 
     
-//use model prism_turns_nocharge_nospeed_map3b(
-use model prism_turns_nocharge_nospeed_map3b_consfixed(
-	INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY, INITIAL_HEADING);
+//use model prism_turns_nocharge_nospeed_map3b( 
+//use model prism_turns_nocharge_nospeed_map3b_consfixed(
+//	INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY, INITIAL_HEADING);
 
 stvar l: int;
 stvar s: int;   

@@ -3,15 +3,15 @@ import tasks_view_map0_simple.*;
 
 use view TaskLibrary.fullspeed as tasklib;
 set tasks: Task;
- 
+   
 bfun distinct(int, int, int, int, int, int) -> bool;    
-
+      
 //use model prism_noturns_nocharge_speed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 stvar l: int;
 stvar s: int;
-stvar b: int;
-  
-// Expected: 40 models
+stvar b: int;    
+     
+// Expected: 40 models      
 
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
 // cohesive path: 
@@ -31,7 +31,7 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 		(F l = t4::start_loc) & 
 		(F l = t5::start_loc) 
 	]{|t1::start_loc, t5::end_loc, t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1 |} = 1;
-	
+	 
 	// very poor performance of automaton building on this one
 	/*P max=? [  
 		(G s = 1) & 
