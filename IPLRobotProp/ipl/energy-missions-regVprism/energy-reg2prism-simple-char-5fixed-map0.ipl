@@ -1,0 +1,75 @@
+import Robot_Task_Types.*;
+
+use view tasks_view_map0_simple_char::TaskLibrary.fullspeed as tasklib;
+set tasks: Task;
+   
+bfun distinct(int, int, int, int, int, int) -> bool;    
+      
+use model prism_noturns_chargesmall_nospeed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+stvar l: int; 
+stvar s: int;
+stvar b: int;    
+     
+// A different expression of circularity
+// Expected: 139 models (not validated yet) 
+// does it make sense to charge in the end? maybe prohibit that
+forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
+// cohesive path: 
+	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
+		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc & 
+	// no circularities <=> no intersecting task
+	// no such intersector
+	not (exists i : tasks | 
+		// that is one of legit tasks  
+		( i = t1 || i = t2 || i = t3 || i = t4 || i = t5 ) & i::task_type = 0 &
+		// and its end is one of the other legit tasks -- or the absolute beginning
+		(    
+			(i::end_loc = t1::start_loc) ||
+			(t1::task_type = 0 & t1::end_loc = i::end_loc & t1 != i) ||
+			(t2::task_type = 0 & t2::end_loc = i::end_loc & t2 != i) ||
+			(t3::task_type = 0 & t3::end_loc = i::end_loc & t3 != i) || 
+			(t4::task_type = 0 & t4::end_loc = i::end_loc & t4 != i) || 
+			(t5::task_type = 0 & t5::end_loc = i::end_loc & t5 != i)   
+		)
+	) &  
+	t5::task_type != 3 
+	// last task is not charging (does not make domain-specific sense)
+	->  
+		P max=? [  
+//		(G s = 1) &  
+		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U
+			 (l = t4::start_loc U (l = t5::start_loc U ( l = t5::end_loc & b > 0)
+		))))) &
+		(F l = t2::start_loc) &
+		(F l = t3::start_loc) &
+		(F l = t4::start_loc) & 
+		(F l = t5::start_loc) 
+	]{|t1::start_loc, t5::end_loc, t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1 |} = 1;    
+ 
+// Expected: 40 models which is wrong because there has to be one with charging
+// TODO but I guess it is destroyed by the no-circularities rule. Need to rethink that.       
+
+//forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
+//// cohesive path: 
+//	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
+//		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc & 
+//// no circularities: 
+//	distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) &
+//// either moving forward or charging -- FIXME why is this needed?
+//	(t1::task_type = 0 || t1::task_type = 3) &
+//	(t2::task_type = 0 || t2::task_type = 3) &
+//	(t3::task_type = 0 || t3::task_type = 3) &
+//	(t4::task_type = 0 || t4::task_type = 3) 
+//	->    
+//	// robot can find its way to the finish  
+//	P max=? [  
+////		(G s = 1) &  
+//		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U
+//			 (l = t4::start_loc U (l = t5::start_loc U ( l = t5::end_loc & b > 0)
+//		))))) &
+//		(F l = t2::start_loc) &
+//		(F l = t3::start_loc) &
+//		(F l = t4::start_loc) & 
+//		(F l = t5::start_loc) 
+//	]{|t1::start_loc, t5::end_loc, t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1 |} = 1;
+	 
