@@ -1,0 +1,12 @@
+property set Map_Properties is
+	 
+	hasChargingSt: aadlboolean 
+		applies to (memory);
+		
+	id: aadlinteger
+		applies to (memory);
+	
+	edges: list of reference (memory)
+		applies to (memory);
+	
+end Map_Properties;

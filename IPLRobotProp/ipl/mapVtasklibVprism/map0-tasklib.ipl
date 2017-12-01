@@ -1,9 +1,8 @@
 import Robot_Task_Types.*;
    
 import Map_Types.*; 
-import map0.*;     
   
-use view Map.i as mapp;  
+use view map0::Map.i as mapp;  
 set Locs : Location;  
   
 bfun list_contains_archelem(<<elem>>, elem) -> bool; 
