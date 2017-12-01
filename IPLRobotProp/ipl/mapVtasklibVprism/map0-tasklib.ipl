@@ -4,8 +4,8 @@ import Map_Types.*;
 import map0.*;     
   
 use view Map.i as mapp;  
-set Locs : Location; 
-
+set Locs : Location;  
+  
 bfun list_contains_archelem(<<elem>>, elem) -> bool; 
  
 // pick 1 out of 3 views; otherwise too large a scope

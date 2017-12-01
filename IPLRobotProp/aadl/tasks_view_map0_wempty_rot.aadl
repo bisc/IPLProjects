@@ -4,7 +4,7 @@
 package tasks_view_map0_wempty_rot
 public
 	with Robot_Task_Types, Robot_Task_Properties;
-	 
+	   
 	system TaskLibrary
 		
 	end TaskLibrary;
@@ -96,6 +96,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_1_to_2;  
 			Robot_Task_Properties::start_loc => 0 applies to s_1_to_2;
 			Robot_Task_Properties::end_loc => 1 applies to s_1_to_2;
+			Robot_Task_Properties::start_head => 2 applies to s_1_to_2;
+			Robot_Task_Properties::end_head => 2 applies to s_1_to_2;
 			
 			Robot_Task_Properties::task_id => 1 applies to s_2_to_1;
 			Robot_Task_Properties::duration => 7.9941 applies to s_2_to_1;
@@ -105,7 +107,9 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_2_to_1;  
 			Robot_Task_Properties::start_loc => 1 applies to s_2_to_1;
 			Robot_Task_Properties::end_loc => 0 applies to s_2_to_1;
-			
+			Robot_Task_Properties::start_head => 6 applies to s_2_to_1;
+			Robot_Task_Properties::end_head => 6 applies to s_2_to_1;
+	
 			Robot_Task_Properties::task_id => 2 applies to s_2_to_3;
 			Robot_Task_Properties::duration => 33.1941 applies to s_2_to_3;
 			Robot_Task_Properties::energy => 848 applies to s_2_to_3;
@@ -114,6 +118,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_2_to_3;  
 			Robot_Task_Properties::start_loc => 1 applies to s_2_to_3;
 			Robot_Task_Properties::end_loc => 2 applies to s_2_to_3;
+			Robot_Task_Properties::start_head => 2 applies to s_2_to_3;
+			Robot_Task_Properties::end_head => 2 applies to s_2_to_3;
 			
 			Robot_Task_Properties::task_id => 3 applies to s_3_to_2;
 			Robot_Task_Properties::duration => 33.1941 applies to s_3_to_2;
@@ -123,7 +129,9 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_3_to_2;  
 			Robot_Task_Properties::start_loc => 2 applies to s_3_to_2;
 			Robot_Task_Properties::end_loc => 1 applies to s_3_to_2;
-			
+			Robot_Task_Properties::start_head => 6 applies to s_3_to_2;
+			Robot_Task_Properties::end_head => 6 applies to s_3_to_2;
+
 			Robot_Task_Properties::task_id => 4 applies to s_3_to_4;
 			Robot_Task_Properties::duration => 14.2941 applies to s_3_to_4;
 			Robot_Task_Properties::energy => 697 applies to s_3_to_4;
@@ -132,6 +140,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_3_to_4;  
 			Robot_Task_Properties::start_loc => 2 applies to s_3_to_4;
 			Robot_Task_Properties::end_loc => 3 applies to s_3_to_4;
+			Robot_Task_Properties::start_head => 2 applies to s_3_to_4;
+			Robot_Task_Properties::end_head => 2 applies to s_3_to_4;			
 			
 			Robot_Task_Properties::task_id => 5 applies to s_4_to_3;
 			Robot_Task_Properties::duration => 14.2941 applies to s_4_to_3;
@@ -141,6 +151,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_4_to_3;  
 			Robot_Task_Properties::start_loc => 3 applies to s_4_to_3;
 			Robot_Task_Properties::end_loc => 2 applies to s_4_to_3;
+			Robot_Task_Properties::start_head => 6 applies to s_4_to_3;
+			Robot_Task_Properties::end_head => 6 applies to s_4_to_3;			
 			
 			Robot_Task_Properties::task_id => 6 applies to s_2_to_8;
 			Robot_Task_Properties::duration => 5.9559 applies to s_2_to_8;
@@ -150,6 +162,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_2_to_8;
 			Robot_Task_Properties::start_loc => 1 applies to s_2_to_8;
 			Robot_Task_Properties::end_loc => 7 applies to s_2_to_8;
+			Robot_Task_Properties::start_head => 4 applies to s_2_to_8;
+			Robot_Task_Properties::end_head => 4 applies to s_2_to_8;
 			
 			Robot_Task_Properties::task_id => 7 applies to s_8_to_2;
 			Robot_Task_Properties::duration => 5.9559 applies to s_8_to_2;
@@ -159,6 +173,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_8_to_2;  
 			Robot_Task_Properties::start_loc => 7 applies to s_8_to_2;
 			Robot_Task_Properties::end_loc => 1 applies to s_8_to_2;
+			Robot_Task_Properties::start_head => 0 applies to s_8_to_2;
+			Robot_Task_Properties::end_head => 0 applies to s_8_to_2;			
 			
 			Robot_Task_Properties::task_id => 8 applies to s_8_to_7;
 			Robot_Task_Properties::duration => 9.1324 applies to s_8_to_7;
@@ -168,6 +184,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_8_to_7;  
 			Robot_Task_Properties::start_loc => 7 applies to s_8_to_7;
 			Robot_Task_Properties::end_loc => 6 applies to s_8_to_7;
+			Robot_Task_Properties::start_head => 4 applies to s_8_to_7;
+			Robot_Task_Properties::end_head => 4 applies to s_8_to_7;			
 			
 			Robot_Task_Properties::task_id => 9 applies to s_7_to_8;
 			Robot_Task_Properties::duration => 9.1324 applies to s_7_to_8;
@@ -177,6 +195,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_7_to_8;  
 			Robot_Task_Properties::start_loc => 6 applies to s_7_to_8;
 			Robot_Task_Properties::end_loc => 7 applies to s_7_to_8;
+			Robot_Task_Properties::start_head => 0 applies to s_7_to_8;
+			Robot_Task_Properties::end_head => 0 applies to s_7_to_8;			
 			
 			Robot_Task_Properties::task_id => 10 applies to s_7_to_6;
 			Robot_Task_Properties::duration => 33.1941 applies to s_7_to_6;
@@ -186,6 +206,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_7_to_6;  
 			Robot_Task_Properties::start_loc => 6 applies to s_7_to_6;
 			Robot_Task_Properties::end_loc => 5 applies to s_7_to_6;  
+			Robot_Task_Properties::start_head => 2 applies to s_7_to_6;
+			Robot_Task_Properties::end_head => 2 applies to s_7_to_6;
 			
 			Robot_Task_Properties::task_id => 11 applies to s_6_to_7;
 			Robot_Task_Properties::duration => 33.1941 applies to s_6_to_7;
@@ -195,6 +217,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_6_to_7;  
 			Robot_Task_Properties::start_loc => 5 applies to s_6_to_7;
 			Robot_Task_Properties::end_loc => 6 applies to s_6_to_7;
+			Robot_Task_Properties::start_head => 6 applies to s_6_to_7;
+			Robot_Task_Properties::end_head => 6 applies to s_6_to_7;
 			
 			Robot_Task_Properties::task_id => 12 applies to s_3_to_6;
 			Robot_Task_Properties::duration => 15.0882 applies to s_3_to_6;
@@ -204,6 +228,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_3_to_6;  
 			Robot_Task_Properties::start_loc => 2 applies to s_3_to_6;
 			Robot_Task_Properties::end_loc => 5 applies to s_3_to_6;
+			Robot_Task_Properties::start_head => 4 applies to s_3_to_6;
+			Robot_Task_Properties::end_head => 4 applies to s_3_to_6;			
 			
 			Robot_Task_Properties::task_id => 13 applies to s_6_to_3;
 			Robot_Task_Properties::duration => 4.4118 applies to s_6_to_3;
@@ -213,6 +239,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_6_to_3;  
 			Robot_Task_Properties::start_loc => 5 applies to s_6_to_3;
 			Robot_Task_Properties::end_loc => 2 applies to s_6_to_3;
+			Robot_Task_Properties::start_head => 0 applies to s_6_to_3;
+			Robot_Task_Properties::end_head => 0 applies to s_6_to_3;
 			
 			Robot_Task_Properties::task_id => 14 applies to s_4_to_5;
 			Robot_Task_Properties::duration => 15.0882 applies to s_4_to_5;
@@ -222,6 +250,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_4_to_5;  
 			Robot_Task_Properties::start_loc => 3 applies to s_4_to_5;
 			Robot_Task_Properties::end_loc => 4 applies to s_4_to_5;
+			Robot_Task_Properties::start_head => 4 applies to s_4_to_5;
+			Robot_Task_Properties::end_head => 4 applies to s_4_to_5;			
 			
 			Robot_Task_Properties::task_id => 15 applies to s_5_to_4;
 			Robot_Task_Properties::duration => 15.0882 applies to s_5_to_4;
@@ -231,6 +261,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_5_to_4;  
 			Robot_Task_Properties::start_loc => 4 applies to s_5_to_4;
 			Robot_Task_Properties::end_loc => 3 applies to s_5_to_4;
+			Robot_Task_Properties::start_head => 0 applies to s_5_to_4;
+			Robot_Task_Properties::end_head => 0 applies to s_5_to_4;			
 			
 			Robot_Task_Properties::task_id => 16 applies to s_6_to_5;
 			Robot_Task_Properties::duration => 14.2941 applies to s_6_to_5;
@@ -240,6 +272,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_6_to_5;  
 			Robot_Task_Properties::start_loc => 5 applies to s_6_to_5;
 			Robot_Task_Properties::end_loc => 4 applies to s_6_to_5;
+			Robot_Task_Properties::start_head => 2 applies to s_6_to_5;
+			Robot_Task_Properties::end_head => 2 applies to s_6_to_5;			
 			
 			Robot_Task_Properties::task_id => 17 applies to s_5_to_6;
 			Robot_Task_Properties::duration => 14.2941 applies to s_5_to_6;
@@ -249,6 +283,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_5_to_6;  
 			Robot_Task_Properties::start_loc => 4 applies to s_5_to_6;
 			Robot_Task_Properties::end_loc => 5 applies to s_5_to_6;
+			Robot_Task_Properties::start_head => 6 applies to s_5_to_6;
+			Robot_Task_Properties::end_head => 6 applies to s_5_to_6;			
 			
 			Robot_Task_Properties::task_id => 18 applies to s_4_to_s;
 			Robot_Task_Properties::duration => 7.9412 applies to s_4_to_s;
@@ -258,6 +294,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_4_to_s;  
 			Robot_Task_Properties::start_loc => 3 applies to s_4_to_s;
 			Robot_Task_Properties::end_loc => 8 applies to s_4_to_s;
+			Robot_Task_Properties::start_head => 0 applies to s_4_to_s;
+			Robot_Task_Properties::end_head => 0 applies to s_4_to_s;			
 			
 			Robot_Task_Properties::task_id => 19 applies to s_s_to_4;
 			Robot_Task_Properties::duration => 7.9412 applies to s_s_to_4;
@@ -267,6 +305,8 @@ public
 			Robot_Task_Properties::task_type => 0 applies to s_s_to_4;  
 			Robot_Task_Properties::start_loc => 8 applies to s_s_to_4;
 			Robot_Task_Properties::end_loc => 3 applies to s_s_to_4;
+			Robot_Task_Properties::start_head => 4 applies to s_s_to_4;
+			Robot_Task_Properties::end_head => 4 applies to s_s_to_4;			
 				
 			
 			-- Rotation tasks

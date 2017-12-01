@@ -3,7 +3,7 @@ public
 	with Robot_Task_Properties;
 	
 	process Task 
-		
+		 
 	end Task;
 	
 end Robot_Task_Types; 

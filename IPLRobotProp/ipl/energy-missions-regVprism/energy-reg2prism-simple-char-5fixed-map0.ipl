@@ -17,23 +17,23 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 // cohesive path: 
 	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
 		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc & 
-	// no circularities <=> no intersecting task
-	// no such intersector
+	// "no circularities" expressed as "no intersecting task"
+	// no such intersector task
 	not (exists i : tasks | 
-		// that is one of legit tasks  
+		// that is one of the legit tasks  
 		( i = t1 || i = t2 || i = t3 || i = t4 || i = t5 ) & i::task_type = 0 &
 		// and its end is one of the other legit tasks -- or the absolute beginning
 		(    
-			(i::end_loc = t1::start_loc) ||
-			(t1::task_type = 0 & t1::end_loc = i::end_loc & t1 != i) ||
-			(t2::task_type = 0 & t2::end_loc = i::end_loc & t2 != i) ||
-			(t3::task_type = 0 & t3::end_loc = i::end_loc & t3 != i) || 
-			(t4::task_type = 0 & t4::end_loc = i::end_loc & t4 != i) || 
-			(t5::task_type = 0 & t5::end_loc = i::end_loc & t5 != i)   
+			(t1 != i & t1::task_type = 0 & t1::end_loc = i::end_loc) ||
+			(t2 != i & t2::task_type = 0 & t2::end_loc = i::end_loc) ||
+			(t3 != i & t3::task_type = 0 & t3::end_loc = i::end_loc) || 
+			(t4 != i & t4::task_type = 0 & t4::end_loc = i::end_loc) || 
+			(t5 != i & t5::task_type = 0 & t5::end_loc = i::end_loc) ||
+			(i::end_loc = t1::start_loc)    
 		)
 	) &  
+	// the last task is not charging (does not make domain-specific sense)
 	t5::task_type != 3 
-	// last task is not charging (does not make domain-specific sense)
 	->  
 		P max=? [  
 //		(G s = 1) &  

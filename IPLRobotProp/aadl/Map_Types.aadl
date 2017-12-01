@@ -1,5 +1,5 @@
 property set Map_Types is
-	
+	 
 	hasChargingSt: aadlboolean 
 		applies to (memory);
 		
