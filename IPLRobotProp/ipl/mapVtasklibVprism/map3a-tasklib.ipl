@@ -1,10 +1,8 @@
 import Robot_Task_Types.*;
-//import tasks_view_map3a_simple.*;
    
 import Map_Types.*;
-import map3a.*;    
   
-use view Map.i as mapp;  
+use view map3a::Map.i as mapp;  
 set Locs : Location; 
 
 // pick 1 out of 3 views; otherwise too large a scope

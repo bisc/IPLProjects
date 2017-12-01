@@ -2,9 +2,8 @@ import Robot_Task_Types.*;
 import tasks_view_map0_simple.*;
    
 import Map_Types.*;
-import map0.*;    
   
-use view Map.i as mapp;  
+use view map0::Map.i;  
 set locs : Location; 
 
 use view TaskLibrary.fullspeed as tasklib; 

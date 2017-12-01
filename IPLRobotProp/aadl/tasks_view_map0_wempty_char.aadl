@@ -4,7 +4,7 @@
 package tasks_view_map0_wempty_char
 public
 	with Robot_Task_Types, Robot_Task_Properties;
-	 
+	  
 	system TaskLibrary
 		 
 	end TaskLibrary;

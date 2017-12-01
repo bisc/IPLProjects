@@ -1,12 +1,11 @@
-import Robot_Task_Properties.*;
 import Robot_Task_Types.*;
 
 import tasks_view_map0_simple.*;
 import tasks_view_map1_simple.*; 
 
 // Choose 1 out of 3 pairs of views; otherwise the scope is too large
-//use view tasks_view_map0_simple::TaskLibrary.fullspeed as tasklib0;
-//use view tasks_view_map1_simple::TaskLibrary.fullspeed as tasklib1;
+use view tasks_view_map0_simple::TaskLibrary.fullspeed as tasklib0;
+use view tasks_view_map1_simple::TaskLibrary.fullspeed as tasklib1;
 
 //use view tasks_view_map0_wempty::TaskLibrary.fullspeed as tasklib0;
 //use view tasks_view_map1_wempty::TaskLibrary.fullspeed as tasklib1;

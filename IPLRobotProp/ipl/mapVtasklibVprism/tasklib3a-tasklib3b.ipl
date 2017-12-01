@@ -1,8 +1,8 @@
 import Robot_Task_Types.*;
 
 // Choose 1 out of 3 pairs of views; otherwise the scope is too large 
-//use view tasks_view_map3a_simple::TaskLibrary.fullspeed as tasklib1;
-//use view tasks_view_map3b_simple::TaskLibrary.fullspeed as tasklib2;
+use view tasks_view_map3a_simple::TaskLibrary.fullspeed as tasklib1;
+use view tasks_view_map3b_simple::TaskLibrary.fullspeed as tasklib2;
 
 //use view tasks_view_map3a_wempty::TaskLibrary.fullspeed as tasklib1;
 //use view tasks_view_map3b_wempty::TaskLibrary.fullspeed as tasklib2;
@@ -11,6 +11,7 @@ import Robot_Task_Types.*;
 //use view tasks_view_map3b_wempty_rot::TaskLibrary.fullspeed as tasklib2;
 
 bfun isSubcomponentOf(elem, elem) -> bool;
+bfun abs_int(int) -> int; 
   
 set AllTasks: Task;
 

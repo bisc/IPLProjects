@@ -1,10 +1,8 @@
 import Robot_Task_Types.*; 
-import tasks_view_map3b_simple.*;
 import Map_Types.*;
-import map3b.*;    
     
-use view TaskLibrary.fullspeed as tasklib;
-use view Map.i as mapp;  
+use view tasks_view_map3b_simple::TaskLibrary.fullspeed;
+use view map3b::Map.i;  
 set locs : Location;   
 set tasks: Task;   
 

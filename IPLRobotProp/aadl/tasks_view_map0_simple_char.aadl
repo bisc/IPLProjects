@@ -7,7 +7,7 @@ public
 
 	system TaskLibrary
 		 
-	end TaskLibrary;
+	end TaskLibrary; 
 	
 	system implementation TaskLibrary.fullspeed
 		subcomponents
