@@ -2,13 +2,13 @@ import Robot_Task_Types.*;
    
 import Map_Types.*;
   
-use view map1::Map.i;  
-set Locs : Location; 
+use view map1::Map.i;
+set Locs : Location;
 
 bfun list_contains_archelem(<<elem>>, elem) -> bool; 
 
 // pick 1 out of 3 views; otherwise too large a scope
-// use view tasks_view_map1_simple::TaskLibrary.fullspeed;
+ use view tasks_view_map1_simple::TaskLibrary.fullspeed;
 // use view tasks_view_map1_wempty::TaskLibrary.fullspeed;
 // use view tasks_view_map1_wempty_rot::TaskLibrary.fullspeed;  
 
@@ -16,7 +16,7 @@ set Tasks: Task;
 
 // "each location in the map has at least one outgoing motion task" 
 // Expected: valid for all 3 views
-forall loc : Locs | 
+forall loc : Locs |  
 	(exists t: Tasks | t::task_type = 0 & 
 		t::start_loc = loc::id );
 		

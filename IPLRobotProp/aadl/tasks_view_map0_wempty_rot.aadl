@@ -671,7 +671,7 @@ public
 			Robot_Task_Properties::task_type => 1 applies to r_in_l8_from_l7_to_l7;
 			
 			-- empty tasks
-			Robot_Task_Properties::task_id => 20 applies to s_1_empty;
+			Robot_Task_Properties::task_id => 60 applies to s_1_empty;
 			Robot_Task_Properties::duration => 0.0 applies to s_1_empty;
 			Robot_Task_Properties::energy => 0 applies to s_1_empty;
 			Robot_Task_Properties::energy_sim => 0 applies to s_1_empty;
@@ -680,7 +680,7 @@ public
 			Robot_Task_Properties::start_loc => 0 applies to s_1_empty;
 			Robot_Task_Properties::end_loc => 0 applies to s_1_empty;
 			
-			Robot_Task_Properties::task_id => 21 applies to s_2_empty;
+			Robot_Task_Properties::task_id => 61 applies to s_2_empty;
 			Robot_Task_Properties::duration => 0.0 applies to s_2_empty;
 			Robot_Task_Properties::energy => 0 applies to s_2_empty;
 			Robot_Task_Properties::energy_sim => 0 applies to s_2_empty;
@@ -689,7 +689,7 @@ public
 			Robot_Task_Properties::start_loc => 1 applies to s_2_empty;
 			Robot_Task_Properties::end_loc => 1 applies to s_2_empty;
 			
-			Robot_Task_Properties::task_id => 22 applies to s_3_empty;
+			Robot_Task_Properties::task_id => 62 applies to s_3_empty;
 			Robot_Task_Properties::duration => 0.0 applies to s_3_empty;
 			Robot_Task_Properties::energy => 0 applies to s_3_empty;
 			Robot_Task_Properties::energy_sim => 0 applies to s_3_empty;
@@ -698,7 +698,7 @@ public
 			Robot_Task_Properties::start_loc => 2 applies to s_3_empty;
 			Robot_Task_Properties::end_loc => 2 applies to s_3_empty;
 			
-			Robot_Task_Properties::task_id => 23 applies to s_4_empty;
+			Robot_Task_Properties::task_id => 63 applies to s_4_empty;
 			Robot_Task_Properties::duration => 0.0 applies to s_4_empty;
 			Robot_Task_Properties::energy => 0 applies to s_4_empty;
 			Robot_Task_Properties::energy_sim => 0 applies to s_4_empty;
@@ -707,7 +707,7 @@ public
 			Robot_Task_Properties::start_loc => 3 applies to s_4_empty;
 			Robot_Task_Properties::end_loc => 3 applies to s_4_empty;
 			
-			Robot_Task_Properties::task_id => 24 applies to s_5_empty;
+			Robot_Task_Properties::task_id => 64 applies to s_5_empty;
 			Robot_Task_Properties::duration => 0.0 applies to s_5_empty;
 			Robot_Task_Properties::energy => 0 applies to s_5_empty;
 			Robot_Task_Properties::energy_sim => 0 applies to s_5_empty;
@@ -716,7 +716,7 @@ public
 			Robot_Task_Properties::start_loc => 4 applies to s_5_empty;
 			Robot_Task_Properties::end_loc => 4 applies to s_5_empty;
 			
-			Robot_Task_Properties::task_id => 25 applies to s_6_empty;
+			Robot_Task_Properties::task_id => 65 applies to s_6_empty;
 			Robot_Task_Properties::duration => 0.0 applies to s_6_empty;
 			Robot_Task_Properties::energy => 0 applies to s_6_empty;
 			Robot_Task_Properties::energy_sim => 0 applies to s_6_empty;
@@ -725,7 +725,7 @@ public
 			Robot_Task_Properties::start_loc => 5 applies to s_6_empty;
 			Robot_Task_Properties::end_loc => 5 applies to s_6_empty;
 			
-			Robot_Task_Properties::task_id => 26 applies to s_7_empty;
+			Robot_Task_Properties::task_id => 66 applies to s_7_empty;
 			Robot_Task_Properties::duration => 0.0 applies to s_7_empty;
 			Robot_Task_Properties::energy => 0 applies to s_7_empty;
 			Robot_Task_Properties::energy_sim => 0 applies to s_7_empty;
@@ -734,7 +734,7 @@ public
 			Robot_Task_Properties::start_loc => 6 applies to s_7_empty;
 			Robot_Task_Properties::end_loc => 6 applies to s_7_empty;
 			
-			Robot_Task_Properties::task_id => 27 applies to s_8_empty;
+			Robot_Task_Properties::task_id => 67 applies to s_8_empty;
 			Robot_Task_Properties::duration => 0.0 applies to s_8_empty;
 			Robot_Task_Properties::energy => 0 applies to s_8_empty;
 			Robot_Task_Properties::energy_sim => 0 applies to s_8_empty;
@@ -743,7 +743,7 @@ public
 			Robot_Task_Properties::start_loc => 7 applies to s_8_empty;
 			Robot_Task_Properties::end_loc => 7 applies to s_8_empty;
 			
-			Robot_Task_Properties::task_id => 29 applies to s_s_empty;
+			Robot_Task_Properties::task_id => 68 applies to s_s_empty;
 			Robot_Task_Properties::duration => 0.0 applies to s_s_empty;
 			Robot_Task_Properties::energy => 0 applies to s_s_empty;
 			Robot_Task_Properties::energy_sim => 0 applies to s_s_empty;

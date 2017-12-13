@@ -12,7 +12,7 @@ set tasks: Task;
 //bfun list_contains_elem(<<elem>>, elem) -> bool;
 bfun list_contains_archelem(<<elem>>, elem) -> bool; 
           
-//use model prism_noturns_nocharge_speed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+use model prism_noturns_nocharge_speed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 stvar l: int;
 stvar b: int;    
  

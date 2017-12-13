@@ -12,14 +12,14 @@ stvar l: int;
 stvar s: int;
 stvar b: int;
 
-// Expected: ?? models (terminated at 500, tehn at 400, TODO figure out why so many)
+// Expected: 362 models
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | 
 // cohesive path: 
 	( t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
 		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc) & 
 	// "no circularities" expressed as "no intersecting task"
 	// no such intersector task
-	not (exists i : tasks | 
+	(not (exists i : tasks | 
 		// that is one of the legit tasks  
 		( i = t1 || i = t2 || i = t3 || i = t4 || i = t5 ) & i::task_type = 0 &
 		// and its end is one of the other legit tasks -- or the absolute beginning
@@ -31,20 +31,38 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 			(t5 != i & t5::task_type = 0 & t5::end_loc = i::end_loc) ||
 			(i::end_loc = t1::start_loc)    
 		)
-	) &  
-	// "no empty task in the middle"
-	not (exists em : tasks |
-		// such that it's one of the tasks and it's empty 
-		( em = t1 || em = t2 || em = t3 || em = t4 || em = t5 ) & em::task_type = 2 &
-		// and the task after it is not empty
-		(em = t1 -> t2::task_type != 2) &
-		(em = t2 -> t3::task_type != 2) &
-		(em = t3 -> t4::task_type != 2) &
-		(em = t4 -> t5::task_type != 2) 
-	) &
+	)) &  
 	// the last task is not charging (does not make domain-specific sense)
-	t5::task_type != 3 
-	->      
+	t5::task_type != 3 &
+	// "no empty tasks in the middle"
+	// no such 'empty-in-the-middle' task
+//	(not (exists em : tasks |
+//		// that it's empty and it's one of the mission tasks 
+//		em::task_type = 2 & ( em = t1 || em = t2 || em = t3 || em = t4 ) &
+//		// and the task after it is not empty
+//		// FIXME if all of these have false premises, it passes. Should use disjunction
+//		// OR NOT?
+//		(em = t1 -> t2::task_type != 2) &
+//		(em = t2 -> t3::task_type != 2) &
+//		(em = t3 -> t4::task_type != 2) &
+//		(em = t4 -> t5::task_type != 2) 
+//	)) &
+	// ALT VERSION OF "no empty tasks in the middle"
+	// no such 'empty-in-the-middle' task
+//	(forall em : tasks |
+//		// that it's empty and it's one of the mission tasks
+//		(em::task_type = 2 & em = t1 -> t2::task_type != 2) & 
+//		(em::task_type = 2 & em = t2 -> t3::task_type != 2) &
+//		(em::task_type = 2 & em = t3 -> t4::task_type != 2) &
+//		(em::task_type = 2 & em = t4 -> t5::task_type != 2)
+//	) ->
+
+	// "empty tasks only in the end of a mission"
+		(t1::task_type = 2 -> t2::task_type = 2) &
+		(t2::task_type = 2 -> t3::task_type = 2) & 
+		(t3::task_type = 2 -> t4::task_type = 2) & 
+		(t4::task_type = 2 -> t5::task_type = 2)   
+	->
 	// robot can find its way to the finish  
 	P max=? [   
 		// constrain actuation

@@ -9,12 +9,12 @@ use view tasks_view_map3b_simple::TaskLibrary.fullspeed as tasklib2;
 
 //use view tasks_view_map3a_wempty_rot::TaskLibrary.fullspeed as tasklib1;
 //use view tasks_view_map3b_wempty_rot::TaskLibrary.fullspeed as tasklib2;
-
+ 
 bfun isSubcomponentOf(elem, elem) -> bool;
 bfun abs_int(int) -> int; 
   
-set AllTasks: Task;
-
+set AllTasks: Task; 
+ 
 // "if a forward motion task is in tasklib 1, then it is in tasklib 2"
 // Expected: valid for all 3 views 
 // for each task in one library 

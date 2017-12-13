@@ -7,7 +7,7 @@ use view tasks_view_map0_wempty::TaskLibrary.fullspeed as tasklib;
 bfun distinct(int, int, int, int, int, int) -> bool;    
 bfun min_int(int, int) -> int;
 
-//use model prism_noturns_nocharge_nospeed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+use model prism_noturns_nocharge_nospeed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 // uncomment constraint on speed below if using this model:
 //use model prism_noturns_nocharge_speed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
  

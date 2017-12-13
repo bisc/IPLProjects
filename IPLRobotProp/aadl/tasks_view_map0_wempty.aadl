@@ -299,7 +299,7 @@ public
 			Robot_Task_Properties::start_loc => 7 applies to s_8_empty;
 			Robot_Task_Properties::end_loc => 7 applies to s_8_empty;
 			
-			Robot_Task_Properties::task_id => 29 applies to s_s_empty;
+			Robot_Task_Properties::task_id => 28 applies to s_s_empty;
 			Robot_Task_Properties::duration => 0.0 applies to s_s_empty;
 			Robot_Task_Properties::energy => 0 applies to s_s_empty;
 			Robot_Task_Properties::energy_sim => 0 applies to s_s_empty;

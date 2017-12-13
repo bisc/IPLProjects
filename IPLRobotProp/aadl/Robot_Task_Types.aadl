@@ -2,7 +2,7 @@ package Robot_Task_Types
 public
 	with Robot_Task_Properties;
 	 
-	process Task 
+	process Task  
 		 
 	end Task;
 	
