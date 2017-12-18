@@ -12,7 +12,13 @@ stvar l: int;
 stvar s: int;
 stvar b: int;
 
-// Expected: 362 models
+var MAX_BATTERY: int = 32560;
+var CHARGING_THRES: int = 1500; 
+
+// Expected: 362 models without tail energy constraint
+//			333 models with it 
+//			324 with total energy constraint
+// FIXME failing full verification due to Rabinizer "dummy" error
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | 
 // cohesive path: 
 	( t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
@@ -34,7 +40,43 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 	)) &  
 	// the last task is not charging (does not make domain-specific sense)
 	t5::task_type != 3 &
-	// "no empty tasks in the middle"
+
+	// "empty tasks only in the end of a mission"
+		t1::task_type != 2 &  // the first task is not empty (not considering empty missions)
+		(t1::task_type = 2 -> t2::task_type = 2) &
+		(t2::task_type = 2 -> t3::task_type = 2) & 
+		(t3::task_type = 2 -> t4::task_type = 2) & 
+		(t4::task_type = 2 -> t5::task_type = 2) &  
+	// "no charging when battery is above 1500"
+	// equivalent to "if charging is happening now, then the tail required energy is <= 1500"
+	// TODO not sure if this is valid, check off by one
+	(
+		(t1::task_type = 3 -> t2::energy + t3::energy + t4::energy + t5::energy <= CHARGING_THRES) &
+		(t2::task_type = 3 -> t3::energy + t4::energy + t5::energy <= CHARGING_THRES) & 
+		(t3::task_type = 3 -> t4::energy + t5::energy <= CHARGING_THRES) &
+		(t4::task_type = 3 -> t5::energy <= CHARGING_THRES)
+	) &
+	// regression considers this a power-safe mission 
+	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1 <= MAX_BATTERY
+	->
+	// robot can find its way to the finish  
+	P max=? [   
+		// constrain actuation
+		//(G s = 1) & 
+		// robot visits each location
+		(F l = t2::start_loc) &
+		(F l = t3::start_loc) &
+		(F l = t4::start_loc) & 
+		(F l = t5::start_loc) &
+		// in order
+		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U
+			// gets to the end without draining the battery 
+			( l = t5::end_loc & b > 0)
+		)))))
+	]{|t1::start_loc, t5::end_loc, 
+		min_int(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1, 32560) |} = 1;
+		
+// VERSIONS OF "no empty tasks in the middle"
 	// no such 'empty-in-the-middle' task
 //	(not (exists em : tasks |
 //		// that it's empty and it's one of the mission tasks 
@@ -57,25 +99,3 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 //		(em::task_type = 2 & em = t4 -> t5::task_type != 2)
 //	) ->
 
-	// "empty tasks only in the end of a mission"
-		(t1::task_type = 2 -> t2::task_type = 2) &
-		(t2::task_type = 2 -> t3::task_type = 2) & 
-		(t3::task_type = 2 -> t4::task_type = 2) & 
-		(t4::task_type = 2 -> t5::task_type = 2)   
-	->
-	// robot can find its way to the finish  
-	P max=? [   
-		// constrain actuation
-		//(G s = 1) & 
-		// robot visits each location
-		(F l = t2::start_loc) &
-		(F l = t3::start_loc) &
-		(F l = t4::start_loc) & 
-		(F l = t5::start_loc) &
-		// in order
-		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U
-			// gets to the end without draining the battery 
-			( l = t5::end_loc & b > 0)
-		)))))
-	]{|t1::start_loc, t5::end_loc, 
-		min_int(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1, 32560) |} = 1;

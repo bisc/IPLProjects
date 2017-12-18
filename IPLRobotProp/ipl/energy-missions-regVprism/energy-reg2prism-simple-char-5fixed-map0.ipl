@@ -9,9 +9,13 @@ use model prism_noturns_chargesmall_nospeed_map0(INITIAL_LOCATION, TARGET_LOCATI
 stvar l: int; 
 stvar s: int;
 stvar b: int;    
-     
+
+var MAX_BATTERY: int = 32560;
+var CHARGING_THRES: int = 1500; 
+
 // A different expression of circularity
-// Expected: 121 models (partially validated)
+// Expected: 121 models (partially validated) without tail energy constraint
+//			100 models with it 
 // does it make sense to charge in the end? maybe prohibit that
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
 // cohesive path: 
@@ -32,10 +36,19 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 			(i::end_loc = t1::start_loc)    
 		)
 	) &  
-	// the first task is not empty -- NOT CONSIDERING EMPTIES HERE
-//	t1::task_type != 2 &
+	// "no charging when battery is above 1500" 
+	// equivalent to "if charging is happening now, then the tail required energy is <= 1500"
+	// TODO not sure if this is valid, check off by one
+	(
+		(t1::task_type = 3 -> t2::energy + t3::energy + t4::energy + t5::energy <= CHARGING_THRES) &
+		(t2::task_type = 3 -> t3::energy + t4::energy + t5::energy <= CHARGING_THRES) & 
+		(t3::task_type = 3 -> t4::energy + t5::energy <= CHARGING_THRES) &
+		(t4::task_type = 3 -> t5::energy <= CHARGING_THRES)
+	) & 
 	// the last task is not charging (does not make domain-specific sense)
-	t5::task_type != 3 
+	t5::task_type != 3 &
+	// regression considers this a power-safe mission 
+	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1 <= MAX_BATTERY
 	->  
 		P max=? [  
 //		(G s = 1) &  
