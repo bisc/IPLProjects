@@ -1,7 +1,6 @@
 import Robot_Task_Types.*;
-import tasks_view_map3b_wempty_rot.*;
     
-use view TaskLibrary.fullspeed as tasklib;
+use view tasks_view_map3b_wempty_rot_char::TaskLibrary.fullspeed as tasklib;
 set tasks: Task;  
 
 bfun distinct(int, int, int, int, int, int, int, int) -> bool;    
@@ -10,12 +9,15 @@ bfun abs (int) -> int;
 var err_prism: int = 2; // by how much prism can be inaccurate by itself (from ground truth). Does not affect verification times.
 var err_cons: int = 0; // by how much prism can deviate from regression. Affects verification times. 
     
-//use model prism_turns_nocharge_nospeed_map3b(
-//	INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY, INITIAL_HEADING);
+// with charging
+use model prism_turns_chargesmall_nospeed_map3b(
+	INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY, INITIAL_HEADING);
 
 stvar l: int;
 stvar s: int; 
 stvar b: int;
+ 
+var MAX_BATTERY: int = 32560;
  
 // assumption: monotonicity of missions, so no point in checking budgets too small or too big
 // assumption: empty tasks have their start = end
@@ -37,58 +39,64 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
 		// rotations are located on the path 
 		r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & 
 		r34::start_loc = t4::start_loc & r45::start_loc = t5::start_loc &
-		// no circularities/shortcuts, and the tail of the path can be empty: 
-		(
-			   // either all tasks are real ones
-			(   
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) &
-				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & t5::task_type = 0
-			)  || 
-			// or the last one is empty
-			(
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) & 
-				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & 
-				t5::task_type = 2
-			) || 
-			// or the last two are empty
-			( 
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc) & 
-				t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & 
-				t4::task_type = 2 & t5::task_type = 2
-			) ||
-			// or the last three are empty
-			( 
-				distinct (t1::start_loc, t2::start_loc, t3::start_loc) &
-				t1::task_type = 0 & t2::task_type = 0 & 
-				t3::task_type = 2 &	t4::task_type = 2 & t5::task_type = 2
-			) ||
-			// or the last four are empty 
-			( 
-				distinct(t1::start_loc, t2::start_loc) & 
-				t1::task_type = 0 & 
-				t2::task_type = 2 &	t3::task_type = 2 &	t4::task_type = 2 & t5::task_type = 2 
-			)
+// "no circularities" expressed as "no intersecting task"
+	// no such intersector task
+	(not (exists i : tasks | 
+		// that is one of the legit tasks  
+		( i = t1 || i = t2 || i = t3 || i = t4 || i = t5 ) & i::task_type = 0 &
+		// and its end is one of the other legit tasks -- or the absolute beginning
+		(    
+			(t1 != i & t1::task_type = 0 & t1::end_loc = i::end_loc) ||
+			(t2 != i & t2::task_type = 0 & t2::end_loc = i::end_loc) ||
+			(t3 != i & t3::task_type = 0 & t3::end_loc = i::end_loc) || 
+			(t4 != i & t4::task_type = 0 & t4::end_loc = i::end_loc) || 
+			(t5 != i & t5::task_type = 0 & t5::end_loc = i::end_loc) ||
+			(i::end_loc = t1::start_loc)    
+		)
+	)) &
+	
+// "rotations are properly aligned" (also considers charging tasks)
+	// if a task is a legit forward, then the previous legit task (either rot or fwd) left the robot with an appropriate heading
+	// doing something hacky: constrain underspecified orientations of charging tasks 
+	// 		this breaks information hiding with SMT 
+	
+	// 2 options are possible if a forward task isn't empty (i.e., it's fwd or charge): 
+	//      1. legit rotation task + matching heading to both forwards
+	//  	2. empty rotation task + same headings of forwards
+	(t2::task_type != 2 -> // should work even if it's a charging task
+		r12::task_type = 1 & t1::end_head = r12::start_head & t2::start_head = r12::end_head ||
+		r12::task_type = 2 & t1::end_head = t2::start_head 
+	) & 
+	(t3::task_type != 2 -> 
+		r23::task_type = 1 & t2::end_head = r23::start_head & t3::start_head = r23::end_head ||
+		r23::task_type = 2 & t2::end_head = t3::start_head
 	) &
-	// rotation tasks connect headings of adjacent forwards (pre and post), with exclusions for empty ones
-// 3 options are possible: 
-//      1. legit next forward + legit rotation + matching rotation to both forwards
-//  	2. legit next forward + empty rotation + matching headings of forwards
-//		3. empty next forward + empty rotation
-	// first rotation: either a legit or empty one
-//	( r01::task_type = 1 & initHead = r01::start_head & r01::end_head = t1::start_head ||
-//	  r01::task_type = 2 & initHead = t1::start_head) &  
-	( t2::task_type = 0 & r12::task_type = 1 & t1::end_head = r12::start_head & r12::end_head = t2::start_head || 
-	  t2::task_type = 0 & r12::task_type = 2 & t1::end_head = t2::start_head || 
-	  t2::task_type = 2 & r12::task_type = 2 ) &   
-	( t3::task_type = 0 & r23::task_type = 1 & t2::end_head = r23::start_head & r23::end_head = t3::start_head || 
-	  t3::task_type = 0 & r23::task_type = 2 & t2::end_head = t3::start_head || 
-	  t3::task_type = 2 & r23::task_type = 2) &  
-	( t4::task_type = 0 & r34::task_type = 1 & t3::end_head = r34::start_head & r34::end_head = t4::start_head || 
-	  t4::task_type = 0 & r34::task_type = 2 & t3::end_head = t4::start_head ||
-	  t4::task_type = 2 & r34::task_type = 2) &
-	( t5::task_type = 0 & r45::task_type = 1 & t4::end_head = r45::start_head & r45::end_head = t5::start_head || 
-	  t5::task_type = 0 & r45::task_type = 2 & t4::end_head = t5::start_head ||
-	  t5::task_type = 2 & r45::task_type = 2) 	  	
+	(t4::task_type != 2 -> 
+		r34::task_type = 1 & t3::end_head = r34::start_head & t4::start_head = r34::end_head ||
+		r34::task_type = 2 & t3::end_head = t4::start_head
+	) &
+	(t5::task_type != 2 -> 
+		r45::task_type = 1 & t4::end_head = r45::start_head & t5::start_head = r45::end_head ||
+		r45::task_type = 2 & t4::end_head = t5::start_head
+	) &
+	
+// "the last task is not charging" (does not make domain-specific sense)
+// where last is defined as either the very last one or the one before a sequence of empty tasks
+	t5::task_type != 3 & 
+	(t4::task_type = 3 -> t5::task_type != 2) &
+	(t3::task_type = 3 -> t4::task_type != 2) &
+	(t2::task_type = 3 -> t3::task_type != 2) &
+	(t1::task_type = 3 -> t2::task_type != 2) &
+	
+// "no charging when battery is above 1500"
+// equivalent to "if charging is happening now, then the tail required energy is <= 1500"
+// TODO not sure if this is valid, check off by one
+	(
+		(t1::task_type = 3 -> t2::energy + t3::energy + t4::energy + t5::energy <= 1500) &
+		(t2::task_type = 3 -> t3::energy + t4::energy + t5::energy <= 1500) & 
+		(t3::task_type = 3 -> t4::energy + t5::energy <= 1500) &
+		(t4::task_type = 3 -> t5::energy <= 1500)
+	) 
 	// exists such a minimal budget
 	 ->  (exists ebmin: int |  
 		// the budget fits into the battery  
