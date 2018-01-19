@@ -88,15 +88,19 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
 	(t2::task_type = 3 -> t3::task_type != 2) &
 	(t1::task_type = 3 -> t2::task_type != 2) &
 	
-// "no charging when battery is above 1500"
-// equivalent to "if charging is happening now, then the tail required energy is <= 1500"
-// TODO not sure if this is valid, check off by one
+// "no charging when battery is full" (specific to this map/model)
+// equivalent to "if charging is happening now, then the tail required energy less than full"
+// TODO check if this inequality works well when subsequent tasks are charging
 	(
-		(t1::task_type = 3 -> t2::energy + t3::energy + t4::energy + t5::energy <= 1500) &
-		(t2::task_type = 3 -> t3::energy + t4::energy + t5::energy <= 1500) & 
-		(t3::task_type = 3 -> t4::energy + t5::energy <= 1500) &
-		(t4::task_type = 3 -> t5::energy <= 1500)
-	) 
+		(t1::task_type = 3 -> t2::energy + t3::energy + t4::energy + t5::energy + 
+			r12::energy + r23::energy + r34::energy + r45::energy < MAX_BATTERY
+		) &
+		(t2::task_type = 3 -> t3::energy + t4::energy + t5::energy +  
+			r23::energy + r34::energy + r45::energy < MAX_BATTERY
+		) & 
+		(t3::task_type = 3 -> t4::energy + t5::energy + r34::energy + r45::energy < MAX_BATTERY) &
+		(t4::task_type = 3 -> t5::energy + r45::energy < MAX_BATTERY)
+	)
 	// exists such a minimal budget
 	 ->  (exists ebmin: int |  
 		// the budget fits into the battery  
