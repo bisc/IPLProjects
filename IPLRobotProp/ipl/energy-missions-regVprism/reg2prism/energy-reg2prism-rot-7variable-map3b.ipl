@@ -109,7 +109,7 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
 		(F l = t7::start_loc) & 
 		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U 
 			(l = t5::start_loc U (l = t6::start_loc U (l = t7::start_loc U 
-			( l = t7::end_loc & b > 0)
+			(l = t7::end_loc & b > 0)
 		)))))))
 	]{|t1::start_loc, t7::end_loc,  t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + t6::energy + t7::energy + 
 			// r01::energy +

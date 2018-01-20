@@ -173,9 +173,6 @@ formula b_upd_c4_l7_LOC_MED= s=HALF_SPEED? max(0,b-(2870+rot_energy_c4_to_l7)) :
 formula b_upd_c4_l7_LOC_LO= s=HALF_SPEED? max(0,b-(2870+rot_energy_c4_to_l7)) : max(0,b-(3938+rot_energy_c4_to_l7));
 formula b_upd_c4_l7 = k = LOC_LO ? b_upd_c4_l7_LOC_LO : ( k = LOC_MED ? b_upd_c4_l7_LOC_MED : b_upd_c4_l7_LOC_HI );
 
-formula b_upd_1min = min(b+700, MAX_BATTERY); // Recharging one minute adds 700 mW/hr to the battery
-
-
 module bot_module
 b:[0..MAX_BATTERY] init INITIAL_BATTERY;
 l:[0..11] init INITIAL_LOCATION;
@@ -185,9 +182,6 @@ r:[0..8] init INITIAL_HEADING;
 kr:[0..2] init 0;
 robot_done:bool init false;
 	[] true & (turn=RT) & (!stop) & (robot_done) -> (robot_done'=false) & (turn'=ET);
-
-	 // Recharge tactics
-	 [t_recharge] true  & (false|l=10|l=11|l=8|l=9) & (b<32560)& (!stop) & (turn=RT) & (!robot_done) ->  (b'=b_upd_1min) & (robot_done'=true);
 
 	 [l1_to_l2] (l=l1) & (!stop) & (turn=RT) & (!robot_done) -> (l'=l2)  & (b'=b_upd_l1_l2) & (r'=H_EAST) & (robot_done'=true);
 	 [l2_to_l1] (l=l2) & (!stop) & (turn=RT) & (!robot_done) -> (l'=l1)  & (b'=b_upd_l2_l1) & (r'=H_WEST) & (robot_done'=true);
@@ -220,7 +214,6 @@ endmodule
 
 
 rewards "time"
-	[t_recharge] true : (32560 - b)/41.75;
 	[l1_to_l2] true :k = LOC_LO ? 20.0000 + rot_time_l1_to_l2 : s=HALF_SPEED? 15.7143 + rot_time_l1_to_l2 : 8.8235 + rot_time_l1_to_l2;
 	[l2_to_l1] true :k = LOC_LO ? 20.0000 + rot_time_l2_to_l1 : s=HALF_SPEED? 15.7143 + rot_time_l2_to_l1 : 8.8235 + rot_time_l2_to_l1;
 	[l2_to_c1] true :k = LOC_LO ? 16.0000 + rot_time_l2_to_c1 : s=HALF_SPEED? 12.5714 + rot_time_l2_to_c1 : 7.0588 + rot_time_l2_to_c1;

@@ -30,37 +30,36 @@ var MAX_BATTERY: int = 32560;
 // - empty steps can only be found in the end of a mission (otherwise, the rotation task spec below would allow too many fake turns  
 // - no non-empty rotations before empty tasks
  
-// Expected: 1190 models
+// Expected: ?? models
 
 	//forall initHead: {0, 1, 2, 3, 4, 5, 6, 7} |   // a full-scale version, but takes too long
 	// forward or charging tasks
-forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
+forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks |
 	//forall initHead: { t1::start_head } | // a reduced version, see assumption
 	//currently using the above version, but using t1::starthead instead of introducing a new variable
 	//forall r01: tasks | 	
 // rotations between forward tasks
-forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
+forall r12: tasks | forall r23: tasks | forall r34: tasks |
 // a fixed heading, see assumption
 	//initHead = t1::start_head & 
 // cohesive path (forward)  
 	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
-		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc &
+		t3::end_loc = t4::start_loc &
 // rotations are located on the path 
 	//r01::start_loc = t1::start_loc & 
 	r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & 
-		r34::start_loc = t4::start_loc & r45::start_loc = t5::start_loc &
+		r34::start_loc = t4::start_loc & 
 // "no circularities" expressed as "no intersecting task"
 	// no such intersector task
 	(not (exists i : tasks | 
 		// that is one of the legit tasks  
-		( i = t1 || i = t2 || i = t3 || i = t4 || i = t5 ) & i::task_type = 0 &
+		( i = t1 || i = t2 || i = t3 || i = t4 ) & i::task_type = 0 &
 		// and its end is one of the other legit tasks -- or the absolute beginning
 		(    
 			(t1 != i & t1::task_type = 0 & t1::end_loc = i::end_loc) ||
 			(t2 != i & t2::task_type = 0 & t2::end_loc = i::end_loc) ||
 			(t3 != i & t3::task_type = 0 & t3::end_loc = i::end_loc) || 
 			(t4 != i & t4::task_type = 0 & t4::end_loc = i::end_loc) || 
-			(t5 != i & t5::task_type = 0 & t5::end_loc = i::end_loc) ||
 			(i::end_loc = t1::start_loc)    
 		)
 	)) &
@@ -68,7 +67,7 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
 // tasks are either forward, charging or empty 
 // aka not rotations
 t1::task_type != 1 & t2::task_type != 1 & t3::task_type != 1 &
-t4::task_type != 1 & t5::task_type != 1 &
+t4::task_type != 1 &
 	
 // "no empty task in the middle, and if it's empty then its rotation is empty"
 // written as "if some task is empty, the next one is also empty"
@@ -76,19 +75,10 @@ t4::task_type != 1 & t5::task_type != 1 &
 	t1::task_type != 2 & // the first task is not empty (not considering empty missions)
 	(t2::task_type = 2 -> t3::task_type = 2 & r12::task_type = 2) & 
 	(t3::task_type = 2 -> t4::task_type = 2 & r23::task_type = 2) & 
-	(t4::task_type = 2 -> t5::task_type = 2 & r34::task_type = 2) &
-	(t5::task_type = 2 -> r45::task_type = 2) &  
+	(t4::task_type = 2 -> r34::task_type = 2) &
 	
 // "headings are properly aligned between tasks" (also considers charging tasks)
 		// if a task is a legit forward, then the previous legit task (either rot or fwd) left the robot with an appropriate heading
-		// brute force: manually write out this recursion
-		// alternatives: 
-		// can define function "previous" on tasks
-		// can define "order function" with arbitrary number of arguments that constrains 'previous' somehow
-		// can make orientation functions 
-		// can do something hacky and constrain underspecified orientations of charging tasks 
-		// 		this breaks information hiding with SMT 
-	
 	// 2 options are possible if a forward task isn't empty (i.e., it's fwd or charge): 
 	//      1. legit rotation task + matching heading to both forwards
 	//  	2. empty rotation task + same headings of forwards
@@ -104,17 +94,12 @@ t4::task_type != 1 & t5::task_type != 1 &
 		r34::task_type = 1 & t3::end_head = r34::start_head & t4::start_head = r34::end_head ||
 		r34::task_type = 2 & t3::end_head = t4::start_head
 	) &
-	(t5::task_type != 2 -> 
-		r45::task_type = 1 & t4::end_head = r45::start_head & t5::start_head = r45::end_head ||
-		r45::task_type = 2 & t4::end_head = t5::start_head
-	) &
 
 // "when the robot is charging, it either rotates before or after, but not both"
 // AND
 // "the last task is not charging" (does not make domain-specific sense)
 // where last is defined as either the very last one or the one before a sequence of empty tasks
-	t5::task_type != 3 & 
-	(t4::task_type = 3 -> t5::task_type != 2 & (r34::task_type = 2 || r45::task_type = 2)) &
+	t4::task_type != 3 & 
 	(t3::task_type = 3 -> t4::task_type != 2 & (r23::task_type = 2 || r34::task_type = 2)) &
 	(t2::task_type = 3 -> t3::task_type != 2 & (r12::task_type = 2 || r23::task_type = 2)) &
 	(t1::task_type = 3 -> t2::task_type != 2) &
@@ -122,19 +107,18 @@ t4::task_type != 1 & t5::task_type != 1 &
 // "no charging when battery is full" (specific to this map/model)
 // equivalent to "if charging is happening now, then the tail required energy is less than full"
 	(
-		(t1::task_type = 3 -> t2::energy + t3::energy + t4::energy + t5::energy + 
-			r12::energy + r23::energy + r34::energy + r45::energy < MAX_BATTERY
+		(t1::task_type = 3 -> t2::energy + t3::energy + t4::energy + 
+			r12::energy + r23::energy + r34::energy < MAX_BATTERY
 		) &
-		(t2::task_type = 3 -> t3::energy + t4::energy + t5::energy +  
-			r23::energy + r34::energy + r45::energy < MAX_BATTERY
+		(t2::task_type = 3 -> t3::energy + t4::energy +   
+			r23::energy + r34::energy < MAX_BATTERY
 		) & 
-		(t3::task_type = 3 -> t4::energy + t5::energy + r34::energy + r45::energy < MAX_BATTERY) &
-		(t4::task_type = 3 -> t5::energy + r45::energy < MAX_BATTERY)
+		(t3::task_type = 3 -> t4::energy + r34::energy  < MAX_BATTERY) 
 	) &
 
 	// regression considers this a power-safe mission 
-	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
-			r12::energy + r23::energy + r34::energy + r45::energy + 1 <= MAX_BATTERY
+	t1::energy + t2::energy + t3::energy + t4::energy +
+			r12::energy + r23::energy + r34::energy + 1 <= MAX_BATTERY
 	->
 	// robot can find its way to the finish   
 	P max=? [  
@@ -142,13 +126,12 @@ t4::task_type != 1 & t5::task_type != 1 &
 		(F l = t2::start_loc) &
 		(F l = t3::start_loc) &
 		(F l = t4::start_loc) &  
-		(F l = t5::start_loc) &
-		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
-			( l = t5::end_loc & b > 0)
-		))))) 
-	]{|t1::start_loc, t5::end_loc,  
-			t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
+		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U  
+			( l = t4::end_loc & b > 0)
+		))))
+	]{|t1::start_loc, t4::end_loc,  
+			t1::energy + t2::energy + t3::energy + t4::energy +  
 			// r01::energy +
-			r12::energy + r23::energy + r34::energy + r45::energy + 1, t1::start_head
+			r12::energy + r23::energy + r34::energy + 1, t1::start_head
 	|} = 1;
  

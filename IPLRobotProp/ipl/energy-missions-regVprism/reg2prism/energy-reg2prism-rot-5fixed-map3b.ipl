@@ -16,6 +16,7 @@ stvar s: int;
 stvar b: int; 
 
 // Expected 60 models (with single starting heading)
+// rabinizer can give value out of range if "Future" clauses come last in the PCTL part
 
 // assumptions:  
 // - forward tasks have start_head = end_head
@@ -60,13 +61,13 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
 	// robot can find its way to the finish   
 	P max=? [  
 		//(G s = 1) &  
-		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
-			( l = t5::end_loc & b > 0)
-		))))) &
 		(F l = t2::start_loc) &
 		(F l = t3::start_loc) & 
 		(F l = t4::start_loc) &  
-		(F l = t5::start_loc) 
+		(F l = t5::start_loc) & 
+		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
+			( l = t5::end_loc & b > 0)
+		))))) 
 	]{|t1::start_loc, t5::end_loc, t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
 //			r01::energy + 
 			r12::energy + r23::energy + r34::energy + r45::energy + 1, t1::start_head
