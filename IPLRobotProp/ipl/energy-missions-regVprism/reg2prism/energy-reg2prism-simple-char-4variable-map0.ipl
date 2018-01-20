@@ -1,0 +1,75 @@
+import Robot_Task_Types.*;
+set tasks: Task;
+       
+use view tasks_view_map0_wempty_char::TaskLibrary.fullspeed as tasklib;
+ 
+bfun distinct(int, int, int, int, int, int) -> bool;    
+bfun min_int(int, int) -> int;
+
+var MAX_BATTERY: int = 32560;
+var CHARGING_THRES: int = 1500; 
+
+use model prism_noturns_chargesmall_nospeed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+ 
+stvar l: int; 
+stvar s: int;
+stvar b: int;
+
+// Expected:?? models
+forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | 
+// cohesive path: 
+	( t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
+		t3::end_loc = t4::start_loc ) & 
+	// "no circularities" expressed as "no intersecting task"
+	// no such intersector task
+	(not (exists i : tasks | 
+		// that is one of the legit tasks  
+		( i = t1 || i = t2 || i = t3 || i = t4  ) & i::task_type = 0 &
+		// and its end is one of the other legit tasks -- or the absolute beginning
+		(    
+			(t1 != i & t1::task_type = 0 & t1::end_loc = i::end_loc) ||
+			(t2 != i & t2::task_type = 0 & t2::end_loc = i::end_loc) ||
+			(t3 != i & t3::task_type = 0 & t3::end_loc = i::end_loc) || 
+			(t4 != i & t4::task_type = 0 & t4::end_loc = i::end_loc) || 
+			(i::end_loc = t1::start_loc)    
+		)
+	)) &  
+// "the last task is not charging" (does not make domain-specific sense)
+// where last is defined as either the very last one or the one before a sequence of empty tasks
+	(t1::task_type = 3 -> t2::task_type != 2) &
+	(t2::task_type = 3 -> t3::task_type != 2) &
+	(t3::task_type = 3 -> t4::task_type != 2) &
+	t4::task_type != 3 & 
+// "empty tasks only in the end of a mission"
+	t1::task_type != 2 &  // the first task is not empty (not considering empty missions)
+	(t1::task_type = 2 -> t2::task_type = 2) &
+	(t2::task_type = 2 -> t3::task_type = 2) & 
+	(t3::task_type = 2 -> t4::task_type = 2) & 
+// "no charging when battery is above 1500" (specific number to map 0 & this model)
+	// equivalent to "if charging is happening now, then the tail required energy is <= 1500"
+	(
+		(t1::task_type = 3 -> t2::energy + t3::energy + t4::energy < CHARGING_THRES) &
+		(t2::task_type = 3 -> t3::energy + t4::energy < CHARGING_THRES) & 
+		(t3::task_type = 3 -> t4::energy < CHARGING_THRES) 
+	) &
+	// regression considers this a power-safe mission 
+	t1::energy + t2::energy + t3::energy + t4::energy + 1 <= MAX_BATTERY &
+	// do not start with negative energy (otherwise prism freaks out) 
+	t1::energy + t2::energy + t3::energy + t4::energy + 1 >= 0 
+	->
+	// robot can find its way to the finish  
+	P max=? [   
+		// constrain actuation
+		//(G s = 1) & 
+		// robot visits each location
+		(F l = t2::start_loc) &
+		(F l = t3::start_loc) &
+		(F l = t4::start_loc) & 
+		// in order
+		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U
+			// gets to the end without draining the battery 
+			( l = t4::end_loc & b > 0)
+		))))
+	]{|t1::start_loc, t4::end_loc, 
+		min_int(t1::energy + t2::energy + t3::energy + t4::energy + 1, MAX_BATTERY) |} = 1;
+

@@ -15,20 +15,16 @@ stvar l: int;
 stvar s: int;
 stvar b: int;
 
-// Expected:295 with tail + total energy constraints + no charging before empties 
-//			324 with tail + total energy constraints
-//			333 models with tail energy constraint
-//			362 models without tail energy constraint
-
-forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | 
+// Expected:?? models
+forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | forall t6:tasks |
 // cohesive path: 
 	( t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
-		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc) & 
+		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc & t5::end_loc = t6::start_loc) & 
 	// "no circularities" expressed as "no intersecting task"
 	// no such intersector task
 	(not (exists i : tasks | 
 		// that is one of the legit tasks  
-		( i = t1 || i = t2 || i = t3 || i = t4 || i = t5 ) & i::task_type = 0 &
+		( i = t1 || i = t2 || i = t3 || i = t4 || i = t5 || i = t6 ) & i::task_type = 0 &
 		// and its end is one of the other legit tasks -- or the absolute beginning
 		(    
 			(t1 != i & t1::task_type = 0 & t1::end_loc = i::end_loc) ||
@@ -36,6 +32,7 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 			(t3 != i & t3::task_type = 0 & t3::end_loc = i::end_loc) || 
 			(t4 != i & t4::task_type = 0 & t4::end_loc = i::end_loc) || 
 			(t5 != i & t5::task_type = 0 & t5::end_loc = i::end_loc) ||
+			(t6 != i & t6::task_type = 0 & t6::end_loc = i::end_loc) ||
 			(i::end_loc = t1::start_loc)    
 		)
 	)) &  
@@ -45,25 +42,28 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 	(t2::task_type = 3 -> t3::task_type != 2) &
 	(t3::task_type = 3 -> t4::task_type != 2) &
 	(t4::task_type = 3 -> t5::task_type != 2) &
-	t5::task_type != 3 & 
+	(t5::task_type = 3 -> t6::task_type != 2) &
+	t6::task_type != 3 & 
 // "empty tasks only in the end of a mission"
 	t1::task_type != 2 &  // the first task is not empty (not considering empty missions)
 	(t1::task_type = 2 -> t2::task_type = 2) &
 	(t2::task_type = 2 -> t3::task_type = 2) & 
 	(t3::task_type = 2 -> t4::task_type = 2) & 
 	(t4::task_type = 2 -> t5::task_type = 2) &  
+	(t5::task_type = 2 -> t6::task_type = 2) &  
 // "no charging when battery is above 1500" (specific number to map 0 & this model)
 	// equivalent to "if charging is happening now, then the tail required energy is <= 1500"
 	(
-		(t1::task_type = 3 -> t2::energy + t3::energy + t4::energy + t5::energy < CHARGING_THRES) &
-		(t2::task_type = 3 -> t3::energy + t4::energy + t5::energy < CHARGING_THRES) & 
-		(t3::task_type = 3 -> t4::energy + t5::energy < CHARGING_THRES) &
-		(t4::task_type = 3 -> t5::energy < CHARGING_THRES)
+		(t1::task_type = 3 -> t2::energy + t3::energy + t4::energy + t5::energy + t6::energy < CHARGING_THRES) &
+		(t2::task_type = 3 -> t3::energy + t4::energy + t5::energy + t6::energy < CHARGING_THRES) & 
+		(t3::task_type = 3 -> t4::energy + t5::energy + t6::energy < CHARGING_THRES) &
+		(t4::task_type = 3 -> t5::energy + t6::energy < CHARGING_THRES) &
+		(t5::task_type = 3 -> t6::energy < CHARGING_THRES)
 	) &
 	// regression considers this a power-safe mission 
-	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1 <= MAX_BATTERY &
+	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + t6::energy + 1 <= MAX_BATTERY &
 	// do not start with negative energy (otherwise prism freaks out) 
-	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1 >= 0 
+	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + t6::energy + 1 >= 0 
 	->
 	// robot can find its way to the finish  
 	P max=? [   
@@ -74,34 +74,12 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 		(F l = t3::start_loc) &
 		(F l = t4::start_loc) & 
 		(F l = t5::start_loc) &
+		(F l = t6::start_loc) &
 		// in order
-		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U
+		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U (l = t6::start_loc U
 			// gets to the end without draining the battery 
-			( l = t5::end_loc & b > 0)
-		)))))
-	]{|t1::start_loc, t5::end_loc, 
-		min_int(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1, MAX_BATTERY) |} = 1;
+			( l = t6::end_loc & b > 0)
+		))))))
+	]{|t1::start_loc, t6::end_loc, 
+		min_int(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + t6::energy + 1, MAX_BATTERY) |} = 1;
 		
-// VERSIONS OF "no empty tasks in the middle"
-	// no such 'empty-in-the-middle' task
-//	(not (exists em : tasks |
-//		// that it's empty and it's one of the mission tasks 
-//		em::task_type = 2 & ( em = t1 || em = t2 || em = t3 || em = t4 ) &
-//		// and the task after it is not empty
-//		// if all of these have false premises, it passes. Should use disjunction
-//		// OR NOT?
-//		(em = t1 -> t2::task_type != 2) &
-//		(em = t2 -> t3::task_type != 2) &
-//		(em = t3 -> t4::task_type != 2) &
-//		(em = t4 -> t5::task_type != 2) 
-//	)) &
-	// ALT VERSION OF "no empty tasks in the middle"
-	// no such 'empty-in-the-middle' task
-//	(forall em : tasks |
-//		// that it's empty and it's one of the mission tasks
-//		(em::task_type = 2 & em = t1 -> t2::task_type != 2) & 
-//		(em::task_type = 2 & em = t2 -> t3::task_type != 2) &
-//		(em::task_type = 2 & em = t3 -> t4::task_type != 2) &
-//		(em::task_type = 2 & em = t4 -> t5::task_type != 2)
-//	) ->
-
