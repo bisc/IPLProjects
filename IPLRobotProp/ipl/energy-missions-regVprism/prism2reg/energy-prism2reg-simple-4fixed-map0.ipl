@@ -1,0 +1,53 @@
+import Robot_Task_Types.*;
+
+import tasks_view_map0_simple.*;   
+// this spec is also valid with:
+//import tasks_manual_simple.*;
+ 
+use view TaskLibrary.fullspeed as tasklib;
+set tasks: Task;
+
+bfun distinct(int, int, int, int, int, int) -> bool;  
+bfun abs (int) -> int; 
+var error_prism: int = 2;   
+var error_cons: int = 1; 
+ 
+use model prism_noturns_nocharge_nospeed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+stvar l: int;
+stvar s: int;
+stvar b: int;
+
+// assumption: monotonicity of mission success in terms of energy budget (so no point in checking smaller budgets) 
+
+// Expected 100 models
+
+forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | 
+// cohesive path: 
+	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
+		t3::end_loc = t4::start_loc &
+// no circularities: 
+		distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t4::end_loc)
+	// for any budget that is small enough 
+	->  (forall eb: int |  
+		(   // constraint: no more energy then the max budget (is weaker than implication so doesn't matter)
+			// actually <= is not useful, so superceded by the one below
+			//(eb <= t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1 +1) &
+			
+			//  at least of certain size 
+			(eb >= (t1::energy + t2::energy + t3::energy + t4::energy + 1) - error_prism) & 
+			// if the robot succeeds on this budget
+			P max=? [  
+				// no shortcuts
+				//(G s = 1) & 
+				(F l = t2::start_loc) &
+				(F l = t3::start_loc) &
+				(F l = t4::start_loc) & 
+				// in order
+				((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U 
+					( l = t4::end_loc & b > 0)
+				))))
+			]{|t1::start_loc, t4::end_loc, eb |} = 1
+		) // then power model should also consider this mission possible, with some error
+		-> ( eb > (t1::energy + t2::energy + t3::energy + t4::energy + 1) - error_cons ) // actual goal (doesn't provide a bottom constraint, instead a top constraint)
+//		-> abs( eb - (t1::energy + t2::energy + t3::energy + t4::energy + 1)) <= error_cons
+		);

@@ -1,8 +1,6 @@
 import Robot_Task_Types.*;
 
-//import tasks_view_map0_wempty_rot.*; // useless map 
-import tasks_view_map3b_wempty_rot.*;
-use view TaskLibrary.fullspeed as tasklib;
+use view tasks_view_map3b_wempty_rot::TaskLibrary.fullspeed;
 set tasks: Task;
    
 bfun distinct(int, int, int, int, int, int) -> bool;

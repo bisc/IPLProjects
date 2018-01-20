@@ -29,6 +29,7 @@ var MAX_BATTERY: int = 32560;
 // - full quant removal: over 200 models, did not wait to terminate
 
 // TODO maybe have two different sorts with appropriate task types? that would necessitate the view
+// FIXME what is preventing empty tasks in the end? 
 // forward tasks:
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | 
 // rotations between forward tasks
