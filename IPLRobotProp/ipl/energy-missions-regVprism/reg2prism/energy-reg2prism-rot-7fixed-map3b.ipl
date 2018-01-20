@@ -3,7 +3,7 @@ import Robot_Task_Types.*;
 use view tasks_view_map3b_wempty_rot::TaskLibrary.fullspeed;
 set tasks: Task;
    
-bfun distinct(int, int, int, int, int, int) -> bool;
+bfun distinct(int, int, int, int, int, int, int, int) -> bool;
 bfun min_int(int, int) -> int;
 
 var MAX_BATTERY: int = 32560; 
@@ -15,7 +15,7 @@ stvar l: int;
 stvar s: int;
 stvar b: int; 
 
-// Expected 60 models (with single starting heading)
+// Expected ?? models (with single starting heading)
 
 // assumptions:  
 // - forward tasks have start_head = end_head
@@ -24,22 +24,26 @@ stvar b: int;
 // - (optional, currently enabled) initial heading faces the same direction as the first step
   
 	// forall initHead: {0, 1, 2, 3, 4, 5, 6, 7} | // a full version, but takes too long  
-forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
+forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | forall t6: tasks | forall t7: tasks |
 	//		forall r01: tasks | 
-forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
+forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | forall r56: tasks | forall r67: tasks | 
 	// a heading fixed to the first step, see assumption 
 	// initHead = t1::start_head & 
 // forward tasks; rotation tasks with possibility of emptiness are defined below
-	t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & t5::task_type = 0 &
+	t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & 
+	t5::task_type = 0 & t6::task_type = 0 & t7::task_type = 0 &
 // cohesive path (forward) 
 	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
-	t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc &
+	t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc & 
+	t5::end_loc = t6::start_loc & t6::end_loc = t7::start_loc &
 // no circularities
-	distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) &
+	distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, 
+		t5::start_loc, t6::start_loc, t7::start_loc, t7::end_loc) &
 // rotations are on the path    
 //	r01::start_loc = t1::start_loc & 
 	r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & 
 		r34::start_loc = t4::start_loc & r45::start_loc = t5::start_loc &
+		r56::start_loc = t6::start_loc & 
 // rotation tasks connect headings of adjacent forwards (pre and post), 
 // 		unless directions already match and rotation tasks are empty 
 //	( r01::task_type = 1 & r01::start_head = initHead & r01::end_head = t1::start_head || 
@@ -52,25 +56,29 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
 		r34::task_type = 2 & t3::end_head = t4::start_head) &
 	( r45::task_type = 1 & t4::end_head = r45::start_head & r45::end_head = t5::start_head || 
 		r45::task_type = 2 & t4::end_head = t5::start_head)	& 
+	( r56::task_type = 1 & t5::end_head = r56::start_head & r56::end_head = t6::start_head || 
+		r56::task_type = 2 & t5::end_head = t6::start_head)	& 
+	( r67::task_type = 1 & t6::end_head = r67::start_head & r67::end_head = t7::start_head || 
+		r67::task_type = 2 & t6::end_head = t7::start_head)	& 
 	// regression considers this a power-safe mission 
-	(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
+	(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + t6::energy + t7::energy +
 //	r01::energy + 
-	r12::energy + r23::energy + r34::energy + r45::energy + 1 <= MAX_BATTERY)
+	r12::energy + r23::energy + r34::energy + r45::energy + r56::energy + r67::energy + 1 <= MAX_BATTERY)
 	->           
 	// robot can find its way to the finish   
 	P max=? [  
 		//(G s = 1) &  
-		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
-			( l = t5::end_loc & b > 0)
-		))))) &
+		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U 
+			(l = t5::start_loc U (l = t6::start_loc U (l = t7::start_loc U
+			( l = t7::end_loc & b > 0)
+		))))))) &
 		(F l = t2::start_loc) &
 		(F l = t3::start_loc) & 
 		(F l = t4::start_loc) &  
-		(F l = t5::start_loc) 
-	]{|t1::start_loc, t5::end_loc, t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
+		(F l = t5::start_loc) &
+		(F l = t6::start_loc) & 
+		(F l = t7::start_loc) 
+	]{|t1::start_loc, t5::end_loc, t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + t6::energy + t7::energy +
 //			r01::energy + 
-			r12::energy + r23::energy + r34::energy + r45::energy + 1, t1::start_head
-		// incorrect to do this because if > 32560 then reg rejected this mission
-		/*min_int(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
-			r12::energy + r23::energy + r34::energy + r45::energy + 1, 32560)*/|} = 1;
+			r12::energy + r23::energy + r34::energy + r45::energy + r56::energy + r67::energy + 1, t1::start_head|} = 1;
 	

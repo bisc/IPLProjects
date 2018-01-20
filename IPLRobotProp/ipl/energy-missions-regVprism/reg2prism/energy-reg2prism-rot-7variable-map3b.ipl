@@ -26,28 +26,30 @@ stvar b: int;
 // modeling choice: 
 //	- empty steps can only be found in the end of a mission  (otherwise, the rotation task spec below would allow too many fake turns  
  
-// Expected: 222 on map 3, with single heading 
+// Expected: ?? on map 3, with single heading 
  
 	//forall initHead: {0, 1, 2, 3, 4, 5, 6, 7} |   // a full-scale version, but takes too long
-forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks |
+forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | forall t6: tasks | forall t7: tasks |
 	//forall initHead: { t1::start_head } | // a reduced version, see assumption 
 	//forall r01: tasks | 	
 // rotations between forward tasks
-forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
+forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | forall r56: tasks | forall r67: tasks |
 // a fixed heading, see assumption
 	//initHead = t1::start_head & 
 // cohesive path (forward)  
 	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
 		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc &
+		t5::end_loc = t6::start_loc & t6::end_loc = t7::start_loc &
 // rotations are located on the path 
 	//r01::start_loc = t1::start_loc & 
 	r12::start_loc = t2::start_loc & r23::start_loc = t3::start_loc & 
 		r34::start_loc = t4::start_loc & r45::start_loc = t5::start_loc &
+		r56::start_loc = t6::start_loc & r67::start_loc = t7::start_loc &
 // no circularities/shortcuts for the first part, and the tail of the path must be empty
 // expressed as "no intersectors"
 	(not (exists i : tasks | 
 		// that is one of the legit tasks  
-		( i = t1 || i = t2 || i = t3 || i = t4 || i = t5 ) & i::task_type = 0 &
+		( i = t1 || i = t2 || i = t3 || i = t4 || i = t5 || i = t6 || i = t7 ) & i::task_type = 0 &
 		// and its end is one of the other legit tasks -- or the absolute beginning
 		(    
 			(t1 != i & t1::task_type = 0 & t1::end_loc = i::end_loc) ||
@@ -55,6 +57,8 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
 			(t3 != i & t3::task_type = 0 & t3::end_loc = i::end_loc) || 
 			(t4 != i & t4::task_type = 0 & t4::end_loc = i::end_loc) || 
 			(t5 != i & t5::task_type = 0 & t5::end_loc = i::end_loc) || 
+			(t6 != i & t6::task_type = 0 & t6::end_loc = i::end_loc) || 
+			(t7 != i & t7::task_type = 0 & t7::end_loc = i::end_loc) || 
 			(i::end_loc = t1::start_loc)    
 		))) &
 	// no empty followed by legit forward
@@ -62,6 +66,8 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
 	(t2::task_type = 2 -> t3::task_type = 2) & 
 	(t3::task_type = 2 -> t4::task_type = 2) & 
 	(t4::task_type = 2 -> t5::task_type = 2) &
+	(t5::task_type = 2 -> t6::task_type = 2) &
+	(t6::task_type = 2 -> t7::task_type = 2) &
 // rotation tasks connect headings of adjacent forwards (pre and post), with exclusions for empty ones
 // 3 options are possible: 
 //      1. legit next forward + legit rotation + matching rotation to both forwards
@@ -82,9 +88,15 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
 	( t5::task_type = 0 & r45::task_type = 1 & t4::end_head = r45::start_head & r45::end_head = t5::start_head || 
 	  t5::task_type = 0 & r45::task_type = 2 & t4::end_head = t5::start_head ||
 	  t5::task_type = 2 & r45::task_type = 2) & 
+	( t6::task_type = 0 & r56::task_type = 1 & t5::end_head = r56::start_head & r56::end_head = t6::start_head || 
+	  t6::task_type = 0 & r56::task_type = 2 & t5::end_head = t6::start_head ||
+	  t6::task_type = 2 & r56::task_type = 2) & 
+  	( t7::task_type = 0 & r67::task_type = 1 & t6::end_head = r67::start_head & r67::end_head = t7::start_head || 
+	  t7::task_type = 0 & r67::task_type = 2 & t6::end_head = t7::start_head ||
+	  t7::task_type = 2 & r67::task_type = 2) & 
 	  	// regression considers this a power-safe mission 
-	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
-			r12::energy + r23::energy + r34::energy + r45::energy + 1 <= MAX_BATTERY
+	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + t6::energy + t7::energy +
+			r12::energy + r23::energy + r34::energy + r45::energy + r56::energy + r67::energy + 1 <= MAX_BATTERY
 	->  
 	// robot can find its way to the finish   
 	P max=? [  
@@ -93,42 +105,13 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks |
 		(F l = t3::start_loc) &
 		(F l = t4::start_loc) &  
 		(F l = t5::start_loc) & 
-		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
-			( l = t5::end_loc & b > 0)
-		))))) 
-	]{|t1::start_loc, t5::end_loc,  t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
+		(F l = t6::start_loc) & 
+		(F l = t7::start_loc) & 
+		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U 
+			(l = t5::start_loc U (l = t6::start_loc U (l = t7::start_loc U 
+			( l = t7::end_loc & b > 0)
+		)))))))
+	]{|t1::start_loc, t7::end_loc,  t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + t6::energy + t7::energy + 
 			// r01::energy +
-			r12::energy + r23::energy + r34::energy + r45::energy + 1, t1::start_head|} = 1;
+			r12::energy + r23::energy + r34::energy + r45::energy + r56::energy + r67::energy + 1, t1::start_head|} = 1;
  
- 
- // old way to say no intersections: 
- //	// every task moves to a new spot unless empty
-//	(
-//		// no empty steps
-//		(distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) & 
-//			t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 & t5::task_type = 0)
-//		|| 
-//		// one empty step
-//		(distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc) &
-//			t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 & t4::task_type = 0 
-//				& t5::task_type = 2)
-//		|| 
-//		// two empty steps
-//		(distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc) &
-//			t1::task_type = 0 & t2::task_type = 0 & t3::task_type = 0 
-//				& t4::task_type = 2 & t5::task_type = 2)
-//		||
-//		// three empty steps
-//		(distinct (t1::start_loc, t2::start_loc, t3::start_loc) &
-//			t1::task_type = 0 & t2::task_type = 0 &  
-//				t3::task_type = 2 & t4::task_type = 2 & t5::task_type = 2)
-//		||
-//		// four empty steps
-//		(distinct (t1::start_loc, t2::start_loc) &
-//			t1::task_type = 0 & 
-//				t2::task_type = 2 &	t3::task_type = 2 & t4::task_type = 2 & t5::task_type = 2)
-//	) & 
- 
- // incorrect to do this because in initialize if > 32560 then reg rejected this mission
-		/*min_int(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy +  
-			r12::energy + r23::energy + r34::energy + r45::energy + 1, 32560)*/
