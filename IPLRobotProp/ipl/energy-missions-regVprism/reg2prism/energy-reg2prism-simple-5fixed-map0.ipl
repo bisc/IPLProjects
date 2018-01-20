@@ -7,9 +7,10 @@ use view tasks_view_map0_simple::TaskLibrary.fullspeed as tasklib;
 
 // an auxiliary background function that returns true if all arguments are different
 bfun distinct(int, int, int, int, int, int) -> bool;    
+var MAXBAT: int = 32560; 
       
 // specifying a behavioral model and its variables to use
-use model prism_noturns_nocharge_speed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
+use model prism_noturns_nocharge_nospeed_map0(INITIAL_LOCATION, TARGET_LOCATION, INITIAL_BATTERY);
 stvar l: int; // location
 stvar s: int; // speed
 stvar b: int; // battery
@@ -21,12 +22,13 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 // that form a cohesive path 
 	t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
 		t3::end_loc = t4::start_loc & t4::end_loc = t5::start_loc & 
-// and do not have circularities 
-		distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc)
+	// and do not have circularities 
+	distinct (t1::start_loc, t2::start_loc, t3::start_loc, t4::start_loc, t5::start_loc, t5::end_loc) &
+	// less than the maximum battery capacity 
+	(t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1 <= MAXBAT)
 	->    
 	// robot can find its way to the finish  
 	P max=? [  
-		(G s = 1) &  
 		((l = t1::start_loc) U (l = t2::start_loc U (l = t3::start_loc U (l = t4::start_loc U (l = t5::start_loc U 
 			( l = t5::end_loc & b > 0)
 		))))) &
@@ -35,21 +37,4 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 		(F l = t4::start_loc) & 
 		(F l = t5::start_loc) 
 	]{|t1::start_loc, t5::end_loc, t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + 1 |} = 1;
-	 
-	// very poor performance of automaton building on this one
-	/*P max=? [  
-		(G s = 1) & 
-		((l = t1::start_loc & (F l = t2::start_loc)) U 
-			(l = t2::start_loc & (F l = t3::start_loc) U 
-				(l = t3::start_loc & (F l = t4::start_loc) U 
-					(l = t4::start_loc & (F l = t5::start_loc) U 
-						(l = t5::start_loc U 
-			( l = t5::end_loc & b > 0)
-		))))) 
-	]*/
-	// no circ old:
-			/*t1::start_loc != t3::start_loc & t3::start_loc != t5::start_loc & t1::start_loc != t5::start_loc & 
-		t2::start_loc != t4::start_loc & 
-		t3::end_loc != t5::end_loc & 
-		t1::start_loc != t5::start_loc & 
-		t1::start_loc != t5::end_loc &*/
+	
