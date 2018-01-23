@@ -30,7 +30,8 @@ var MAX_BATTERY: int = 32560;
 // - empty steps can only be found in the end of a mission (otherwise, the rotation task spec below would allow too many fake turns  
 // - no non-empty rotations before empty tasks
  
-// Expected: 1190 models
+// Expected: 902 models
+// FIXME invalid, investigate
 
 	//forall initHead: {0, 1, 2, 3, 4, 5, 6, 7} |   // a full-scale version, but takes too long
 	// forward or charging tasks

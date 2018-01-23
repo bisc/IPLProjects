@@ -17,6 +17,7 @@ stvar b: int;
 
 // Expected 60 models (with single starting heading)
 // rabinizer can give value out of range if "Future" clauses come last in the PCTL part
+// FIXME invalid, investigate
 
 // assumptions:  
 // - forward tasks have start_head = end_head

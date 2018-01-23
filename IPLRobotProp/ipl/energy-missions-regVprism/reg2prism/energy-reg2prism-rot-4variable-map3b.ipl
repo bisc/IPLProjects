@@ -26,7 +26,7 @@ stvar b: int;
 // modeling choice: 
 //	- empty steps can only be found in the end of a mission  (otherwise, the rotation task spec below would allow too many fake turns  
  
-// Expected: ?? with single heading 
+// Expected: 162 with single heading 
  
 	//forall initHead: {0, 1, 2, 3, 4, 5, 6, 7} |   // a full-scale version, but takes too long
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks |
@@ -61,6 +61,7 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks |
 	(t2::task_type = 2 -> t3::task_type = 2) & 
 	(t3::task_type = 2 -> t4::task_type = 2) & 
 // rotation tasks connect headings of adjacent forwards (pre and post), with exclusions for empty ones
+// and forward tasks are constrained in types
 // 3 options are possible: 
 //      1. legit next forward + legit rotation + matching rotation to both forwards
 //  	2. legit next forward + empty rotation + matching headings of forwards
@@ -68,6 +69,8 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks |
 	// first rotation: either a legit or empty one
 //	( r01::task_type = 1 & initHead = r01::start_head & r01::end_head = t1::start_head ||
 //	  r01::task_type = 2 & initHead = t1::start_head) &  
+	// first task is not a rotation
+	t1::task_type != 1 &
 	( t2::task_type = 0 & r12::task_type = 1 & t1::end_head = r12::start_head & r12::end_head = t2::start_head || 
 	  t2::task_type = 0 & r12::task_type = 2 & t1::end_head = t2::start_head || 
 	  t2::task_type = 2 & r12::task_type = 2 ) &   

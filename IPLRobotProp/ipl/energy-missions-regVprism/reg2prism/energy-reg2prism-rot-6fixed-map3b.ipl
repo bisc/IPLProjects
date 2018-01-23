@@ -15,7 +15,8 @@ stvar l: int;
 stvar s: int;
 stvar b: int; 
 
-// Expected ?? models (with single starting heading)
+// Expected 44 models (with single starting heading)
+// FIXME invalid, investigate
 
 // assumptions:  
 // - forward tasks have start_head = end_head

@@ -74,6 +74,8 @@ forall r12: tasks | forall r23: tasks | forall r34: tasks | forall r45: tasks | 
 	// first rotation: either a legit or empty one
 //	( r01::task_type = 1 & initHead = r01::start_head & r01::end_head = t1::start_head ||
 //	  r01::task_type = 2 & initHead = t1::start_head) &  
+	// first task is not a rotation
+	t1::task_type != 1 &
 	( t2::task_type = 0 & r12::task_type = 1 & t1::end_head = r12::start_head & r12::end_head = t2::start_head || 
 	  t2::task_type = 0 & r12::task_type = 2 & t1::end_head = t2::start_head || 
 	  t2::task_type = 2 & r12::task_type = 2 ) &   
