@@ -1,5 +1,16 @@
-# IPL Examples
-Examples, models, views, case studies, and tests for the Integration Property Language (https://github.com/bisc/IPL). 
+# IPL Projects
+Illustrations, case studies, and tests for the Integration Property Language (https://github.com/bisc/IPL). 
+
+Directories: 
+* IPLRobotProp a collection of properties for the mobile robot case study
+  - aadl/ views
+  - ipl/ properties
+  - model/ MDPs and map model
+  - performance-analysis/ performance data and logs
+* IPLTest/ a collection of tests for an IPL implementation
+  - model/ prism models
+  - src/aadl tests with views 
+  - standalone/ tests without views
 
 ## Usage 
 Import into an IPL-supporting Eclipse application. Build *.ipl files to verify integration properties. 
