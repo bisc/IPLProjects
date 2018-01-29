@@ -31,6 +31,7 @@ var MAX_BATTERY: int = 32560;
 // - no non-empty rotations before empty tasks
  
 // Expected: ?? models
+// probably not doable on the laptop, given how 6-long missions went...
 
 	//forall initHead: {0, 1, 2, 3, 4, 5, 6, 7} |   // a full-scale version, but takes too long
 	// forward or charging tasks
