@@ -95,5 +95,8 @@ Pmax=? [ F l=8 ]
 Pmax=? [ (F l=3)&(F l=2)&(l=7 U (l=3 U (l=2&b>0))) ]
 
 // mission 2->(charge?)->5->6->7->1
-Pmax=? [(F l=5)&(F l=6)& (F l=7) & (F l=1) & (l=2 U (l=5 U (l=6 U (l=7 U (l=1&b>0))))) ]
+Pmax=? [ (F l=5)&(F l=6)&(F l=7)&(F l=1)&(l=2 U (l=5 U (l=6 U (l=7 U (l=1&b>0))))) ]
+
+// on map 3b, sum of energies 21735 (without +1), start heading 6
+Pmax=? [ (F l=6)&(F l=8)&(F l=1) & (l=11 U (l=6 U (l=8 U (l=1 U (l=9&b>0))))) ]
 

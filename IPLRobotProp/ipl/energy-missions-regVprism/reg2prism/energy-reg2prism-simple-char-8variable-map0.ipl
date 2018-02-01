@@ -15,8 +15,7 @@ stvar l: int;
 stvar s: int;
 stvar b: int;
 
-// Expected: 559 models
-// FIXME invalid for some reason, find out
+// Expected: 584 models 
 forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | forall t5: tasks | forall t6:tasks | forall t7:tasks | forall t8:tasks |
 // cohesive path: 
 	( t1::end_loc = t2::start_loc & t2::end_loc = t3::start_loc &
@@ -42,7 +41,7 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 		)
 	)) &  
 // "the last task is not charging" (does not make domain-specific sense)
-// where last is defined as either the very last one or the one before a sequence of empty tasks
+	// where last is defined as either the very last one or the one before a sequence of empty tasks
 	(t1::task_type = 3 -> t2::task_type != 2) &
 	(t2::task_type = 3 -> t3::task_type != 2) &
 	(t3::task_type = 3 -> t4::task_type != 2) &
@@ -50,7 +49,7 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 	(t5::task_type = 3 -> t6::task_type != 2) &
 	(t6::task_type = 3 -> t7::task_type != 2) &
 	(t7::task_type = 3 -> t8::task_type != 2) &
-	t7::task_type != 3 & 
+	t8::task_type != 3 & 
 // "empty tasks only in the end of a mission"
 	t1::task_type != 2 &  // the first task is not empty (not considering empty missions)
 	(t1::task_type = 2 -> t2::task_type = 2) &
@@ -71,6 +70,15 @@ forall t1: tasks | forall t2: tasks | forall t3: tasks | forall t4: tasks | fora
 		(t6::task_type = 3 -> t7::energy + t8::energy < CHARGING_THRES) &
 		(t7::task_type = 3 -> t8::energy < CHARGING_THRES)
 	) &
+// "each step has enough energy to be made" 
+	//	equivalent to "for i-step to be possible, sum of energies from i+1 to n is non-negative"
+	(t2::energy + t3::energy + t4::energy + t5::energy + t6::energy + t7::energy + t8::energy >= 0) & 
+	(t3::energy + t4::energy + t5::energy + t6::energy + t7::energy + t8::energy >= 0) &
+	(t4::energy + t5::energy + t6::energy + t7::energy + t8::energy >= 0) &
+	(t5::energy + t6::energy + t7::energy + t8::energy >= 0) &
+	(t6::energy + t7::energy + t8::energy >= 0) &
+	(t7::energy + t8::energy >= 0) &
+		//	(t8::energy >= 0) & // automatically true if the last task is not charging
 	// regression considers this a power-safe mission 
 	t1::energy + t2::energy + t3::energy + t4::energy + t5::energy + t6::energy + t7::energy + t8::energy + 1 <= MAX_BATTERY &
 	// do not start with negative energy (otherwise prism freaks out) 
