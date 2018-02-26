@@ -25,12 +25,6 @@ public
 			c3: memory Map_Types::LocationWithCharge;
 			c4: memory Map_Types::LocationWithCharge;
 
---		connections -- does not work because it's only one to one...
---		-- try out port groups, or worst case can go with properties
---			cn1 : port l2.edge -> l1.edge;
---			cn2 : port l4.edge -> l2.edge;
---			cn3 : port l3.edge -> l1.edge;
-
 		properties
 			Map_Properties::id => 0 applies to l1;
 			Map_Properties::id => 1 applies to l2;
